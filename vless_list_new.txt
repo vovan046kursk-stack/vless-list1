@@ -1,3 +1,4 @@
-vless://3653ade8-519a-4996-b572-7db5e9d808fe@84.201.153.107:443?type=tcp&security=reality&encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=VRZ6ZwSsMA9K5f7aoJ9KvQgQ4xoSaF792mcNbeh-TQ4&sid=3bf8f24d2a2a2cff&sni=vk.com
-vless://50b95deb-6394-46c5-b88a-583e5b3ca7ee@178.250.243.102:443?type=tcp&security=reality&encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=PGccrEdFmBaB1rQFJqM-a9jJ1pFsxhUP2sD9KTw5Oz4&sid=f69d7af2d5fc5e0c&sni=eh.vk.com
-vless://535235d3-5088-4746-8722-8720e820c043@94.228.124.191:8443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=UHBMEzdUxeJKF5dQscCOYXeZFwtQDhZsUMtLKWx6tAA&security=reality&sid=34ff8146849c7cc4&sni=eh.vk.com
+vless://7bc30425-1c2f-4823-b629-90f599a4cbfe@5.188.140.208:8443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=rQzY0k5b3XhcF6s_BaIxyAH4G_GxE_MXNiQxuA0vbEU&security=reality&sid=0f4dacf08722a04f&sni=max.ru&type=tcp
+vless://7bc30425-1c2f-4823-b629-90f599a4cbfe@5.188.140.115:1488?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc&security=reality&sid=6ba85179e30d4fc2&sni=ads.x5.ru&type=tcp
+vless://6416708c-eaa5-4ec5-b652-a2db2feab875@51.250.83.255:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg&security=reality&sid=95ec618532fa065e&sni=ads.x5.ru&type=tcp
+vless://6416708c-eaa5-4ec5-b652-a2db2feab875@81.200.151.139:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg&security=reality&sid=3f200574d011010f&sni=m.vk.com&type=tcp
