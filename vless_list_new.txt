@@ -1,1 +1,2 @@
 vless://514fdc88-6283-6936-500f-ef9b136bdbf2@46.243.235.89:7443?encryption=none&fp=chrome&pbk=Tcjwbttlx8AatKXoa5AbITK1iwaFj4FD80BF4hKU7FM&security=reality&sid=9b96383beb1d2ba8&sni=cdnv-img.perekrestok.ru&type=grpc#%F0%9F%87%AB%F0%9F%87%AE%20Finland%20%5B%2ACIDR%5D%20CDN
+vless://ae023534-3788-44d3-b7ae-7076c01a9849@est01-vlr01.tcp-reset-club.net:443?type=tcp&security=reality&encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=mLmBhbVFfNuo2eUgBh6r9-5Koz9mUCn3aSzlR6IejUg&sid=f79448a30d&sni=hls-svod.itunes.apple.com&spx=/#0320 | 🇪🇪 Estonia | VLESS | 📺 YT | TG: @YoutubeUnBlockRu
