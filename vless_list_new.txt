@@ -1,6 +1,3 @@
-
-# Date/Time: 2026-02-15 / 19:48 (Moscow)
-# For more info and VPN-configs - visit: www.github.com/igareck/vpn-configs-for-russia
 vless://01e92d42-9bbd-4e77-82a5-f64402c2e161@144.31.100.120:443?encryption=none&fp=chrome&pbk=ihtXyG0UidSbXjvCJXUhABwZGCCB62DUsVBFn_qVd3g&security=reality&sid=352e3a94&sni=www.google.com&type=tcp#%F0%9F%87%B3%F0%9F%87%B1%20The%20Netherlands%20%E2%80%94%20%23538
 vless://03695e31-89d2-4cce-9d7e-3e61d9d80f22@159.195.4.83:443?alpn=h2&encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=ckRcueERkPqqjZABwxqni_J_Nbb70Q6k5fEEUAjoImw&security=reality&sni=live.com&type=tcp#%F0%9F%87%A9%F0%9F%87%AA%20Germany%20%E2%80%94%20%23190
 vless://048ce500-05ab-485b-b224-1753d2b60730@95.174.92.11:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=xfNZvP60yv5cee9Nyac7Daww3QwlAd2WDTd14jJixAk&security=reality&sid=30406a9627a663&sni=dk40.strelkavpn.com&type=tcp#%F0%9F%87%A9%F0%9F%87%B0%20Denmark%20%5B%2ACIDR%5D
