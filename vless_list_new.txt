@@ -1,16 +1,1 @@
-vless://50b95deb-6394-46c5-b88a-583e5b3ca7ee@85.192.32.30:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=eh.vk.com&type=tcp
-vless://d5137491-4da5-426a-8318-6a06d0354c9d@37.139.33.52:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=m.vk.com&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@109.120.188.140:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@178.250.243.100:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@178.250.243.220:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@37.139.34.237:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=eh.vk.com&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@89.208.228.250:8443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=ads.x5.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@178.250.243.208:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@178.250.243.222:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@178.250.243.221:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@178.250.243.211:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@178.250.243.99:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&type=tcp
-vless://9bc247bd-6fef-468b-91e7-2400e8c0903f@178.250.243.210:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&type=tcp
-vless://c690db76-e866-4bca-b184-4965d29ab086@84.252.130.60:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=sun6-21.userapi.com&type=tcp
-vless://64a3a23c-363a-4bee-9401-f5c42eea5a27@217.12.40.76:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=sun9-38.userapi.com&type=tcp
-vless://f5a8e5fb-baa8-48cb-a62a-930c97c29eb2@87.242.103.184:443?encryption=none&security=reality&type=grpc
+vless://64a3a23c-363a-4bee-9401-f5c42eea5a27@217.12.40.76:443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg&security=reality&sid=f85b0cdd7d20c84c&sni=sun9-38.userapi.com&type=tcp#%F0%9F%87%B7%F0%9F%87%BA%20Beget%20%E2%80%94%20%23108
