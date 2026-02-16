@@ -3,4 +3,4 @@ vless://479809bf-064a-4667-88b3-c561096c9448@84.23.52.70:8443?encryption=none&fl
 vless://525e49c0-8396-4dac-bb2d-36412723e5cb@79.137.175.59:8443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04&security=reality&sid=c6ef72e4635d15a5&sni=m.vk.ru&type=tcp#%F0%9F%87%B9%F0%9F%87%B7%20T%C3%BCrkiye%20%E2%80%94%20%23739
 vless://871fdc77-e6df-460d-ace3-b38ab82fb487@158.160.105.121:8443?encryption=none&flow=xtls-rprx-vision&fp=chrome&pbk=Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc&security=reality&sid=8f222b3475800821&sni=yandex.ru&type=tcp#%F0%9F%87%B5%F0%9F%87%B1%20Poland%20%5B%2ACIDR%5D%20YA
 vless://c343f67e-8781-4a8e-97e4-e74ab137eb1c@5.188.143.8:443?encryption=none&flow=xtls-rprx-vision&pbk=c8x7I-K2ONBUw5B2d1aZr7JNcFUu7GDfs8PAK-4qM1E&security=reality&sid=0d33e856&sni=ads.x5.ru&type=tcp#%F0%9F%87%B3%F0%9F%87%B1%20The%20Netherlands%20%5B%2ACIDR%5D%20VK
-vless://bbc3bb80-032b-4c15-9bbd-ac6cba0e76a0@130.193.59.133:8443?security=reality&type=tcp&headerType=&flow=xtls-rprx-vision&path=&host=&sni=yandex.ru&fp=random&pbk=_CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM&sid=4ffc99daad0f261f#🟠new_it_proxy_yandex_1:IT:8443
+
