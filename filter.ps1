@@ -1,44 +1,57 @@
-$output = "vless_list_new.txt"
+# ==============================
+# FILTER VLESS (GitHub version)
+# ==============================
 
-$allowed = Get-Content "ip_port_pool.txt"
+$ErrorActionPreference = "Stop"
 
-$urls = @(
+# Источники подписок
+$sources = @(
 "https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt",
 "https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt",
 "https://raw.githubusercontent.com/vsevjik/OBSpiskov/refs/heads/main/wwh_old"
 )
 
-$result = @()
+# Разрешённые порты
+$allowedPorts = @("443","8443","6443","7443","9443","51102")
 
-foreach ($url in $urls) {
+$outputFile = "filtered_vless.txt"
 
-    Write-Host "Downloading $url"
+Write-Host "Downloading sources..."
 
+$allLines = @()
+
+foreach ($url in $sources) {
     try {
-        $content = Invoke-WebRequest -Uri $url -UseBasicParsing
-        $lines = $content.Content -split "`n"
-
-        foreach ($line in $lines) {
-
-            if ($line -notlike "vless://*") { continue }
-
-            if ($line -match "@([\d\.]+):(\d+)") {
-
-                $pair = "${($matches[1])}:${($matches[2])}"
-
-                if ($allowed -contains $pair) {
-                    $result += $line.Trim()
-                }
-            }
-        }
+        $content = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 20
+        $allLines += $content.Content -split "`n"
+        Write-Host "Downloaded: $url"
     }
     catch {
-        Write-Host "Failed $url"
+        Write-Host "Failed: $url"
     }
 }
 
-$result |
-    Sort-Object -Unique |
-    Set-Content $output -Encoding utf8
+Write-Host "Filtering..."
 
-Write-Host "DONE"
+$result = @()
+
+foreach ($line in $allLines) {
+
+    if ($line -match "^vless://") {
+
+        if ($line -match "@([\d\.]+):(\d+)") {
+
+            $port = $matches[2]
+
+            if ($allowedPorts -contains $port) {
+                $result += $line.Trim()
+            }
+        }
+    }
+}
+
+$result = $result | Sort-Object -Unique
+
+$result | Set-Content $outputFile -Encoding UTF8
+
+Write-Host "Saved $($result.Count) entries to $outputFile"
