@@ -21,20 +21,17 @@ jobs:
 
       - name: Install subconverter
         run: |
-          git clone https://github.com/tindy2013/subconverter.git
-          cd subconverter
+          wget https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
+          tar -xzf subconverter_linux64.tar.gz
           chmod +x subconverter
-          cd ..
 
-      - name: Generate Clash YAML locally
+      - name: Generate Clash YAML
         run: |
-          cd subconverter
           ./subconverter \
           -g \
-          -u ../filtered_vless.txt \
+          -u filtered_vless.txt \
           -t clash \
-          -o ../clash_pool.yaml
-          cd ..
+          -o clash_pool.yaml
 
       - name: Validate YAML
         run: |
@@ -50,3 +47,4 @@ jobs:
           git add filtered_vless.txt clash_pool.yaml
           git commit -m "Auto update pool" || echo "No changes"
           git push
+
