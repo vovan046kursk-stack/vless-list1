@@ -1,0 +1,25 @@
+name: Update VLESS list
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run filter
+        shell: pwsh
+        run: ./filter.ps1
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add vless_list_new.txt
+          git commit -m "auto update list" || echo "no changes"
+          git push
