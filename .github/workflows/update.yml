@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ---------- DOWNLOAD SOURCES ----------
+      # ---------- DOWNLOAD ----------
       - name: Download sources
         run: |
           curl -L -o src1.txt https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt
@@ -30,25 +30,27 @@ jobs:
             exit 1
           fi
 
-      # ---------- INSTALL SUBCONVERTER ----------
+      # ---------- INSTALL ----------
       - name: Install subconverter
         run: |
           wget https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
           tar -xzf subconverter_linux64.tar.gz
           chmod +x subconverter/subconverter
 
-      # ---------- CREATE PREF ----------
-      - name: Create pref.ini
+      # ---------- START SERVER ----------
+      - name: Start subconverter server
         run: |
-          echo "[common]" > pref.ini
-          echo "source=filtered_vless.txt" >> pref.ini
-          echo "target=clash" >> pref.ini
-          echo "output=clash_pool.yaml" >> pref.ini
+          ./subconverter/subconverter &
+          sleep 5
 
-      # ---------- GENERATE ----------
+      # ---------- CONVERT ----------
       - name: Generate Clash YAML
         run: |
-          ./subconverter/subconverter -g -c pref.ini
+          curl -X POST \
+          -F "target=clash" \
+          -F "url=@filtered_vless.txt" \
+          http://127.0.0.1:25500/sub \
+          -o clash_pool.yaml
 
       # ---------- VALIDATE ----------
       - name: Validate YAML
@@ -68,5 +70,3 @@ jobs:
           git add filtered_vless.txt clash_pool.yaml
           git commit -m "Auto update VLESS & Clash" || echo "No changes"
           git push
-
-
