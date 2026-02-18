@@ -31,7 +31,7 @@ jobs:
           cd subconverter
           ./subconverter \
           -g \
-          -u https://raw.githubusercontent.com/${{ github.repository }}/main/filtered_vless.txt \
+          -u ../filtered_vless.txt \
           -t clash \
           -o ../clash_pool.yaml
           cd ..
@@ -50,4 +50,3 @@ jobs:
           git add filtered_vless.txt clash_pool.yaml
           git commit -m "Auto update pool" || echo "No changes"
           git push
-
