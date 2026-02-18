@@ -30,24 +30,25 @@ jobs:
             exit 1
           fi
 
-      # ---------- INSTALL SUBCONVERTER (BINARY) ----------
-      - name: Install subconverter binary
+      # ---------- INSTALL SUBCONVERTER ----------
+      - name: Install subconverter
         run: |
           wget https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
           tar -xzf subconverter_linux64.tar.gz
           chmod +x subconverter/subconverter
 
-      # ---------- GENERATE CLASH ----------
+      # ---------- CREATE PREF ----------
+      - name: Create pref.ini
+        run: |
+          echo "[common]" > pref.ini
+          echo "source=filtered_vless.txt" >> pref.ini
+          echo "target=clash" >> pref.ini
+          echo "output=clash_pool.yaml" >> pref.ini
+
+      # ---------- GENERATE ----------
       - name: Generate Clash YAML
         run: |
-          base64 filtered_vless.txt > encoded.txt
-          BASE=$(cat encoded.txt | tr -d '\n')
-
-          ./subconverter/subconverter \
-            -g \
-            -u "$BASE" \
-            -t clash \
-            -o clash_pool.yaml
+          ./subconverter/subconverter -g -c pref.ini
 
       # ---------- VALIDATE ----------
       - name: Validate YAML
@@ -67,3 +68,5 @@ jobs:
           git add filtered_vless.txt clash_pool.yaml
           git commit -m "Auto update VLESS & Clash" || echo "No changes"
           git push
+
+
