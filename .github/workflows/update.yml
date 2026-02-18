@@ -13,33 +13,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # ---------- FILTER ----------
-      - name: Filter VLESS
+      # ---------- DOWNLOAD SOURCES ----------
+      - name: Download sources
         run: |
-          echo "Downloading sources..."
-
           curl -L -o src1.txt https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt
           curl -L -o src2.txt https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt
           curl -L -o src3.txt https://raw.githubusercontent.com/vsevjik/OBSpiskov/refs/heads/main/wwh_old
 
           cat src1.txt src2.txt src3.txt > all.txt
-
           grep "^vless://" all.txt > filtered_vless.txt
 
           if [ ! -s filtered_vless.txt ]; then
-            echo "No VLESS links found"
+            echo "No VLESS found"
             exit 1
           fi
 
-      # ---------- INSTALL SUBCONVERTER ----------
-      - name: Install subconverter
+      # ---------- INSTALL SUBCONVERTER (BINARY) ----------
+      - name: Install subconverter binary
         run: |
-          git clone https://github.com/tindy2013/subconverter.git
-          cd subconverter
-          chmod +x subconverter
+          wget https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
+          tar -xzf subconverter_linux64.tar.gz
+          chmod +x subconverter/subconverter
 
       # ---------- GENERATE CLASH ----------
       - name: Generate Clash YAML
@@ -56,10 +52,10 @@ jobs:
       # ---------- VALIDATE ----------
       - name: Validate YAML
         run: |
-          if [ -s clash_pool.yaml ]; then
-            echo "YAML generated successfully"
+          if grep -q "proxies:" clash_pool.yaml; then
+            echo "YAML OK"
           else
-            echo "Empty YAML generated"
+            echo "Invalid YAML"
             exit 1
           fi
 
@@ -68,7 +64,6 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-
           git add filtered_vless.txt clash_pool.yaml
           git commit -m "Auto update VLESS & Clash" || echo "No changes"
           git push
