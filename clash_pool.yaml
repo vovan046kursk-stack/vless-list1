@@ -11,7 +11,8 @@ dns:
     - 1.1.1.1
     - 8.8.8.8
 
-proxies:  - name: "37.139.33.15-443"
+proxies:
+  - name: "37.139.33.15-443"
     type: vless
     server: 37.139.33.15
     port: 443
@@ -19,6 +20,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "84.23.52.70-8443"
     type: vless
     server: 84.23.52.70
@@ -27,6 +29,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "79.137.175.59-8443"
     type: vless
     server: 79.137.175.59
@@ -35,6 +38,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "46.243.235.109-443"
     type: vless
     server: 46.243.235.109
@@ -43,6 +47,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "188.253.17.225-443"
     type: vless
     server: 188.253.17.225
@@ -51,6 +56,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "37.139.33.57-443"
     type: vless
     server: 37.139.33.57
@@ -59,6 +65,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "109.120.191.92-1488"
     type: vless
     server: 109.120.191.92
@@ -67,6 +74,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "5.188.140.18-1488"
     type: vless
     server: 5.188.140.18
@@ -75,6 +83,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "158.160.105.121-8443"
     type: vless
     server: 158.160.105.121
@@ -83,6 +92,7 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
   - name: "95.163.208.52-443"
     type: vless
     server: 95.163.208.52
@@ -91,13 +101,15 @@ proxies:  - name: "37.139.33.15-443"
     network: tcp
     tls: true
     udp: true
+
 proxy-groups:
   - name: Auto
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-    proxies:      - 37.139.33.15-443
+    proxies:
+      - 37.139.33.15-443
       - 84.23.52.70-8443
       - 79.137.175.59-8443
       - 46.243.235.109-443
@@ -112,7 +124,8 @@ proxy-groups:
     type: select
     proxies:
       - Auto
-      - DIRECT      - 37.139.33.15-443
+      - DIRECT
+      - 37.139.33.15-443
       - 84.23.52.70-8443
       - 79.137.175.59-8443
       - 46.243.235.109-443
@@ -124,18 +137,5 @@ proxy-groups:
       - 95.163.208.52-443
 
 rules:
-  - DOMAIN-KEYWORD,yaplakal,DIRECT
-  - DOMAIN-SUFFIX,yaplakal.com,DIRECT
-  - DOMAIN-SUFFIX,yaplakal.net,DIRECT
+  - MATCH,Proxy
 
-  - DOMAIN-SUFFIX,nnmclub.to,Proxy
-  - DOMAIN-SUFFIX,vipdrive.net,Proxy
-  - DOMAIN-SUFFIX,4pda.to,Proxy
-  - DOMAIN-SUFFIX,filmix.my,Proxy
-
-  - IP-CIDR,127.0.0.0/8,DIRECT
-  - IP-CIDR,10.0.0.0/8,DIRECT
-  - IP-CIDR,172.16.0.0/12,DIRECT
-  - IP-CIDR,192.168.0.0/16,DIRECT
-
-  - MATCH,DIRECT
