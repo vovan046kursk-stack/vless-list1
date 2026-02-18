@@ -6,7 +6,7 @@ if (!(Test-Path $inputFile)) {
     exit 1
 }
 
-$vlessLines = Get-Content $inputFile | Where-Object { $_ -match "^vless://" }
+$vlessLines = Get-Content $inputFile | Where-Object { $_.Trim().StartsWith("vless://") }
 
 if ($vlessLines.Count -eq 0) {
     Write-Host "No VLESS entries found"
@@ -34,11 +34,15 @@ $yaml += "proxies:`n"
 
 foreach ($line in $vlessLines) {
     try {
-        $uuid = ($line -split "vless://")[1].Split("@")[0]
-        $rest = $line.Split("@")[1]
+        $clean = $line.Trim()
+
+        $uuid = ($clean -split "vless://")[1].Split("@")[0]
+        $rest = $clean.Split("@")[1]
         $serverPort = $rest.Split("?")[0]
+
         $server = $serverPort.Split(":")[0]
         $port = $serverPort.Split(":")[1]
+
         $name = "$server-$port"
 
         if ($proxyNames -contains $name) { continue }
@@ -87,4 +91,3 @@ $yaml += "  - MATCH,Proxy`n"
 $yaml | Set-Content $outputFile -Encoding UTF8
 
 Write-Host "Clash config generated successfully"
-
