@@ -11,31 +11,31 @@ proxies:
     uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
     network: tcp
     tls: true
-  - name: "158.160.105.121-8443-2"
-    type: vless
-    server: 158.160.105.121
-    port: 8443
-    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
-    network: tcp
-    tls: true
-  - name: "158.160.105.121-8443-3"
-    type: vless
-    server: 158.160.105.121
-    port: 8443
-    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
-    network: tcp
-    tls: true
-  - name: "37.139.33.15-443-4"
+  - name: "37.139.33.15-443-2"
     type: vless
     server: 37.139.33.15
     port: 443
     uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
     network: tcp
     tls: true
-  - name: "37.139.33.15-443-5"
+  - name: "37.139.33.15-443-3"
     type: vless
     server: 37.139.33.15
     port: 443
+    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    network: tcp
+    tls: true
+  - name: "84.23.52.70-8443-4"
+    type: vless
+    server: 84.23.52.70
+    port: 8443
+    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    network: tcp
+    tls: true
+  - name: "84.23.52.70-8443-5"
+    type: vless
+    server: 84.23.52.70
+    port: 8443
     uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
     network: tcp
     tls: true
@@ -46,11 +46,11 @@ proxies:
     uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
     network: tcp
     tls: true
-  - name: "84.23.52.70-8443-7"
+  - name: "79.137.175.59-8443-7"
     type: vless
-    server: 84.23.52.70
+    server: 79.137.175.59
     port: 8443
-    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    uuid: 525e49c0-8396-4dac-bb2d-36412723e5cb
     network: tcp
     tls: true
   - name: "79.137.175.59-8443-8"
@@ -81,11 +81,11 @@ proxies:
     uuid: 525e49c0-8396-4dac-bb2d-36412723e5cb
     network: tcp
     tls: true
-  - name: "79.137.175.59-8443-12"
+  - name: "46.243.235.109-443-12"
     type: vless
-    server: 79.137.175.59
-    port: 8443
-    uuid: 525e49c0-8396-4dac-bb2d-36412723e5cb
+    server: 46.243.235.109
+    port: 443
+    uuid: 57ae3183-edc5-4842-b8bd-3e13c170f1c9
     network: tcp
     tls: true
   - name: "46.243.235.109-443-13"
@@ -95,189 +95,119 @@ proxies:
     uuid: 57ae3183-edc5-4842-b8bd-3e13c170f1c9
     network: tcp
     tls: true
-  - name: "46.243.235.109-443-14"
-    type: vless
-    server: 46.243.235.109
-    port: 443
-    uuid: 57ae3183-edc5-4842-b8bd-3e13c170f1c9
-    network: tcp
-    tls: true
-  - name: "188.253.17.225-443-15"
+  - name: "188.253.17.225-443-14"
     type: vless
     server: 188.253.17.225
     port: 443
     uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
     network: tcp
     tls: true
-  - name: "188.253.17.225-443-16"
-    type: vless
-    server: 188.253.17.225
-    port: 443
-    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
-    network: tcp
-    tls: true
-  - name: "37.139.33.57-443-17"
+  - name: "37.139.33.57-443-15"
     type: vless
     server: 37.139.33.57
     port: 443
     uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
     network: tcp
     tls: true
-  - name: "37.139.33.57-443-18"
+  - name: "37.139.33.57-443-16"
     type: vless
     server: 37.139.33.57
     port: 443
     uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
     network: tcp
     tls: true
-  - name: "37.139.33.57-443-19"
-    type: vless
-    server: 37.139.33.57
-    port: 443
-    uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
-    network: tcp
-    tls: true
-  - name: "37.139.33.57-443-20"
-    type: vless
-    server: 37.139.33.57
-    port: 443
-    uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
-    network: tcp
-    tls: true
-  - name: "109.120.191.92-1488-21"
+  - name: "109.120.191.92-1488-17"
     type: vless
     server: 109.120.191.92
     port: 1488
     uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
     network: tcp
     tls: true
-  - name: "109.120.191.92-1488-22"
+  - name: "109.120.191.92-1488-18"
     type: vless
     server: 109.120.191.92
     port: 1488
     uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
     network: tcp
     tls: true
-  - name: "5.188.140.18-1488-23"
+  - name: "5.188.140.18-1488-19"
     type: vless
     server: 5.188.140.18
     port: 1488
     uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
     network: tcp
     tls: true
-  - name: "5.188.140.18-1488-24"
+  - name: "5.188.140.18-1488-20"
     type: vless
     server: 5.188.140.18
     port: 1488
     uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
     network: tcp
     tls: true
-  - name: "158.160.105.121-8443-25"
+  - name: "158.160.105.121-8443-21"
     type: vless
     server: 158.160.105.121
     port: 8443
     uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
     network: tcp
     tls: true
+  - name: "79.137.175.59-8443-22"
+    type: vless
+    server: 79.137.175.59
+    port: 8443
+    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
+    network: tcp
+    tls: true
+  - name: "79.137.175.59-8443-23"
+    type: vless
+    server: 79.137.175.59
+    port: 8443
+    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
+    network: tcp
+    tls: true
+  - name: "79.137.175.59-8443-24"
+    type: vless
+    server: 79.137.175.59
+    port: 8443
+    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
+    network: tcp
+    tls: true
+  - name: "79.137.175.59-8443-25"
+    type: vless
+    server: 79.137.175.59
+    port: 8443
+    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
+    network: tcp
+    tls: true
   - name: "37.139.33.57-443-26"
     type: vless
     server: 37.139.33.57
     port: 443
-    uuid: 8d70a867-ec41-45de-b36f-c47bbe465862
+    uuid: c15c00a4-9e8e-4d22-9f2e-dc237c8b1220
     network: tcp
     tls: true
-  - name: "37.139.33.15-443-27"
-    type: vless
-    server: 37.139.33.15
-    port: 443
-    uuid: afffbafe-881f-4a06-bc22-d1a49121ba36
-    network: tcp
-    tls: true
-  - name: "37.139.33.15-443-28"
-    type: vless
-    server: 37.139.33.15
-    port: 443
-    uuid: afffbafe-881f-4a06-bc22-d1a49121ba36
-    network: tcp
-    tls: true
-  - name: "84.23.52.70-8443-29"
-    type: vless
-    server: 84.23.52.70
-    port: 8443
-    uuid: afffbafe-881f-4a06-bc22-d1a49121ba36
-    network: tcp
-    tls: true
-  - name: "79.137.175.59-8443-30"
-    type: vless
-    server: 79.137.175.59
-    port: 8443
-    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
-    network: tcp
-    tls: true
-  - name: "79.137.175.59-8443-31"
-    type: vless
-    server: 79.137.175.59
-    port: 8443
-    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
-    network: tcp
-    tls: true
-  - name: "79.137.175.59-8443-32"
-    type: vless
-    server: 79.137.175.59
-    port: 8443
-    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
-    network: tcp
-    tls: true
-  - name: "79.137.175.59-8443-33"
-    type: vless
-    server: 79.137.175.59
-    port: 8443
-    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
-    network: tcp
-    tls: true
-  - name: "37.139.33.57-443-34"
+  - name: "37.139.33.57-443-27"
     type: vless
     server: 37.139.33.57
     port: 443
     uuid: c15c00a4-9e8e-4d22-9f2e-dc237c8b1220
     network: tcp
     tls: true
-  - name: "37.139.33.57-443-35"
-    type: vless
-    server: 37.139.33.57
-    port: 443
-    uuid: c15c00a4-9e8e-4d22-9f2e-dc237c8b1220
-    network: tcp
-    tls: true
-  - name: "95.163.208.52-443-36"
+  - name: "95.163.208.52-443-28"
     type: vless
     server: 95.163.208.52
     port: 443
     uuid: ec99a7c0-5f60-426c-9e98-8b1798b27b5d
     network: tcp
     tls: true
-  - name: "37.139.33.15-443-37"
+  - name: "37.139.33.15-443-29"
     type: vless
     server: 37.139.33.15
     port: 443
     uuid: f8a2c7b5-616b-48b0-833b-ea59bce29351
     network: tcp
     tls: true
-  - name: "37.139.33.15-443-38"
-    type: vless
-    server: 37.139.33.15
-    port: 443
-    uuid: f8a2c7b5-616b-48b0-833b-ea59bce29351
-    network: tcp
-    tls: true
-  - name: "84.23.52.70-8443-39"
-    type: vless
-    server: 84.23.52.70
-    port: 8443
-    uuid: f8a2c7b5-616b-48b0-833b-ea59bce29351
-    network: tcp
-    tls: true
-  - name: "84.23.52.70-8443-40"
+  - name: "84.23.52.70-8443-30"
     type: vless
     server: 84.23.52.70
     port: 8443
@@ -290,45 +220,35 @@ proxy-groups:
     type: select
     proxies:
       - 158.160.105.121-8443-1
-      - 158.160.105.121-8443-2
-      - 158.160.105.121-8443-3
-      - 37.139.33.15-443-4
-      - 37.139.33.15-443-5
+      - 37.139.33.15-443-2
+      - 37.139.33.15-443-3
+      - 84.23.52.70-8443-4
+      - 84.23.52.70-8443-5
       - 84.23.52.70-8443-6
-      - 84.23.52.70-8443-7
+      - 79.137.175.59-8443-7
       - 79.137.175.59-8443-8
       - 79.137.175.59-8443-9
       - 79.137.175.59-8443-10
       - 79.137.175.59-8443-11
-      - 79.137.175.59-8443-12
+      - 46.243.235.109-443-12
       - 46.243.235.109-443-13
-      - 46.243.235.109-443-14
-      - 188.253.17.225-443-15
-      - 188.253.17.225-443-16
-      - 37.139.33.57-443-17
-      - 37.139.33.57-443-18
-      - 37.139.33.57-443-19
-      - 37.139.33.57-443-20
-      - 109.120.191.92-1488-21
-      - 109.120.191.92-1488-22
-      - 5.188.140.18-1488-23
-      - 5.188.140.18-1488-24
-      - 158.160.105.121-8443-25
+      - 188.253.17.225-443-14
+      - 37.139.33.57-443-15
+      - 37.139.33.57-443-16
+      - 109.120.191.92-1488-17
+      - 109.120.191.92-1488-18
+      - 5.188.140.18-1488-19
+      - 5.188.140.18-1488-20
+      - 158.160.105.121-8443-21
+      - 79.137.175.59-8443-22
+      - 79.137.175.59-8443-23
+      - 79.137.175.59-8443-24
+      - 79.137.175.59-8443-25
       - 37.139.33.57-443-26
-      - 37.139.33.15-443-27
-      - 37.139.33.15-443-28
-      - 84.23.52.70-8443-29
-      - 79.137.175.59-8443-30
-      - 79.137.175.59-8443-31
-      - 79.137.175.59-8443-32
-      - 79.137.175.59-8443-33
-      - 37.139.33.57-443-34
-      - 37.139.33.57-443-35
-      - 95.163.208.52-443-36
-      - 37.139.33.15-443-37
-      - 37.139.33.15-443-38
-      - 84.23.52.70-8443-39
-      - 84.23.52.70-8443-40
+      - 37.139.33.57-443-27
+      - 95.163.208.52-443-28
+      - 37.139.33.15-443-29
+      - 84.23.52.70-8443-30
       - DIRECT
 
 rules:
