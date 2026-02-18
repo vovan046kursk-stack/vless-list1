@@ -13,121 +13,78 @@ if ($vlessLines.Count -eq 0) {
     exit 1
 }
 
-$proxies = @()
 $proxyNames = @()
+$yaml = ""
+
+# ===== HEADER =====
+$yaml += "mixed-port: 7890`n"
+$yaml += "allow-lan: false`n"
+$yaml += "mode: rule`n"
+$yaml += "log-level: info`n`n"
+
+$yaml += "dns:`n"
+$yaml += "  enable: true`n"
+$yaml += "  ipv6: false`n"
+$yaml += "  enhanced-mode: fake-ip`n"
+$yaml += "  nameserver:`n"
+$yaml += "    - 1.1.1.1`n"
+$yaml += "    - 8.8.8.8`n`n"
+
+$yaml += "proxies:`n"
 
 foreach ($line in $vlessLines) {
-
     try {
         $uuid = ($line -split "vless://")[1].Split("@")[0]
         $rest = $line.Split("@")[1]
         $serverPort = $rest.Split("?")[0]
-
         $server = $serverPort.Split(":")[0]
         $port = $serverPort.Split(":")[1]
-
         $name = "$server-$port"
 
         if ($proxyNames -contains $name) { continue }
-
         $proxyNames += $name
 
-        $proxies += @{
-            name = $name
-            type = "vless"
-            server = $server
-            port = [int]$port
-            uuid = $uuid
-            network = "tcp"
-            tls = $true
-            udp = $true
-        }
+        $yaml += "  - name: `"$name`"`n"
+        $yaml += "    type: vless`n"
+        $yaml += "    server: $server`n"
+        $yaml += "    port: $port`n"
+        $yaml += "    uuid: $uuid`n"
+        $yaml += "    network: tcp`n"
+        $yaml += "    tls: true`n"
+        $yaml += "    udp: true`n`n"
 
-    } catch {
-        continue
-    }
+    } catch {}
 }
 
-# Формируем YAML вручную (без ошибок отступов)
+# ===== GROUPS =====
+$yaml += "proxy-groups:`n"
 
-$yaml = @"
-mixed-port: 7890
-allow-lan: false
-mode: rule
-log-level: info
-
-dns:
-  enable: true
-  ipv6: false
-  enhanced-mode: fake-ip
-  nameserver:
-    - 1.1.1.1
-    - 8.8.8.8
-
-proxies:
-"@
-
-foreach ($p in $proxies) {
-$yaml += @"
-  - name: "$($p.name)"
-    type: vless
-    server: $($p.server)
-    port: $($p.port)
-    uuid: $($p.uuid)
-    network: tcp
-    tls: true
-    udp: true
-
-"@
-}
-
-$yaml += @"
-proxy-groups:
-  - name: Auto
-    type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-    proxies:
-"@
+$yaml += "  - name: Auto`n"
+$yaml += "    type: url-test`n"
+$yaml += "    url: http://www.gstatic.com/generate_204`n"
+$yaml += "    interval: 300`n"
+$yaml += "    tolerance: 50`n"
+$yaml += "    proxies:`n"
 
 foreach ($name in $proxyNames) {
     $yaml += "      - $name`n"
 }
 
-$yaml += @"
-
-  - name: Proxy
-    type: select
-    proxies:
-      - Auto
-      - DIRECT
-"@
+$yaml += "`n  - name: Proxy`n"
+$yaml += "    type: select`n"
+$yaml += "    proxies:`n"
+$yaml += "      - Auto`n"
+$yaml += "      - DIRECT`n"
 
 foreach ($name in $proxyNames) {
     $yaml += "      - $name`n"
 }
 
-$yaml += @"
-
-rules:
-  - DOMAIN-KEYWORD,yaplakal,DIRECT
-  - DOMAIN-SUFFIX,yaplakal.com,DIRECT
-  - DOMAIN-SUFFIX,yaplakal.net,DIRECT
-
-  - DOMAIN-SUFFIX,nnmclub.to,Proxy
-  - DOMAIN-SUFFIX,vipdrive.net,Proxy
-  - DOMAIN-SUFFIX,4pda.to,Proxy
-  - DOMAIN-SUFFIX,filmix.my,Proxy
-
-  - IP-CIDR,127.0.0.0/8,DIRECT
-  - IP-CIDR,10.0.0.0/8,DIRECT
-  - IP-CIDR,172.16.0.0/12,DIRECT
-  - IP-CIDR,192.168.0.0/16,DIRECT
-
-  - MATCH,DIRECT
-"@
+# ===== RULES =====
+$yaml += "`nrules:`n"
+$yaml += "  - MATCH,Proxy`n"
 
 $yaml | Set-Content $outputFile -Encoding UTF8
 
-Write-Host "clash_pool.yaml generated successfully"
+Write-Host "Clash config generated successfully"
+
