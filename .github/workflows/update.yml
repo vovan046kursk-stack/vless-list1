@@ -1,50 +1,67 @@
-name: Update VLESS + Clash
+name: Update VLESS & Generate Clash
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/30 * * * *"   # каждые 30 минут
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Run filter
-        shell: pwsh
-        run: ./filter.ps1
+      # --- Скачиваем источники ---
+      - name: Download sources
+        run: |
+          curl -L https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt -o source1.txt
+          curl -L https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt -o source2.txt
+          curl -L https://raw.githubusercontent.com/vsevjik/OBSpiskov/refs/heads/main/wwh_old -o source3.txt
 
+      # --- Объединяем и оставляем только VLESS ---
+      - name: Filter VLESS
+        run: |
+          cat source1.txt source2.txt source3.txt > all.txt
+          grep "^vless://" all.txt > filtered_vless.txt || true
+          echo "Filtered lines:"
+          wc -l filtered_vless.txt
+
+      # --- Устанавливаем subconverter ---
       - name: Install subconverter
         run: |
           wget https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
           tar -xzf subconverter_linux64.tar.gz
-          chmod +x subconverter
+          chmod +x subconverter/subconverter
 
+      # --- Генерируем Clash YAML ---
       - name: Generate Clash YAML
         run: |
-          ./subconverter \
+          ./subconverter/subconverter \
           -g \
           -u filtered_vless.txt \
           -t clash \
           -o clash_pool.yaml
 
+      # --- Проверяем что YAML нормальный ---
       - name: Validate YAML
         run: |
-          if ! grep -q "proxies:" clash_pool.yaml; then
+          if grep -q "proxies:" clash_pool.yaml; then
+            echo "YAML OK"
+          else
             echo "Invalid YAML generated"
             exit 1
           fi
 
+      # --- Коммит если есть изменения ---
       - name: Commit changes
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
           git add filtered_vless.txt clash_pool.yaml
-          git commit -m "Auto update pool" || echo "No changes"
+          git commit -m "Auto update VLESS + Clash" || echo "No changes"
           git push
-
