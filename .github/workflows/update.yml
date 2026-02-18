@@ -1,9 +1,9 @@
-name: Update VLESS & Generate Clash
+name: Update VLESS & Clash
 
 on:
-  schedule:
-    - cron: "*/30 * * * *"   # каждые 30 минут
   workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
 
 permissions:
   contents: write
@@ -16,52 +16,59 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # --- Скачиваем источники ---
-      - name: Download sources
-        run: |
-          curl -L https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt -o source1.txt
-          curl -L https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt -o source2.txt
-          curl -L https://raw.githubusercontent.com/vsevjik/OBSpiskov/refs/heads/main/wwh_old -o source3.txt
-
-      # --- Объединяем и оставляем только VLESS ---
+      # ---------- FILTER ----------
       - name: Filter VLESS
         run: |
-          cat source1.txt source2.txt source3.txt > all.txt
-          grep "^vless://" all.txt > filtered_vless.txt || true
-          echo "Filtered lines:"
-          wc -l filtered_vless.txt
+          echo "Downloading sources..."
 
-      # --- Устанавливаем subconverter ---
-      - name: Install subconverter
-        run: |
-          wget https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
-          tar -xzf subconverter_linux64.tar.gz
-          chmod +x subconverter/subconverter
+          curl -L -o src1.txt https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt
+          curl -L -o src2.txt https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt
+          curl -L -o src3.txt https://raw.githubusercontent.com/vsevjik/OBSpiskov/refs/heads/main/wwh_old
 
-      # --- Генерируем Clash YAML ---
-      - name: Generate Clash YAML
-        run: |
-          ./subconverter/subconverter \
-          -g \
-          -u filtered_vless.txt \
-          -t clash \
-          -o clash_pool.yaml
+          cat src1.txt src2.txt src3.txt > all.txt
 
-      # --- Проверяем что YAML нормальный ---
-      - name: Validate YAML
-        run: |
-          if grep -q "proxies:" clash_pool.yaml; then
-            echo "YAML OK"
-          else
-            echo "Invalid YAML generated"
+          grep "^vless://" all.txt > filtered_vless.txt
+
+          if [ ! -s filtered_vless.txt ]; then
+            echo "No VLESS links found"
             exit 1
           fi
 
-      # --- Коммит если есть изменения ---
+      # ---------- INSTALL SUBCONVERTER ----------
+      - name: Install subconverter
+        run: |
+          git clone https://github.com/tindy2013/subconverter.git
+          cd subconverter
+          chmod +x subconverter
+
+      # ---------- GENERATE CLASH ----------
+      - name: Generate Clash YAML
+        run: |
+          base64 filtered_vless.txt > encoded.txt
+          BASE=$(cat encoded.txt | tr -d '\n')
+
+          ./subconverter/subconverter \
+            -g \
+            -u "$BASE" \
+            -t clash \
+            -o clash_pool.yaml
+
+      # ---------- VALIDATE ----------
+      - name: Validate YAML
+        run: |
+          if [ -s clash_pool.yaml ]; then
+            echo "YAML generated successfully"
+          else
+            echo "Empty YAML generated"
+            exit 1
+          fi
+
+      # ---------- COMMIT ----------
       - name: Commit changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
           git add filtered_vless.txt clash_pool.yaml
-          git commit -m "Auto update VLESS + Clash" || echo "No changes"
+          git commit -m "Auto update VLESS & Clash" || echo "No changes"
           git push
