@@ -13,17 +13,22 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Run filter
         shell: pwsh
-        run: |
-          ./filter.ps1
+        run: ./filter.ps1
 
       - name: Generate Clash via Subconverter
         run: |
-          curl -L "https://subconverter.vercel.app/sub?target=clash&url=https://raw.githubusercontent.com/${{ github.repository }}/main/filtered_vless.txt" -o clash_pool.yaml
+          curl -L "https://api.dler.io/sub?target=clash&url=https://raw.githubusercontent.com/${{ github.repository }}/main/filtered_vless.txt" -o clash_pool.yaml
+
+      - name: Validate YAML
+        run: |
+          if ! grep -q "proxies:" clash_pool.yaml; then
+            echo "Invalid YAML generated"
+            exit 1
+          fi
 
       - name: Commit changes
         run: |
