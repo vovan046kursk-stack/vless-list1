@@ -1,0 +1,40 @@
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+
+proxy-providers:
+  pool:
+    type: http
+    url: https://raw.githubusercontent.com/vovan046kursk-stack/vless-list1/main/filtered_vless.txt
+    interval: 1800
+    path: ./providers/pool.yaml
+    health-check:
+      enable: true
+      interval: 600
+      url: https://www.gstatic.com/generate_204
+
+proxy-groups:
+  - name: Auto
+    type: url-test
+    use:
+      - pool
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+
+  - name: Proxy
+    type: select
+    proxies:
+      - Auto
+      - DIRECT
+
+rules:
+  - MATCH,Proxy
