@@ -1,0 +1,169 @@
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+
+proxies:
+  - name: "158.160.105.121-8443"
+    type: vless
+    server: 158.160.105.121
+    port: 8443
+    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
+    network: tcp
+    tls: true
+    servername: yandex.ru
+    reality-opts:
+      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
+      short-id: 1929ef620e9b34f5
+    flow: xtls-rprx-vision
+
+  - name: "84.23.52.70-8443"
+    type: vless
+    server: 84.23.52.70
+    port: 8443
+    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    network: tcp
+    tls: true
+    servername: m.vk.ru
+    reality-opts:
+      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
+      short-id: 8ba12e75110b7a9c
+    flow: xtls-rprx-vision
+
+  - name: "79.137.175.59-8443"
+    type: vless
+    server: 79.137.175.59
+    port: 8443
+    uuid: 525e49c0-8396-4dac-bb2d-36412723e5cb
+    network: tcp
+    tls: true
+    servername: m.vk.ru
+    reality-opts:
+      public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
+      short-id: c6ef72e4635d15a5
+    flow: xtls-rprx-vision
+
+  - name: "46.243.235.109-443"
+    type: vless
+    server: 46.243.235.109
+    port: 443
+    uuid: 57ae3183-edc5-4842-b8bd-3e13c170f1c9
+    network: tcp
+    tls: true
+    servername: rutube.ru
+    reality-opts:
+      public-key: QqfJ_0Vmng4IZVFl9ZeowP--Ro-RksgYIlCnvfVmlEg
+      short-id: 76995499b21c0f
+    flow: xtls-rprx-vision
+
+  - name: "188.253.17.225-443"
+    type: vless
+    server: 188.253.17.225
+    port: 443
+    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+    network: tcp
+    tls: true
+    servername: sni.111000.v6.navy
+    reality-opts:
+      public-key: 
+      short-id: 
+    flow: xtls-rprx-vision
+
+  - name: "37.139.33.57-443"
+    type: vless
+    server: 37.139.33.57
+    port: 443
+    uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
+    network: tcp
+    tls: true
+    servername: m.vk.ru#%F0%9F%87%AE%F0%9F%87%B9%20Italy%20%E2%80%94%20%23316
+    reality-opts:
+      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+      short-id: 6419bed7fd0a2cff
+    flow: xtls-rprx-vision
+
+  - name: "109.120.191.92-1488"
+    type: vless
+    server: 109.120.191.92
+    port: 1488
+    uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
+    network: tcp
+    tls: true
+    servername: ads.x5.ru
+    reality-opts:
+      public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
+      short-id: 
+    flow: xtls-rprx-vision
+
+  - name: "37.139.33.15-443"
+    type: vless
+    server: 37.139.33.15
+    port: 443
+    uuid: afffbafe-881f-4a06-bc22-d1a49121ba36
+    network: tcp
+    tls: true
+    servername: m.vk.ru
+    reality-opts:
+      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
+      short-id: 8ba12e75110b7a9c
+    flow: xtls-rprx-vision
+
+  - name: "95.163.208.52-443"
+    type: vless
+    server: 95.163.208.52
+    port: 443
+    uuid: ec99a7c0-5f60-426c-9e98-8b1798b27b5d
+    network: tcp
+    tls: true
+    servername: api-maps.yandex.ru
+    reality-opts:
+      public-key: 5bGFIWSo4vlrd9Tv1yFcpdpSjrjYYN20SOWHYfighHc
+      short-id: e5f67890
+    flow: xtls-rprx-vision
+
+
+proxy-groups:
+  - name: Proxy
+    type: select
+    proxies:
+      - Auto
+      - Fallback
+      - Manual
+      - DIRECT
+
+  - name: Auto
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    use:
+      - pool
+
+  - name: Fallback
+    type: fallback
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    use:
+      - pool
+
+  - name: Manual
+    type: select
+    use:
+      - pool
+
+rules:
+  - DOMAIN-KEYWORD,yaplakal,DIRECT
+  - DOMAIN-SUFFIX,yaplakal.com,DIRECT
+  - DOMAIN-SUFFIX,yaplakal.net,DIRECT
+
+  - DOMAIN-SUFFIX,nnmclub.to,Proxy
+  - DOMAIN-SUFFIX,api.sponsor.ajay.app,Proxy
+  - DOMAIN-SUFFIX,vipdrive.net,Proxy
+  - DOMAIN-SUFFIX,4pda.to,Proxy
+  - DOMAIN-SUFFIX,filmix.my,Proxy
+
+  - IP-CIDR,127.0.0.0/8,DIRECT
+  - IP-CIDR,10.0.0.0/8,DIRECT
+  - IP-CIDR,172.16.0.0/12,DIRECT
+  - IP-CIDR,192.168.0.0/16,DIRECT
+
+  - MATCH,DIRECT
