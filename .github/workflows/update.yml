@@ -19,9 +19,22 @@ jobs:
         shell: pwsh
         run: ./filter.ps1
 
-      - name: Generate Clash via Subconverter
+      - name: Install subconverter
         run: |
-          curl -L "https://api.dler.io/sub?target=clash&url=https://raw.githubusercontent.com/${{ github.repository }}/main/filtered_vless.txt" -o clash_pool.yaml
+          git clone https://github.com/tindy2013/subconverter.git
+          cd subconverter
+          chmod +x subconverter
+          cd ..
+
+      - name: Generate Clash YAML locally
+        run: |
+          cd subconverter
+          ./subconverter \
+          -g \
+          -u https://raw.githubusercontent.com/${{ github.repository }}/main/filtered_vless.txt \
+          -t clash \
+          -o ../clash_pool.yaml
+          cd ..
 
       - name: Validate YAML
         run: |
@@ -37,3 +50,4 @@ jobs:
           git add filtered_vless.txt clash_pool.yaml
           git commit -m "Auto update pool" || echo "No changes"
           git push
+
