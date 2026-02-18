@@ -1,3 +1,7 @@
+$inputFile  = "vless_list_new.txt"
+$outputFile = "filtered_vless.txt"
+
+# ===== БЕЛЫЙ СПИСОК IP:PORT =====
 $allowed = @(
 "37.139.33.52:443",
 "37.139.33.15:443",
@@ -32,43 +36,30 @@ $allowed = @(
 "151.236.114.233:6443"
 )
 
-$urls = @(
-"https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt",
-"https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt",
-"https://raw.githubusercontent.com/vsevjik/OBSpiskov/refs/heads/main/wwh_old"
-)
-
-$temp = "all_sources.txt"
-$output = "filtered_vless.txt"
-
-Remove-Item $temp -ErrorAction SilentlyContinue
-Remove-Item $output -ErrorAction SilentlyContinue
-
-foreach ($url in $urls) {
-    try {
-        Invoke-WebRequest $url -OutFile "$temp.tmp"
-        Get-Content "$temp.tmp" | Add-Content $temp
-        Remove-Item "$temp.tmp"
-    } catch {}
-}
-
-if (!(Test-Path $temp)) {
-    Write-Host "No sources downloaded"
+if (!(Test-Path $inputFile)) {
+    Write-Host "Input file not found"
     exit 1
 }
 
 $result = @()
 
-Get-Content $temp | ForEach-Object {
-    if ($_ -match "^vless://" -and $_ -match "@([\d\.]+):(\d+)") {
-        $ipport = "$($matches[1]):$($matches[2])"
-        if ($allowed -contains $ipport) {
-            $result += $_.Trim()
+Get-Content $inputFile | ForEach-Object {
+
+    if ($_ -match "^vless://") {
+
+        if ($_ -match "@([^:]+):(\d+)") {
+
+            $ip   = $matches[1]
+            $port = $matches[2]
+            $ipPort = "$ip`:$port"
+
+            if ($allowed -contains $ipPort) {
+                $result += $_
+            }
         }
     }
 }
 
-$result = $result | Sort-Object -Unique
-$result | Set-Content $output -Encoding UTF8
+$result | Set-Content $outputFile -Encoding UTF8
 
-Write-Host "Final whitelist count: $($result.Count)"
+Write-Host "Filtered servers: $($result.Count)"
