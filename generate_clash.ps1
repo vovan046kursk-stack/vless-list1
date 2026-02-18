@@ -8,6 +8,7 @@ if (!(Test-Path $input)) {
 
 $proxyNames = @()
 $proxyYaml = ""
+$counter = 1
 
 foreach ($line in Get-Content $input) {
 
@@ -17,7 +18,7 @@ foreach ($line in Get-Content $input) {
         $server = $matches[2]
         $port = $matches[3]
 
-        $name = "$server-$port"
+        $name = "$server-$port-$counter"
         $proxyNames += $name
 
 $proxyYaml += @"
@@ -30,6 +31,8 @@ $proxyYaml += @"
     tls: true
 
 "@
+
+        $counter++
     }
 }
 
@@ -59,4 +62,4 @@ rules:
 
 $config | Set-Content $output -Encoding UTF8
 
-Write-Host "Clash config generated correctly"
+Write-Host "Clash config generated successfully"
