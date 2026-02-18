@@ -1,33 +1,26 @@
-# ==============================
-# GENERATE CLASH CONFIG
-# ==============================
+$input = "filtered_vless.txt"
+$output = "clash_pool.yaml"
 
-$ErrorActionPreference = "Stop"
-
-$inputFile = "filtered_vless.txt"
-$outputFile = "clash_pool.yaml"
-
-if (!(Test-Path $inputFile)) {
+if (!(Test-Path $input)) {
     Write-Host "filtered_vless.txt not found"
     exit 1
 }
 
-$lines = Get-Content $inputFile
+$proxyNames = @()
+$proxyYaml = ""
 
-$proxies = @()
+foreach ($line in Get-Content $input) {
 
-foreach ($line in $lines) {
-
-    if ($line -match "^vless://([^@]+)@([\d\.]+):(\d+)\?(.*)$") {
+    if ($line -match "^vless://([^@]+)@([\d\.]+):(\d+)") {
 
         $uuid = $matches[1]
         $server = $matches[2]
         $port = $matches[3]
-        $params = $matches[4]
 
         $name = "$server-$port"
+        $proxyNames += $name
 
-        $proxies += @"
+$proxyYaml += @"
   - name: "$name"
     type: vless
     server: $server
@@ -35,12 +28,15 @@ foreach ($line in $lines) {
     uuid: $uuid
     network: tcp
     tls: true
-    flow: xtls-rprx-vision
+
 "@
     }
 }
 
-$proxyBlock = $proxies -join "`n"
+if ($proxyNames.Count -eq 0) {
+    Write-Host "No proxies parsed"
+    exit 1
+}
 
 $config = @"
 mixed-port: 7890
@@ -49,50 +45,18 @@ mode: rule
 log-level: info
 
 proxies:
-$proxyBlock
-
+$proxyYaml
 proxy-groups:
-  - name: Auto
-    type: url-test
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    proxies:
-$(($proxies | ForEach-Object { ($_ -split '"')[1] } | ForEach-Object { "      - $_" }) -join "`n")
-
-  - name: Fallback
-    type: fallback
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    proxies:
-$(($proxies | ForEach-Object { ($_ -split '"')[1] } | ForEach-Object { "      - $_" }) -join "`n")
-
   - name: Proxy
     type: select
     proxies:
-      - Auto
-      - Fallback
-$(($proxies | ForEach-Object { ($_ -split '"')[1] } | ForEach-Object { "      - $_" }) -join "`n")
+$(($proxyNames | ForEach-Object { "      - $_" }) -join "`n")
+      - DIRECT
 
 rules:
-  # Cloudflare safe
-  - DOMAIN-KEYWORD,yaplakal,DIRECT
-  - DOMAIN-SUFFIX,yaplakal.com,DIRECT
-
-  # Through proxy
-  - DOMAIN-SUFFIX,nnmclub.to,Proxy
-  - DOMAIN-SUFFIX,vipdrive.net,Proxy
-  - DOMAIN-SUFFIX,4pda.to,Proxy
-  - DOMAIN-SUFFIX,filmix.my,Proxy
-
-  # Local networks
-  - IP-CIDR,127.0.0.0/8,DIRECT
-  - IP-CIDR,10.0.0.0/8,DIRECT
-  - IP-CIDR,172.16.0.0/12,DIRECT
-  - IP-CIDR,192.168.0.0/16,DIRECT
-
-  - MATCH,DIRECT
+  - MATCH,Proxy
 "@
 
-$config | Set-Content $outputFile -Encoding UTF8
+$config | Set-Content $output -Encoding UTF8
 
-Write-Host "Clash config generated"
+Write-Host "Clash config generated correctly"
