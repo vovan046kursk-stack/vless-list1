@@ -3,7 +3,7 @@ name: Auto Update VLESS & Clash
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"   # каждые 30 минут
+    - cron: "*/30 * * * *"
 
 jobs:
   build:
@@ -15,9 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Setup PowerShell
-        uses: actions/setup-powershell@v2
 
       - name: Run filter script
         run: pwsh ./filter.ps1
