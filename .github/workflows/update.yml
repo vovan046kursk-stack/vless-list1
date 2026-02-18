@@ -15,54 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ---------- DOWNLOAD ----------
       - name: Download sources
         run: |
           curl -L -o src1.txt https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt
           curl -L -o src2.txt https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt
           curl -L -o src3.txt https://raw.githubusercontent.com/vsevjik/OBSpiskov/refs/heads/main/wwh_old
-
           cat src1.txt src2.txt src3.txt > all.txt
           grep "^vless://" all.txt > filtered_vless.txt
 
-          if [ ! -s filtered_vless.txt ]; then
-            echo "No VLESS found"
-            exit 1
-          fi
-
-      # ---------- INSTALL ----------
-      - name: Install subconverter
-        run: |
-          wget https://github.com/tindy2013/subconverter/releases/latest/download/subconverter_linux64.tar.gz
-          tar -xzf subconverter_linux64.tar.gz
-          chmod +x subconverter/subconverter
-
-      # ---------- START SERVER ----------
-      - name: Start subconverter server
-        run: |
-          ./subconverter/subconverter &
-          sleep 5
-
-      # ---------- CONVERT ----------
       - name: Generate Clash YAML
-        run: |
-          curl -X POST \
-          -F "target=clash" \
-          -F "url=@filtered_vless.txt" \
-          http://127.0.0.1:25500/sub \
-          -o clash_pool.yaml
+        shell: pwsh
+        run: ./generate_clash.ps1
 
-      # ---------- VALIDATE ----------
-      - name: Validate YAML
-        run: |
-          if grep -q "proxies:" clash_pool.yaml; then
-            echo "YAML OK"
-          else
-            echo "Invalid YAML"
-            exit 1
-          fi
-
-      # ---------- COMMIT ----------
       - name: Commit changes
         run: |
           git config --global user.name "github-actions"
