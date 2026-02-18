@@ -1,5 +1,10 @@
-# ===== INPUT / OUTPUT =====
-$inputFile  = "filtered_vless.txt"
+# ==============================
+# GENERATE CLASH CONFIG
+# ==============================
+
+$ErrorActionPreference = "Stop"
+
+$inputFile = "filtered_vless.txt"
 $outputFile = "clash_pool.yaml"
 
 if (!(Test-Path $inputFile)) {
@@ -7,170 +12,79 @@ if (!(Test-Path $inputFile)) {
     exit 1
 }
 
-# ===== PARSE VLESS =====
+$lines = Get-Content $inputFile
+
 $proxies = @()
-$proxyNames = @()
 
-foreach ($line in Get-Content $inputFile) {
+foreach ($line in $lines) {
 
-    if ($line -notmatch "^vless://") { continue }
+    if ($line -match "^vless://([^@]+)@([\d\.]+):(\d+)\?(.*)$") {
 
-    if ($line -match "vless://([^@]+)@([^:]+):(\d+)\?(.*)#?(.*)") {
-
-        $uuid  = $matches[1]
+        $uuid = $matches[1]
         $server = $matches[2]
-        $port  = $matches[3]
+        $port = $matches[3]
         $params = $matches[4]
 
         $name = "$server-$port"
-        $proxyNames += $name
 
-        # defaults
-        $tls = "false"
-        $servername = ""
-        $flow = ""
-        $publicKey = ""
-        $shortId = ""
-        $network = "tcp"
-
-        if ($params -match "security=tls") { $tls = "true" }
-        if ($params -match "security=reality") { $tls = "true" }
-
-        if ($params -match "sni=([^&]+)") {
-            $servername = $matches[1]
-        }
-
-        if ($params -match "flow=([^&]+)") {
-            $flow = $matches[1]
-        }
-
-        if ($params -match "pbk=([^&]+)") {
-            $publicKey = $matches[1]
-        }
-
-        if ($params -match "sid=([^&]+)") {
-            $shortId = $matches[1]
-        }
-
-        if ($params -match "type=ws") {
-            $network = "ws"
-        }
-
-        $proxyBlock = @"
+        $proxies += @"
   - name: "$name"
     type: vless
     server: $server
     port: $port
     uuid: $uuid
-    network: $network
-    tls: $tls
+    network: tcp
+    tls: true
+    flow: xtls-rprx-vision
 "@
-
-        if ($servername -ne "") {
-            $proxyBlock += "    servername: $servername`n"
-        }
-
-        if ($flow -ne "") {
-            $proxyBlock += "    flow: $flow`n"
-        }
-
-        if ($publicKey -ne "") {
-            $proxyBlock += @"
-    reality-opts:
-      public-key: $publicKey
-      short-id: $shortId
-"@
-        }
-
-        $proxies += $proxyBlock
     }
 }
 
-if ($proxyNames.Count -eq 0) {
-    Write-Host "No proxies parsed"
-    exit 1
-}
+$proxyBlock = $proxies -join "`n"
 
-# ===== BUILD YAML =====
-
-$yaml = @"
+$config = @"
 mixed-port: 7890
 allow-lan: false
 mode: rule
 log-level: info
 
 proxies:
-"@
+$proxyBlock
 
-foreach ($p in $proxies) {
-    $yaml += "$p`n"
-}
-
-# ===== PROXY GROUPS =====
-
-$yaml += @"
 proxy-groups:
-
   - name: Auto
     type: url-test
     url: https://www.gstatic.com/generate_204
     interval: 300
     proxies:
-"@
-
-foreach ($n in $proxyNames) {
-    $yaml += "      - `"$n`"`n"
-}
-
-$yaml += @"
+$(($proxies | ForEach-Object { ($_ -split '"')[1] } | ForEach-Object { "      - $_" }) -join "`n")
 
   - name: Fallback
     type: fallback
     url: https://www.gstatic.com/generate_204
     interval: 300
     proxies:
-"@
-
-foreach ($n in $proxyNames) {
-    $yaml += "      - `"$n`"`n"
-}
-
-$yaml += @"
-
-  - name: Manual
-    type: select
-    proxies:
-"@
-
-foreach ($n in $proxyNames) {
-    $yaml += "      - `"$n`"`n"
-}
-
-$yaml += @"
-      - DIRECT
+$(($proxies | ForEach-Object { ($_ -split '"')[1] } | ForEach-Object { "      - $_" }) -join "`n")
 
   - name: Proxy
     type: select
     proxies:
       - Auto
       - Fallback
-      - Manual
-      - DIRECT
+$(($proxies | ForEach-Object { ($_ -split '"')[1] } | ForEach-Object { "      - $_" }) -join "`n")
 
 rules:
-
   # Cloudflare safe
   - DOMAIN-KEYWORD,yaplakal,DIRECT
   - DOMAIN-SUFFIX,yaplakal.com,DIRECT
-  - DOMAIN-SUFFIX,yaplakal.net,DIRECT
 
-  # proxy sites
+  # Through proxy
   - DOMAIN-SUFFIX,nnmclub.to,Proxy
   - DOMAIN-SUFFIX,vipdrive.net,Proxy
   - DOMAIN-SUFFIX,4pda.to,Proxy
   - DOMAIN-SUFFIX,filmix.my,Proxy
 
-  # local networks
+  # Local networks
   - IP-CIDR,127.0.0.0/8,DIRECT
   - IP-CIDR,10.0.0.0/8,DIRECT
   - IP-CIDR,172.16.0.0/12,DIRECT
@@ -179,7 +93,6 @@ rules:
   - MATCH,DIRECT
 "@
 
-# ===== SAVE =====
-$yaml | Set-Content $outputFile -Encoding UTF8
+$config | Set-Content $outputFile -Encoding UTF8
 
-Write-Host "clash_pool.yaml generated successfully"
+Write-Host "Clash config generated"
