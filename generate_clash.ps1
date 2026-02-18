@@ -13,53 +13,42 @@ if ($vlessLines.Count -eq 0) {
     exit 1
 }
 
-$proxiesYaml = ""
+$proxies = @()
 $proxyNames = @()
-
-$index = 1
 
 foreach ($line in $vlessLines) {
 
     try {
-        $uriPart = $line.Split("@")[1]
-        $serverPort = $uriPart.Split("?")[0]
+        $uuid = ($line -split "vless://")[1].Split("@")[0]
+        $rest = $line.Split("@")[1]
+        $serverPort = $rest.Split("?")[0]
+
         $server = $serverPort.Split(":")[0]
         $port = $serverPort.Split(":")[1]
 
-        $uuid = ($line -split "vless://")[1].Split("@")[0]
+        $name = "$server-$port"
 
-        $name = "$server-$port-$index"
+        if ($proxyNames -contains $name) { continue }
+
         $proxyNames += $name
 
-        $proxiesYaml += @"
-  - name: "$name"
-    type: vless
-    server: $server
-    port: $port
-    uuid: $uuid
-    network: tcp
-    tls: true
-    udp: true
-"@
-
-        $index++
+        $proxies += @{
+            name = $name
+            type = "vless"
+            server = $server
+            port = [int]$port
+            uuid = $uuid
+            network = "tcp"
+            tls = $true
+            udp = $true
+        }
 
     } catch {
         continue
     }
 }
 
-# Удаляем дубликаты
-$proxyNames = $proxyNames | Sort-Object -Unique
-
-# Формируем список для YAML
-$autoList = ""
-$proxyList = ""
-
-foreach ($p in $proxyNames) {
-    $autoList += "      - $p`n"
-    $proxyList += "      - $p`n"
-}
+# Формируем YAML вручную (без ошибок отступов)
 
 $yaml = @"
 mixed-port: 7890
@@ -76,8 +65,23 @@ dns:
     - 8.8.8.8
 
 proxies:
-$proxiesYaml
+"@
 
+foreach ($p in $proxies) {
+$yaml += @"
+  - name: "$($p.name)"
+    type: vless
+    server: $($p.server)
+    port: $($p.port)
+    uuid: $($p.uuid)
+    network: tcp
+    tls: true
+    udp: true
+
+"@
+}
+
+$yaml += @"
 proxy-groups:
   - name: Auto
     type: url-test
@@ -85,14 +89,26 @@ proxy-groups:
     interval: 300
     tolerance: 50
     proxies:
-$autoList
+"@
+
+foreach ($name in $proxyNames) {
+    $yaml += "      - $name`n"
+}
+
+$yaml += @"
 
   - name: Proxy
     type: select
     proxies:
       - Auto
       - DIRECT
-$proxyList
+"@
+
+foreach ($name in $proxyNames) {
+    $yaml += "      - $name`n"
+}
+
+$yaml += @"
 
 rules:
   - DOMAIN-KEYWORD,yaplakal,DIRECT
