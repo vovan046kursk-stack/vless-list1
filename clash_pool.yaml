@@ -12,6 +12,21 @@ dns:
     - 8.8.8.8
 
 proxies:
+  - name: "51.250.26.75-443"
+    type: vless
+    server: 51.250.26.75
+    port: 443
+    uuid: b8a44195-0860-4312-a0df-dae178585a48
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: eh.vk.com
+    reality-opts:
+      public-key: 7IOtSp0-n2_uNS5nMO9ywZbn2HibMRGy0KbLad3szXc
+      short-id: b8cf9578640a9edf
+    client-fingerprint: chrome
+
   - name: "87.242.103.184-443"
     type: vless
     server: 87.242.103.184
@@ -42,36 +57,6 @@ proxies:
       short-id: cd57a927f6b72d81
     client-fingerprint: chrome
 
-  - name: "109.120.190.78-443"
-    type: vless
-    server: 109.120.190.78
-    port: 443
-    uuid: 01896982-f9df-4bd5-8f32-914253db2e61
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.com
-    reality-opts:
-      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 4a3ad88ff867a295
-    client-fingerprint: chrome
-
-  - name: "95.163.211.13-443"
-    type: vless
-    server: 95.163.211.13
-    port: 443
-    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: max.ru
-    reality-opts:
-      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: cd57a927f6b72d81
-    client-fingerprint: chrome
-
   - name: "95.163.210.173-443"
     type: vless
     server: 95.163.210.173
@@ -84,7 +69,37 @@ proxies:
     servername: max.ru
     reality-opts:
       public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: c8597fb67d55d9c4
+      short-id: 17f0f0e38f01af5a
+    client-fingerprint: chrome
+
+  - name: "109.120.191.46-443"
+    type: vless
+    server: 109.120.191.46
+    port: 443
+    uuid: f56d3d08-ad0b-4f90-8dfc-21eeaecf075b
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.com
+    reality-opts:
+      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+      short-id: 3f200574d011010f
+    client-fingerprint: chrome
+
+  - name: "109.120.190.78-443"
+    type: vless
+    server: 109.120.190.78
+    port: 443
+    uuid: f56d3d08-ad0b-4f90-8dfc-21eeaecf075b
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.com
+    reality-opts:
+      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+      short-id: e55fd8f9c9a9a0ca
     client-fingerprint: chrome
 
   - name: "217.16.27.217-443"
@@ -102,19 +117,19 @@ proxies:
       short-id: 95ec618532fa065e
     client-fingerprint: chrome
 
-  - name: "109.120.191.46-443"
+  - name: "95.163.211.13-443"
     type: vless
-    server: 109.120.191.46
+    server: 95.163.211.13
     port: 443
-    uuid: 01896982-f9df-4bd5-8f32-914253db2e61
+    uuid: f56d3d08-ad0b-4f90-8dfc-21eeaecf075b
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: m.vk.com
+    servername: max.ru
     reality-opts:
       public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: a76ea384b29a4f79
+      short-id: cd57a927f6b72d81
     client-fingerprint: chrome
 
   - name: "85.239.47.127-443"
@@ -130,6 +145,36 @@ proxies:
     reality-opts:
       public-key: C3hc32Cknec2shasKJIH2DYVb7Fyu64RF9v71L3ipEg
       short-id: 9c2378562188c3cb
+    client-fingerprint: chrome
+
+  - name: "62.113.42.161-443"
+    type: vless
+    server: 62.113.42.161
+    port: 443
+    uuid: a3000753-f543-4412-9c6c-f99af44d7363
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: i.oneme.ru
+    reality-opts:
+      public-key: P_3WYkET4QLGApLfFirNr4TmPHZkawxJ_TAPIixoBFs
+      short-id: 
+    client-fingerprint: chrome
+
+  - name: "62.113.42.161-4443"
+    type: vless
+    server: 62.113.42.161
+    port: 4443
+    uuid: a3000753-f543-4412-9c6c-f99af44d7363
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: i.oneme.ru
+    reality-opts:
+      public-key: P_3WYkET4QLGApLfFirNr4TmPHZkawxJ_TAPIixoBFs
+      short-id: 
     client-fingerprint: chrome
 
   - name: "144.31.128.129-443"
@@ -171,9 +216,24 @@ proxies:
       short-id: 4fc5e35bdb69d36b
     client-fingerprint: chrome
 
-  - name: "152.53.66.46-443"
+  - name: "91.196.35.96-8080"
     type: vless
-    server: 152.53.66.46
+    server: 91.196.35.96
+    port: 8080
+    uuid: f3c95705-8a7b-4566-9086-d19c2f34b675
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: help.max.ru
+    reality-opts:
+      public-key: qGXclTFIbiEJ6sxs5N0V9p91cSdQHElwNxTMS07dM2A
+      short-id: f1
+    client-fingerprint: chrome
+
+  - name: "152.53.46.200-443"
+    type: vless
+    server: 152.53.46.200
     port: 443
     uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
     network: tcp
@@ -184,21 +244,6 @@ proxies:
     reality-opts:
       public-key: ca5sfJNcjkh3oNt51hRexXbGWgITAqCprGSU-YKCJBA
       short-id: 8dc4fccb2bcfc99d
-    client-fingerprint: chrome
-
-  - name: "152.53.46.3-443"
-    type: vless
-    server: 152.53.46.3
-    port: 443
-    uuid: ccedb1b1-35f3-46d1-a85a-c699eef5f3e1
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: au1.scroogethebest.com
-    reality-opts:
-      public-key: wgoLhL4pRP0y6fu6He4qW_ElohCM_ANWJF3HEoUhNz4
-      short-id: 9c2378562188c3cb
     client-fingerprint: chrome
 
   - name: "45.15.178.124-80"
@@ -225,38 +270,44 @@ proxies:
       short-id: 99
     client-fingerprint: chrome
 
-  - name: "172.64.155.209-2096"
+  - name: "172.66.44.211-2096"
     type: vless
-    server: 172.64.155.209
+    server: 172.66.44.211
     port: 2096
     uuid: 686c62d9-17a7-43c9-a40a-f6747df60a9f
     network: tcp
     udp: true
     tls: true
 
-  - name: "51.250.65.209-443"
+  - name: "95.163.209.21-443"
     type: vless
-    server: 51.250.65.209
+    server: 95.163.209.21
+    port: 443
+    uuid: 8664a37d-40c9-47f0-8619-d9199651be2c
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: api-maps.yandex.ru
+    reality-opts:
+      public-key: 5bGFIWSo4vlrd9Tv1yFcpdpSjrjYYN20SOWHYfighHc
+      short-id: abde0809
+    client-fingerprint: chrome
+
+  - name: "84.252.130.60-443"
+    type: vless
+    server: 84.252.130.60
     port: 443
     uuid: 01896982-f9df-4bd5-8f32-914253db2e61
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: ads.x5.ru
+    servername: sun6-21.userapi.com
     reality-opts:
       public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 6354585c37827955
+      short-id: 7426b0c03ef009dc
     client-fingerprint: chrome
-
-  - name: "172.66.47.45-2096"
-    type: vless
-    server: 172.66.47.45
-    port: 2096
-    uuid: 686c62d9-17a7-43c9-a40a-f6747df60a9f
-    network: tcp
-    udp: true
-    tls: true
 
   - name: "146.185.208.206-443"
     type: vless
@@ -277,7 +328,7 @@ proxies:
     type: vless
     server: 51.250.87.167
     port: 443
-    uuid: f56d3d08-ad0b-4f90-8dfc-21eeaecf075b
+    uuid: 01896982-f9df-4bd5-8f32-914253db2e61
     network: tcp
     udp: true
     tls: true
@@ -288,24 +339,9 @@ proxies:
       short-id: 95ec618532fa065e
     client-fingerprint: chrome
 
-  - name: "146.185.208.206-4443"
+  - name: "51.250.4.119-443"
     type: vless
-    server: 146.185.208.206
-    port: 4443
-    uuid: 1dd94d15-8f73-4152-814b-d74cd11c54c9
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: ads.x5.ru
-    reality-opts:
-      public-key: do22ES2nDjO0EggET4H9Gf8_tEY7PwZv76zVXPrDojQ
-      short-id: 5f22
-    client-fingerprint: chrome
-
-  - name: "51.250.86.102-443"
-    type: vless
-    server: 51.250.86.102
+    server: 51.250.4.119
     port: 443
     uuid: 01896982-f9df-4bd5-8f32-914253db2e61
     network: tcp
@@ -315,37 +351,7 @@ proxies:
     servername: api-maps.yandex.ru
     reality-opts:
       public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 87cc0414902bee2d
-    client-fingerprint: chrome
-
-  - name: "95.163.209.21-443"
-    type: vless
-    server: 95.163.209.21
-    port: 443
-    uuid: 8664a37d-40c9-47f0-8619-d9199651be2c
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: api-maps.yandex.ru
-    reality-opts:
-      public-key: 5bGFIWSo4vlrd9Tv1yFcpdpSjrjYYN20SOWHYfighHc
-      short-id: abde0809
-    client-fingerprint: chrome
-
-  - name: "82.22.174.150-50855"
-    type: vless
-    server: 82.22.174.150
-    port: 50855
-    uuid: 853d23ee-38c6-41bb-a51c-8aea6a25b0bd
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: ea.com
-    reality-opts:
-      public-key: 3iQ5QX52pIjouDXoPSfrQRvpqaOTqG26IJLctU7McAY
-      short-id: 02
+      short-id: 4b523a98e1bbd15b
     client-fingerprint: chrome
 
   - name: "146.185.208.206-8443"
@@ -363,49 +369,28 @@ proxies:
       short-id: 5f22
     client-fingerprint: chrome
 
-  - name: "84.252.130.60-443"
+  - name: "104.17.147.22-2096"
     type: vless
-    server: 84.252.130.60
-    port: 443
-    uuid: f56d3d08-ad0b-4f90-8dfc-21eeaecf075b
+    server: 104.17.147.22
+    port: 2096
+    uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
     network: tcp
     udp: true
     tls: true
-    flow: xtls-rprx-vision
-    servername: sun6-21.userapi.com
-    reality-opts:
-      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 4b523a98e1bbd15b
-    client-fingerprint: chrome
 
-  - name: "51.250.0.147-443"
+  - name: "146.185.208.206-4443"
     type: vless
-    server: 51.250.0.147
-    port: 443
-    uuid: f56d3d08-ad0b-4f90-8dfc-21eeaecf075b
+    server: 146.185.208.206
+    port: 4443
+    uuid: 1dd94d15-8f73-4152-814b-d74cd11c54c9
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
     servername: ads.x5.ru
     reality-opts:
-      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 6354585c37827955
-    client-fingerprint: chrome
-
-  - name: "38.244.215.124-443"
-    type: vless
-    server: 38.244.215.124
-    port: 443
-    uuid: 28f9da30-cd81-4726-86a9-d2e17b14decc
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: google.com
-    reality-opts:
-      public-key: teH8elrVppRluj9CeSno57ARzAUKRLCu6X9f8yvxvhQ
-      short-id: 0ad4430e2c
+      public-key: do22ES2nDjO0EggET4H9Gf8_tEY7PwZv76zVXPrDojQ
+      short-id: 5f22
     client-fingerprint: chrome
 
   - name: "95.163.182.178-443"
@@ -423,24 +408,24 @@ proxies:
       short-id: aad92345
     client-fingerprint: chrome
 
-  - name: "51.250.83.255-443"
+  - name: "95.163.213.86-443"
     type: vless
-    server: 51.250.83.255
+    server: 95.163.213.86
     port: 443
-    uuid: 01896982-f9df-4bd5-8f32-914253db2e61
+    uuid: 26590351-6442-4bad-a616-953f7037a147
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: ads.x5.ru
+    servername: api-maps.yandex.ru
     reality-opts:
-      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 33554379411b3219
+      public-key: 5bGFIWSo4vlrd9Tv1yFcpdpSjrjYYN20SOWHYfighHc
+      short-id: e5f67890
     client-fingerprint: chrome
 
-  - name: "51.250.4.119-443"
+  - name: "51.250.0.147-443"
     type: vless
-    server: 51.250.4.119
+    server: 51.250.0.147
     port: 443
     uuid: 01896982-f9df-4bd5-8f32-914253db2e61
     network: tcp
@@ -450,22 +435,7 @@ proxies:
     servername: api-maps.yandex.ru
     reality-opts:
       public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 43df3983229a1c73
-    client-fingerprint: chrome
-
-  - name: "64.188.104.168-40721"
-    type: vless
-    server: 64.188.104.168
-    port: 40721
-    uuid: bf3e8944-8d26-47de-8748-b9aa74cce974
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yahoo.com
-    reality-opts:
-      public-key: TUZgwzcTvoROSbgnqMh3WorXVMxQNIF2zsEM39FQbyk
-      short-id: df8611c07d
+      short-id: f85b0cdd7d20c84c
     client-fingerprint: chrome
 
   - name: "144.31.221.8-443"
@@ -483,11 +453,29 @@ proxies:
       short-id: 
     client-fingerprint: chrome
 
+  - name: "172.66.47.45-2096"
+    type: vless
+    server: 172.66.47.45
+    port: 2096
+    uuid: 686c62d9-17a7-43c9-a40a-f6747df60a9f
+    network: tcp
+    udp: true
+    tls: true
+
   - name: "109.120.177.193-443"
     type: vless
     server: 109.120.177.193
     port: 443
     uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+    network: tcp
+    udp: true
+    tls: true
+
+  - name: "104.17.148.22-2096"
+    type: vless
+    server: 104.17.148.22
+    port: 2096
+    uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
     network: tcp
     udp: true
     tls: true
@@ -501,28 +489,19 @@ proxies:
     udp: true
     tls: true
 
-  - name: "84.201.20.217-443"
+  - name: "51.250.83.255-443"
     type: vless
-    server: 84.201.20.217
+    server: 51.250.83.255
     port: 443
-    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
-    network: tcp
-    udp: true
-    tls: true
-
-  - name: "178.17.50.66-8443"
-    type: vless
-    server: 178.17.50.66
-    port: 8443
-    uuid: 8e1d0e1d-65f7-454a-862b-90a75e1c27b7
+    uuid: 01896982-f9df-4bd5-8f32-914253db2e61
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: yandex.net
+    servername: ads.x5.ru
     reality-opts:
-      public-key: GzQr6fDhigtRAr0n2Y7Nk3snhdytYyOvaYo9zYe1Xn4
-      short-id: b3a1cc510a2001c6
+      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+      short-id: e55fd8f9c9a9a0ca
     client-fingerprint: chrome
 
   - name: "212.192.246.57-2087"
@@ -540,35 +519,50 @@ proxies:
       short-id: e004
     client-fingerprint: chrome
 
-  - name: "104.17.147.22-2096"
+  - name: "144.31.17.116-443"
     type: vless
-    server: 104.17.147.22
+    server: 144.31.17.116
+    port: 443
+    uuid: 54ef6124-3a61-4a44-9901-78fadc6c59d9
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: sun6-22.userapi.com
+    reality-opts:
+      public-key: iAWzXE2vetDOtZePY7-Y64p5AY7h35eE3YnVSZM8LUw
+      short-id: 760f7a4c46859978
+    client-fingerprint: chrome
+
+  - name: "51.250.65.209-443"
+    type: vless
+    server: 51.250.65.209
+    port: 443
+    uuid: 01896982-f9df-4bd5-8f32-914253db2e61
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: ads.x5.ru
+    reality-opts:
+      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+      short-id: e55fd8f9c9a9a0ca
+    client-fingerprint: chrome
+
+  - name: "172.64.158.2-2096"
+    type: vless
+    server: 172.64.158.2
     port: 2096
     uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
     network: tcp
     udp: true
     tls: true
 
-  - name: "195.201.222.173-9090"
+  - name: "172.64.155.209-2096"
     type: vless
-    server: 195.201.222.173
-    port: 9090
-    uuid: c583e7f8-9807-43b6-dac7-ca7ae5623546
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: tgju.org
-    reality-opts:
-      public-key: tQwZ96ULPZim00dZUVBxCl1wRkVjULRVbho7_Z2FQFw
-      short-id: 57d56055
-    client-fingerprint: chrome
-
-  - name: "162.159.36.20-2053"
-    type: vless
-    server: 162.159.36.20
-    port: 2053
-    uuid: e5f8a9f6-f164-479b-b3b5-b90f213c7145
+    server: 172.64.155.209
+    port: 2096
+    uuid: 686c62d9-17a7-43c9-a40a-f6747df60a9f
     network: tcp
     udp: true
     tls: true
@@ -591,20 +585,23 @@ proxies:
     udp: true
     tls: true
 
-  - name: "107.149.184.209-20501"
+  - name: "108.162.193.91-2096"
     type: vless
-    server: 107.149.184.209
-    port: 20501
-    uuid: 8a9c07c4-05e3-419c-875c-16893c28f1d8
+    server: 108.162.193.91
+    port: 2096
+    uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
     network: tcp
     udp: true
     tls: true
-    flow: xtls-rprx-vision
-    servername: img14.360buyimg.com
-    reality-opts:
-      public-key: GwBhOiy3pLa73zga-wmG07xRfiI71_A9VDi-DiHeBWk
-      short-id: 9153
-    client-fingerprint: chrome
+
+  - name: "108.162.194.176-2096"
+    type: vless
+    server: 108.162.194.176
+    port: 2096
+    uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
+    network: tcp
+    udp: true
+    tls: true
 
   - name: "45.145.41.35-443"
     type: vless
@@ -621,33 +618,18 @@ proxies:
       short-id: 9eb31eb7572c0882
     client-fingerprint: chrome
 
-  - name: "95.163.213.86-443"
+  - name: "84.201.20.217-443"
     type: vless
-    server: 95.163.213.86
+    server: 84.201.20.217
     port: 443
-    uuid: 26590351-6442-4bad-a616-953f7037a147
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: api-maps.yandex.ru
-    reality-opts:
-      public-key: 5bGFIWSo4vlrd9Tv1yFcpdpSjrjYYN20SOWHYfighHc
-      short-id: e5f67890
-    client-fingerprint: chrome
-
-  - name: "108.162.193.91-2096"
-    type: vless
-    server: 108.162.193.91
-    port: 2096
-    uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
+    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
     network: tcp
     udp: true
     tls: true
 
-  - name: "172.64.35.45-2096"
+  - name: "108.162.195.45-2096"
     type: vless
-    server: 172.64.35.45
+    server: 108.162.195.45
     port: 2096
     uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
     network: tcp
@@ -663,24 +645,9 @@ proxies:
     udp: true
     tls: true
 
-  - name: "144.31.17.116-443"
+  - name: "5.254.85.152-443"
     type: vless
-    server: 144.31.17.116
-    port: 443
-    uuid: 54ef6124-3a61-4a44-9901-78fadc6c59d9
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: sun6-22.userapi.com
-    reality-opts:
-      public-key: iAWzXE2vetDOtZePY7-Y64p5AY7h35eE3YnVSZM8LUw
-      short-id: 760f7a4c46859978
-    client-fingerprint: chrome
-
-  - name: "5.254.85.151-443"
-    type: vless
-    server: 5.254.85.151
+    server: 5.254.85.152
     port: 443
     uuid: ccedb1b1-35f3-46d1-a85a-c699eef5f3e1
     network: tcp
@@ -693,15 +660,6 @@ proxies:
       short-id: 4fa44664f6a566d3
     client-fingerprint: chrome
 
-  - name: "172.64.34.176-2096"
-    type: vless
-    server: 172.64.34.176
-    port: 2096
-    uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
-    network: tcp
-    udp: true
-    tls: true
-
   - name: "108.162.193.217-2096"
     type: vless
     server: 108.162.193.217
@@ -711,19 +669,34 @@ proxies:
     udp: true
     tls: true
 
-  - name: "217.154.194.55-443"
+  - name: "82.22.174.150-50855"
     type: vless
-    server: 217.154.194.55
-    port: 443
-    uuid: f0b15f64-db59-438c-b1b6-f1b83db52240
+    server: 82.22.174.150
+    port: 50855
+    uuid: 853d23ee-38c6-41bb-a51c-8aea6a25b0bd
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: azure.com
+    servername: ea.com
     reality-opts:
-      public-key: ckRcueERkPqqjZABwxqni_J_Nbb70Q6k5fEEUAjoImw
-      short-id: 
+      public-key: 3iQ5QX52pIjouDXoPSfrQRvpqaOTqG26IJLctU7McAY
+      short-id: 02
+    client-fingerprint: chrome
+
+  - name: "193.178.226.184-443"
+    type: vless
+    server: 193.178.226.184
+    port: 443
+    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: nl.jojack.ru
+    reality-opts:
+      public-key: sxyxV0_y1o09gKJBL9AJJyRSEg6MiYK0j-kb5unzHh4
+      short-id: 6bb3c7f9f97b45b8
     client-fingerprint: chrome
 
   - name: "185.254.98.164-443"
@@ -740,15 +713,6 @@ proxies:
       public-key: ca5sfJNcjkh3oNt51hRexXbGWgITAqCprGSU-YKCJBA
       short-id: 4daa022e84f8edf2
     client-fingerprint: chrome
-
-  - name: "104.21.227.134-2096"
-    type: vless
-    server: 104.21.227.134
-    port: 2096
-    uuid: 686c62d9-17a7-43c9-a40a-f6747df60a9f
-    network: tcp
-    udp: true
-    tls: true
 
   - name: "45.130.125.160-2083"
     type: vless
@@ -768,18 +732,9 @@ proxies:
     udp: true
     tls: true
 
-  - name: "173.245.58.75-2096"
+  - name: "172.64.35.45-2096"
     type: vless
-    server: 173.245.58.75
-    port: 2096
-    uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
-    network: tcp
-    udp: true
-    tls: true
-
-  - name: "108.162.194.176-2096"
-    type: vless
-    server: 108.162.194.176
+    server: 172.64.35.45
     port: 2096
     uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
     network: tcp
@@ -810,6 +765,30 @@ proxies:
     udp: true
     tls: true
 
+  - name: "51.250.86.102-443"
+    type: vless
+    server: 51.250.86.102
+    port: 443
+    uuid: c4d9855b-7eac-44ab-a8a5-d811f371df1b
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: api-maps.yandex.ru
+    reality-opts:
+      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+      short-id: 048fe5c8be4bb687
+    client-fingerprint: chrome
+
+  - name: "172.64.32.75-2096"
+    type: vless
+    server: 172.64.32.75
+    port: 2096
+    uuid: 3f0f36f5-f091-45c5-88c9-4bcc545b922c
+    network: tcp
+    udp: true
+    tls: true
+
   - name: "144.31.74.41-8443"
     type: vless
     server: 144.31.74.41
@@ -825,19 +804,28 @@ proxies:
       short-id: 2916
     client-fingerprint: chrome
 
-  - name: "89.106.89.112-2053"
+  - name: "194.9.6.32-48484"
     type: vless
-    server: 89.106.89.112
-    port: 2053
-    uuid: 07cd9dbe-21ac-4871-817d-c772687e4b7c
+    server: 194.9.6.32
+    port: 48484
+    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+    network: tcp
+    udp: true
+    tls: true
+
+  - name: "144.31.25.130-4443"
+    type: vless
+    server: 144.31.25.130
+    port: 4443
+    uuid: a3000753-f543-4412-9c6c-f99af44d7363
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: www.ibm.com
+    servername: github.com
     reality-opts:
-      public-key: WckOSneVajAzpH0sZSAFAWPnmwuuEXKZrTICNj5_hHU
-      short-id: 4a5b6c7d
+      public-key: slghgDGs-f45wgMe-lHELEUyvL2zHyH6OaVh2bIbLkY
+      short-id: 
     client-fingerprint: chrome
 
   - name: "5.188.140.115-1488"
@@ -870,10 +858,10 @@ proxies:
       short-id: 
     client-fingerprint: chrome
 
-  - name: "109.120.191.92-1488"
+  - name: "5.188.140.55-443"
     type: vless
-    server: 109.120.191.92
-    port: 1488
+    server: 5.188.140.55
+    port: 443
     uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
     network: tcp
     udp: true
@@ -885,10 +873,10 @@ proxies:
       short-id: 
     client-fingerprint: chrome
 
-  - name: "5.188.140.55-443"
+  - name: "109.120.191.92-1488"
     type: vless
-    server: 5.188.140.55
-    port: 443
+    server: 109.120.191.92
+    port: 1488
     uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
     network: tcp
     udp: true
@@ -915,11 +903,26 @@ proxies:
       short-id: 
     client-fingerprint: chrome
 
-  - name: "79.137.175.44-8443"
+  - name: "87.239.106.153-8443"
     type: vless
-    server: 79.137.175.44
+    server: 87.239.106.153
     port: 8443
     uuid: 2936e344-2c52-4508-9523-1f3ed6824770
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.ru
+    reality-opts:
+      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
+      short-id: 28047c78b3f5ee2c
+    client-fingerprint: chrome
+
+  - name: "37.139.34.145-8443"
+    type: vless
+    server: 37.139.34.145
+    port: 8443
+    uuid: 829ce713-8748-4049-ba76-be56e60bc449
     network: tcp
     udp: true
     tls: true
@@ -934,102 +937,12 @@ proxies:
     type: vless
     server: 37.139.34.145
     port: 443
-    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 04bf0403f96e5b4b
-    client-fingerprint: chrome
-
-  - name: "84.252.143.25-8443"
-    type: vless
-    server: 84.252.143.25
-    port: 8443
-    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 48fccabc158a4c22
-    client-fingerprint: chrome
-
-  - name: "158.160.223.36-8443"
-    type: vless
-    server: 158.160.223.36
-    port: 8443
     uuid: 829ce713-8748-4049-ba76-be56e60bc449
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 28047c78b3f5ee2c
-    client-fingerprint: chrome
-
-  - name: "79.137.175.44-443"
-    type: vless
-    server: 79.137.175.44
-    port: 443
-    uuid: d35900ef-0dbc-4e38-bab3-d6169b180c96
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
     servername: m.vk.ru
-    reality-opts:
-      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 28047c78b3f5ee2c
-    client-fingerprint: chrome
-
-  - name: "87.239.106.153-8443"
-    type: vless
-    server: 87.239.106.153
-    port: 8443
-    uuid: d35900ef-0dbc-4e38-bab3-d6169b180c96
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 48fccabc158a4c22
-    client-fingerprint: chrome
-
-  - name: "158.160.223.36-443"
-    type: vless
-    server: 158.160.223.36
-    port: 443
-    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 04bf0403f96e5b4b
-    client-fingerprint: chrome
-
-  - name: "84.252.143.25-443"
-    type: vless
-    server: 84.252.143.25
-    port: 443
-    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
     reality-opts:
       public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
       short-id: 04bf0403f96e5b4b
@@ -1050,9 +963,54 @@ proxies:
       short-id: 04bf0403f96e5b4b
     client-fingerprint: chrome
 
-  - name: "37.139.34.145-8443"
+  - name: "84.252.143.25-443"
     type: vless
-    server: 37.139.34.145
+    server: 84.252.143.25
+    port: 443
+    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
+      short-id: 04bf0403f96e5b4b
+    client-fingerprint: chrome
+
+  - name: "158.160.223.36-8443"
+    type: vless
+    server: 158.160.223.36
+    port: 8443
+    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
+      short-id: 28047c78b3f5ee2c
+    client-fingerprint: chrome
+
+  - name: "84.252.143.25-8443"
+    type: vless
+    server: 84.252.143.25
+    port: 8443
+    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
+      short-id: 48fccabc158a4c22
+    client-fingerprint: chrome
+
+  - name: "79.137.175.44-8443"
+    type: vless
+    server: 79.137.175.44
     port: 8443
     uuid: 2936e344-2c52-4508-9523-1f3ed6824770
     network: tcp
@@ -1062,42 +1020,57 @@ proxies:
     servername: m.vk.ru
     reality-opts:
       public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 48fccabc158a4c22
+      short-id: 28047c78b3f5ee2c
     client-fingerprint: chrome
 
-  - name: "107.181.147.22-443"
+  - name: "79.137.175.44-443"
     type: vless
-    server: 107.181.147.22
+    server: 79.137.175.44
     port: 443
-    uuid: 5e18094c-18b1-4198-b211-96b40518cecf
+    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: www.techradar.com
+    servername: m.vk.ru
     reality-opts:
-      public-key: Cs45TZ-4YKa8fWZ72YJcIcQCKipWsoYNZHEqFvs-PTE
-      short-id: f6e197a0b9f2
+      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
+      short-id: 04bf0403f96e5b4b
     client-fingerprint: chrome
 
-  - name: "38.244.137.198-443"
+  - name: "158.160.223.36-443"
     type: vless
-    server: 38.244.137.198
+    server: 158.160.223.36
     port: 443
-    uuid: 09748875-9da3-440e-9809-9752e1dda1e4
+    uuid: 2936e344-2c52-4508-9523-1f3ed6824770
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: google.com
+    servername: yandex.ru
     reality-opts:
-      public-key: QXGsw1KqljvUiarkvFdBs3T1TeUQq4skwHFlsmbj31o
-      short-id: 365c07ed
+      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
+      short-id: 04bf0403f96e5b4b
     client-fingerprint: chrome
 
-  - name: "45.144.53.156-8104"
+  - name: "45.15.127.107-443"
     type: vless
-    server: 45.144.53.156
+    server: 45.15.127.107
+    port: 443
+    uuid: 8df8d701-38b4-5175-89ef-7447a1250e67
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: eh.vk.com
+    reality-opts:
+      public-key: 3Q2wyMPpUbyfw7rmNxL25nnsNDmK9mHqcumAxYIGKVk
+      short-id: e3
+    client-fingerprint: chrome
+
+  - name: "45.144.53.77-8104"
+    type: vless
+    server: 45.144.53.77
     port: 8104
     uuid: db27262a-4151-4c36-8e5f-2cf7fd387a0f
     network: tcp
@@ -1110,24 +1083,9 @@ proxies:
       short-id: 9f4ca836ca270ef8
     client-fingerprint: chrome
 
-  - name: "92.63.224.18-443"
+  - name: "85.192.48.1-8104"
     type: vless
-    server: 92.63.224.18
-    port: 443
-    uuid: b823aaa4-7b6f-49cb-98e4-ffc0a1fb19ee
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: google.com
-    reality-opts:
-      public-key: N7QOAJAui59pdM3FtsS9Ey-KFpr36OuhincNGnkm_E4
-      short-id: f6ae0c7beb
-    client-fingerprint: chrome
-
-  - name: "144.31.90.6-8104"
-    type: vless
-    server: 144.31.90.6
+    server: 85.192.48.1
     port: 8104
     uuid: db27262a-4151-4c36-8e5f-2cf7fd387a0f
     network: tcp
@@ -1155,9 +1113,9 @@ proxies:
       short-id: 42237f32aba8
     client-fingerprint: chrome
 
-  - name: "172.67.159.168-8443"
+  - name: "104.21.9.88-8443"
     type: vless
-    server: 172.67.159.168
+    server: 104.21.9.88
     port: 8443
     uuid: 453c3861-eaf4-4c60-94e0-e57a2c9d2fcf
     network: tcp
@@ -1194,21 +1152,6 @@ proxies:
       short-id: 174c6cf22e22
     client-fingerprint: chrome
 
-  - name: "45.144.53.37-8104"
-    type: vless
-    server: 45.144.53.37
-    port: 8104
-    uuid: db27262a-4151-4c36-8e5f-2cf7fd387a0f
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: tradingview.com
-    reality-opts:
-      public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
-      short-id: 9f4ca836ca270ef8
-    client-fingerprint: chrome
-
   - name: "64.188.73.12-443"
     type: vless
     server: 64.188.73.12
@@ -1224,33 +1167,33 @@ proxies:
       short-id: d91248fbca
     client-fingerprint: chrome
 
-  - name: "178.17.53.125-443"
+  - name: "45.144.53.37-8104"
     type: vless
-    server: 178.17.53.125
-    port: 443
-    uuid: d9f21835-bc20-4668-94ad-53ce678004cc
+    server: 45.144.53.37
+    port: 8104
+    uuid: db27262a-4151-4c36-8e5f-2cf7fd387a0f
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: fin.1.babymelo.shop
+    servername: tradingview.com
     reality-opts:
-      public-key: SoTei6uBNm6Z5zYsn1evgnbDDWr2TKR0sNPVVrr5MQY
-      short-id: da
+      public-key: 4gcDJumxa0bTaHvrZRL4Hb5ItXPha6ZYZ0fGmMD_k0A
+      short-id: 9f4ca836ca270ef8
     client-fingerprint: chrome
 
-  - name: "172.67.159.168-2083"
+  - name: "104.21.9.88-2083"
     type: vless
-    server: 172.67.159.168
+    server: 104.21.9.88
     port: 2083
     uuid: 453c3861-eaf4-4c60-94e0-e57a2c9d2fcf
     network: tcp
     udp: true
     tls: true
 
-  - name: "45.144.53.77-8104"
+  - name: "45.144.53.156-8104"
     type: vless
-    server: 45.144.53.77
+    server: 45.144.53.156
     port: 8104
     uuid: db27262a-4151-4c36-8e5f-2cf7fd387a0f
     network: tcp
@@ -1278,9 +1221,18 @@ proxies:
       short-id: 18e4d2d21241
     client-fingerprint: chrome
 
-  - name: "185.171.202.55-443"
+  - name: "135.181.205.220-31421"
     type: vless
-    server: 185.171.202.55
+    server: 135.181.205.220
+    port: 31421
+    uuid: 0fd6389a-acb9-48b4-8d2c-63edc5dbc4ba
+    network: tcp
+    udp: true
+    tls: true
+
+  - name: "185.171.202.58-443"
+    type: vless
+    server: 185.171.202.58
     port: 443
     uuid: ccedb1b1-35f3-46d1-a85a-c699eef5f3e1
     network: tcp
@@ -1293,32 +1245,29 @@ proxies:
       short-id: 4fa44664f6a566d3
     client-fingerprint: chrome
 
-  - name: "109.172.55.122-443"
+  - name: "77.221.152.183-443"
     type: vless
-    server: 109.172.55.122
+    server: 77.221.152.183
     port: 443
     uuid: 0e90f352-e9bc-4834-8ff6-49ba887eded4
     network: tcp
     udp: true
     tls: true
 
-  - name: "57.129.133.88-2345"
+  - name: "84.54.48.238-443"
     type: vless
-    server: 57.129.133.88
-    port: 2345
-    uuid: 7007111a-c28b-4ab1-8d28-bc7b42681028
+    server: 84.54.48.238
+    port: 443
+    uuid: a25806c0-0e09-46a2-bd27-a94e92285ce9
     network: tcp
     udp: true
     tls: true
-
-  - name: "54.38.214.29-2345"
-    type: vless
-    server: 54.38.214.29
-    port: 2345
-    uuid: 0331b690-79fc-49d5-85f0-54faa4eff89f
-    network: tcp
-    udp: true
-    tls: true
+    flow: xtls-rprx-vision
+    servername: www.amd.com
+    reality-opts:
+      public-key: SlyS4DeFZ7Ic9r8wc-FNpxfQvCqzEe05RsmhZ4jsYm0
+      short-id: 3cc8ceccd9de7f
+    client-fingerprint: chrome
 
   - name: "193.46.81.207-443"
     type: vless
@@ -1335,35 +1284,23 @@ proxies:
       short-id: 4daa022e84f8edf2
     client-fingerprint: chrome
 
-  - name: "217.13.104.154-443"
+  - name: "54.38.214.29-2345"
     type: vless
-    server: 217.13.104.154
-    port: 443
-    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
+    server: 54.38.214.29
+    port: 2345
+    uuid: 0331b690-79fc-49d5-85f0-54faa4eff89f
     network: tcp
     udp: true
     tls: true
-    flow: xtls-rprx-vision
-    servername: travel.yandex.ru
-    reality-opts:
-      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: d17bd238f23fba92
-    client-fingerprint: chrome
 
-  - name: "37.139.33.15-8443"
+  - name: "57.129.133.88-2345"
     type: vless
-    server: 37.139.33.15
-    port: 8443
-    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    server: 57.129.133.88
+    port: 2345
+    uuid: 7007111a-c28b-4ab1-8d28-bc7b42681028
     network: tcp
     udp: true
     tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
-      short-id: 8ba12e75110b7a9c
-    client-fingerprint: chrome
 
   - name: "217.13.104.149-443"
     type: vless
@@ -1380,19 +1317,19 @@ proxies:
       short-id: 3f200574d011010f
     client-fingerprint: chrome
 
-  - name: "178.154.253.80-443"
+  - name: "217.13.104.134-443"
     type: vless
-    server: 178.154.253.80
+    server: 217.13.104.134
     port: 443
-    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: yandex.ru
+    servername: hu.jojack.ru
     reality-opts:
-      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
-      short-id: f4b4a6365558ea2e
+      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+      short-id: 3f200574d011010f
     client-fingerprint: chrome
 
   - name: "217.13.104.148-443"
@@ -1410,9 +1347,9 @@ proxies:
       short-id: 3f200574d011010f
     client-fingerprint: chrome
 
-  - name: "178.154.253.80-8443"
+  - name: "89.169.128.105-8443"
     type: vless
-    server: 178.154.253.80
+    server: 89.169.128.105
     port: 8443
     uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
     network: tcp
@@ -1425,6 +1362,21 @@ proxies:
       short-id: 8ba12e75110b7a9c
     client-fingerprint: chrome
 
+  - name: "37.139.33.15-8443"
+    type: vless
+    server: 37.139.33.15
+    port: 8443
+    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.ru
+    reality-opts:
+      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
+      short-id: 2715592069f36fe7
+    client-fingerprint: chrome
+
   - name: "84.23.52.70-8443"
     type: vless
     server: 84.23.52.70
@@ -1435,6 +1387,51 @@ proxies:
     tls: true
     flow: xtls-rprx-vision
     servername: m.vk.ru
+    reality-opts:
+      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
+      short-id: 8ba12e75110b7a9c
+    client-fingerprint: chrome
+
+  - name: "217.13.104.154-443"
+    type: vless
+    server: 217.13.104.154
+    port: 443
+    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: travel.yandex.ru
+    reality-opts:
+      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+      short-id: d17bd238f23fba92
+    client-fingerprint: chrome
+
+  - name: "89.169.128.105-443"
+    type: vless
+    server: 89.169.128.105
+    port: 443
+    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
+      short-id: f4b4a6365558ea2e
+    client-fingerprint: chrome
+
+  - name: "178.154.253.80-8443"
+    type: vless
+    server: 178.154.253.80
+    port: 8443
+    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
     reality-opts:
       public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
       short-id: 8ba12e75110b7a9c
@@ -1455,55 +1452,10 @@ proxies:
       short-id: f4b4a6365558ea2e
     client-fingerprint: chrome
 
-  - name: "89.169.128.105-443"
+  - name: "178.154.253.80-443"
     type: vless
-    server: 89.169.128.105
+    server: 178.154.253.80
     port: 443
-    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
-      short-id: f4b4a6365558ea2e
-    client-fingerprint: chrome
-
-  - name: "84.23.52.70-443"
-    type: vless
-    server: 84.23.52.70
-    port: 443
-    uuid: 3f8e8529-9cb9-42a7-9a02-533ab8838114
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
-      short-id: f4b4a6365558ea2e
-    client-fingerprint: chrome
-
-  - name: "212.111.84.82-8443"
-    type: vless
-    server: 212.111.84.82
-    port: 8443
-    uuid: 36316bec-8976-4b1f-8042-b87db88faa25
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
-      short-id: 8ba12e75110b7a9c
-    client-fingerprint: chrome
-
-  - name: "89.169.128.105-8443"
-    type: vless
-    server: 89.169.128.105
-    port: 8443
     uuid: 36316bec-8976-4b1f-8042-b87db88faa25
     network: tcp
     udp: true
@@ -1519,6 +1471,21 @@ proxies:
     type: vless
     server: 212.233.73.212
     port: 8443
+    uuid: 36316bec-8976-4b1f-8042-b87db88faa25
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.ru
+    reality-opts:
+      public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
+      short-id: 8ba12e75110b7a9c
+    client-fingerprint: chrome
+
+  - name: "84.23.52.70-443"
+    type: vless
+    server: 84.23.52.70
+    port: 443
     uuid: 36316bec-8976-4b1f-8042-b87db88faa25
     network: tcp
     udp: true
@@ -1566,21 +1533,6 @@ proxies:
     udp: true
     tls: true
 
-  - name: "217.12.219.53-443"
-    type: vless
-    server: 217.12.219.53
-    port: 443
-    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: ozon.ru
-    reality-opts:
-      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 43df3983229a1c73
-    client-fingerprint: chrome
-
   - name: "37.139.33.57-443"
     type: vless
     server: 37.139.33.57
@@ -1596,41 +1548,11 @@ proxies:
       short-id: 6419bed7fd0a2cff
     client-fingerprint: chrome
 
-  - name: "217.12.219.51-443"
-    type: vless
-    server: 217.12.219.51
-    port: 443
-    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: ozon.ru
-    reality-opts:
-      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 43df3983229a1c73
-    client-fingerprint: chrome
-
-  - name: "37.139.33.57-8443"
-    type: vless
-    server: 37.139.33.57
-    port: 8443
-    uuid: c15c00a4-9e8e-4d22-9f2e-dc237c8b1220
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
-      short-id: f32140952ba18e18
-    client-fingerprint: chrome
-
   - name: "37.139.33.57-51101"
     type: vless
     server: 37.139.33.57
     port: 51101
-    uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
+    uuid: c15c00a4-9e8e-4d22-9f2e-dc237c8b1220
     network: tcp
     udp: true
     tls: true
@@ -1641,34 +1563,19 @@ proxies:
       short-id: 4ffc99daad0f261f
     client-fingerprint: chrome
 
-  - name: "130.193.59.133-443"
+  - name: "217.12.219.53-443"
     type: vless
-    server: 130.193.59.133
+    server: 217.12.219.53
     port: 443
-    uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
+    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: yandex.ru
+    servername: ozon.ru
     reality-opts:
-      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
-      short-id: 6419bed7fd0a2cff
-    client-fingerprint: chrome
-
-  - name: "130.193.59.133-51101"
-    type: vless
-    server: 130.193.59.133
-    port: 51101
-    uuid: bbc3bb80-032b-4c15-9bbd-ac6cba0e76a0
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
-      short-id: f32140952ba18e18
+      public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
+      short-id: e55fd8f9c9a9a0ca
     client-fingerprint: chrome
 
   - name: "130.193.59.133-8443"
@@ -1701,6 +1608,66 @@ proxies:
       short-id: f32140952ba18e18
     client-fingerprint: chrome
 
+  - name: "176.109.109.58-51101"
+    type: vless
+    server: 176.109.109.58
+    port: 51101
+    uuid: 6e67163a-95e2-422b-b966-774920649662
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.ru
+    reality-opts:
+      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+      short-id: 6419bed7fd0a2cff
+    client-fingerprint: chrome
+
+  - name: "130.193.59.133-443"
+    type: vless
+    server: 130.193.59.133
+    port: 443
+    uuid: 6e67163a-95e2-422b-b966-774920649662
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+      short-id: 6419bed7fd0a2cff
+    client-fingerprint: chrome
+
+  - name: "130.193.59.133-51101"
+    type: vless
+    server: 130.193.59.133
+    port: 51101
+    uuid: 6e67163a-95e2-422b-b966-774920649662
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+      short-id: 6419bed7fd0a2cff
+    client-fingerprint: chrome
+
+  - name: "37.139.33.57-8443"
+    type: vless
+    server: 37.139.33.57
+    port: 8443
+    uuid: 6e67163a-95e2-422b-b966-774920649662
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.ru
+    reality-opts:
+      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+      short-id: f32140952ba18e18
+    client-fingerprint: chrome
+
   - name: "109.61.109.135-443"
     type: vless
     server: 109.61.109.135
@@ -1715,15 +1682,6 @@ proxies:
       public-key: 2Q0J_OPL73qhEIYf3YBLCuY4RIBurgz5QDVchQ8e9ks
       short-id: f189d91760bb6663
     client-fingerprint: chrome
-
-  - name: "188.253.17.85-443"
-    type: vless
-    server: 188.253.17.85
-    port: 443
-    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
-    network: tcp
-    udp: true
-    tls: true
 
   - name: "176.120.67.169-443"
     type: vless
@@ -1755,6 +1713,15 @@ proxies:
       short-id: 33f2
     client-fingerprint: chrome
 
+  - name: "138.124.63.58-443"
+    type: vless
+    server: 138.124.63.58
+    port: 443
+    uuid: 94a03e9a-74d5-4036-95e9-563cc19355de
+    network: tcp
+    udp: true
+    tls: true
+
   - name: "90.156.255.198-51114"
     type: vless
     server: 90.156.255.198
@@ -1779,65 +1746,14 @@ proxies:
     udp: true
     tls: true
 
-  - name: "144.31.100.120-443"
+  - name: "188.253.17.85-443"
     type: vless
-    server: 144.31.100.120
+    server: 188.253.17.85
     port: 443
-    uuid: 456bd17d-9407-4b88-959f-aa320b0a572e
+    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
     network: tcp
     udp: true
     tls: true
-    flow: xtls-rprx-vision
-    servername: google.com
-    reality-opts:
-      public-key: ihtXyG0UidSbXjvCJXUhABwZGCCB62DUsVBFn_qVd3g
-      short-id: 97
-    client-fingerprint: chrome
-
-  - name: "185.121.232.251-8443"
-    type: vless
-    server: 185.121.232.251
-    port: 8443
-    uuid: db444bee-8212-5ff5-be40-47e1a7509eb8
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: vk.com
-    reality-opts:
-      public-key: r5UDMc2_uZ8J9nYbKqq7G3TWpQL_W53sl7zDAUPPEn4
-      short-id: 40e0d46c46c7bd17
-    client-fingerprint: chrome
-
-  - name: "195.26.224.112-8443"
-    type: vless
-    server: 195.26.224.112
-    port: 8443
-    uuid: db444bee-8212-5ff5-be40-47e1a7509eb8
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: vk.com
-    reality-opts:
-      public-key: HE-fVd73NsTheypCLSyeNxgkg2EJOfXWGxjUOcvPZyQ
-      short-id: 938f14cf6757a249
-    client-fingerprint: chrome
-
-  - name: "87.239.252.186-443"
-    type: vless
-    server: 87.239.252.186
-    port: 443
-    uuid: 357488d2-cec8-4392-ba2a-92598c8711ee
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: www.mozilla.org
-    reality-opts:
-      public-key: uf64ptbhMNcLWuwEfOzQB7qgn725h6w9DmKRteQQPwg
-      short-id: 46ff0446a02c
-    client-fingerprint: chrome
 
   - name: "37.139.42.234-8443"
     type: vless
@@ -1852,6 +1768,21 @@ proxies:
     reality-opts:
       public-key: a1xQOijfR3NuJRVfCNfNr4YMdcb7eqsKpvhuv-Gs9l8
       short-id: 6670
+    client-fingerprint: chrome
+
+  - name: "144.31.100.120-443"
+    type: vless
+    server: 144.31.100.120
+    port: 443
+    uuid: 373a56eb-aaa9-4a92-b209-503dd916900f
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: google.com
+    reality-opts:
+      public-key: ihtXyG0UidSbXjvCJXUhABwZGCCB62DUsVBFn_qVd3g
+      short-id: 47e4c3980f872e68
     client-fingerprint: chrome
 
   - name: "37.139.42.234-443"
@@ -1869,6 +1800,36 @@ proxies:
       short-id: 6670
     client-fingerprint: chrome
 
+  - name: "87.239.252.186-443"
+    type: vless
+    server: 87.239.252.186
+    port: 443
+    uuid: 87f25004-a0d6-42df-aac0-915e21b035b5
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: www.foxsports.com
+    reality-opts:
+      public-key: uf64ptbhMNcLWuwEfOzQB7qgn725h6w9DmKRteQQPwg
+      short-id: 32f1ee9b6dc5
+    client-fingerprint: chrome
+
+  - name: "37.139.42.234-4443"
+    type: vless
+    server: 37.139.42.234
+    port: 4443
+    uuid: 9cb2d5c5-c5e0-409b-ad3b-7c057b7971b1
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: -kDgSQgouE56cqDIDwgCco1LNQ-8q61WllL5egDI0yI
+      short-id: 6670
+    client-fingerprint: chrome
+
   - name: "144.31.111.130-443"
     type: vless
     server: 144.31.111.130
@@ -1882,21 +1843,6 @@ proxies:
     reality-opts:
       public-key: wBrGfTI9PaFf966aN6KaCY0cL6QRLlop4nzNa6bJsiQ
       short-id: 9f35da6c9412b832
-    client-fingerprint: chrome
-
-  - name: "51.158.206.86-23576"
-    type: vless
-    server: 51.158.206.86
-    port: 23576
-    uuid: 48ff2b70-e180-582f-8866-d9a2edeed5f5
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: fuck.rkn
-    reality-opts:
-      public-key: 1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s
-      short-id: 01
     client-fingerprint: chrome
 
   - name: "103.27.158.56-443"
@@ -1923,6 +1869,21 @@ proxies:
     udp: true
     tls: true
 
+  - name: "89.110.119.44-443"
+    type: vless
+    server: 89.110.119.44
+    port: 443
+    uuid: 720c415d-f807-5a8d-9d0c-b86599a88a0b
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yahoo.com
+    reality-opts:
+      public-key: pi3nuu39TECDwHciK9c7oWaMz6KfJWUOiWVLfo1Nz3M
+      short-id: 
+    client-fingerprint: chrome
+
   - name: "146.103.102.82-80"
     type: vless
     server: 146.103.102.82
@@ -1945,7 +1906,7 @@ proxies:
     type: vless
     server: 104.20.1.252
     port: 80
-    uuid: 33e1a095-1e25-4198-bfe7-ec312e4f98ee
+    uuid: 7d4a519b-d270-434e-a42d-d39624577a92
     network: tcp
     udp: true
     tls: true
@@ -1980,21 +1941,6 @@ proxies:
       short-id: 
     client-fingerprint: chrome
 
-  - name: "193.178.226.184-443"
-    type: vless
-    server: 193.178.226.184
-    port: 443
-    uuid: eb071647-72a6-46be-8e89-ff3d228d52f6
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: nl.jojack.ru
-    reality-opts:
-      public-key: sxyxV0_y1o09gKJBL9AJJyRSEg6MiYK0j-kb5unzHh4
-      short-id: 6bb3c7f9f97b45b8
-    client-fingerprint: chrome
-
   - name: "51.158.206.97-23576"
     type: vless
     server: 51.158.206.97
@@ -2008,30 +1954,6 @@ proxies:
     reality-opts:
       public-key: 1y5h2FGWKXTJ9xLPCqPo6Mw7RxoZzh6fGkEQKNxpZ3s
       short-id: 01
-    client-fingerprint: chrome
-
-  - name: "89.110.82.233-443"
-    type: vless
-    server: 89.110.82.233
-    port: 443
-    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
-    network: tcp
-    udp: true
-    tls: true
-
-  - name: "79.174.94.49-21314"
-    type: vless
-    server: 79.174.94.49
-    port: 21314
-    uuid: e4ffd1f2-6032-4f59-8b62-852312b592f5
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: api-maps.yandex.ru
-    reality-opts:
-      public-key: VLTPbv0RFFV3b1SZsYV4NXDgNmhzx_mtyKCOy509hVQ
-      short-id: fe98f19f16f18265
     client-fingerprint: chrome
 
   - name: "37.16.74.19-2053"
@@ -2049,21 +1971,6 @@ proxies:
       short-id: 4a5b6c7d
     client-fingerprint: chrome
 
-  - name: "85.17.145.169-443"
-    type: vless
-    server: 85.17.145.169
-    port: 443
-    uuid: 2143c858-cdf6-4971-a240-98dedc815723
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: www.samsung.com
-    reality-opts:
-      public-key: ckRcueERkPqqjZABwxqni_J_Nbb70Q6k5fEEUAjoImw
-      short-id: 
-    client-fingerprint: chrome
-
   - name: "91.84.105.61-25998"
     type: vless
     server: 91.84.105.61
@@ -2079,29 +1986,14 @@ proxies:
       short-id: 0ae9b755f28f
     client-fingerprint: chrome
 
-  - name: "104.18.38.47-2052"
+  - name: "162.159.36.5-2052"
     type: vless
-    server: 104.18.38.47
+    server: 162.159.36.5
     port: 2052
     uuid: 5e62ddcf-78c9-4b15-803a-436c8c839ddc
     network: tcp
     udp: true
     tls: true
-
-  - name: "37.139.42.234-4443"
-    type: vless
-    server: 37.139.42.234
-    port: 4443
-    uuid: 9cb2d5c5-c5e0-409b-ad3b-7c057b7971b1
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: -kDgSQgouE56cqDIDwgCco1LNQ-8q61WllL5egDI0yI
-      short-id: 6670
-    client-fingerprint: chrome
 
   - name: "37.218.247.35-8443"
     type: vless
@@ -2118,10 +2010,58 @@ proxies:
       short-id: 3ca620a7ed5f3196
     client-fingerprint: chrome
 
-  - name: "5.188.140.18-1488"
+  - name: "195.26.224.112-8443"
     type: vless
-    server: 5.188.140.18
-    port: 1488
+    server: 195.26.224.112
+    port: 8443
+    uuid: db444bee-8212-5ff5-be40-47e1a7509eb8
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: vk.com
+    reality-opts:
+      public-key: HE-fVd73NsTheypCLSyeNxgkg2EJOfXWGxjUOcvPZyQ
+      short-id: 938f14cf6757a249
+    client-fingerprint: chrome
+
+  - name: "194.164.32.99-2053"
+    type: vless
+    server: 194.164.32.99
+    port: 2053
+    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+    network: tcp
+    udp: true
+    tls: true
+
+  - name: "185.121.232.251-8443"
+    type: vless
+    server: 185.121.232.251
+    port: 8443
+    uuid: db444bee-8212-5ff5-be40-47e1a7509eb8
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: vk.com
+    reality-opts:
+      public-key: r5UDMc2_uZ8J9nYbKqq7G3TWpQL_W53sl7zDAUPPEn4
+      short-id: 40e0d46c46c7bd17
+    client-fingerprint: chrome
+
+  - name: "5.35.36.50-443"
+    type: vless
+    server: 5.35.36.50
+    port: 443
+    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+    network: tcp
+    udp: true
+    tls: true
+
+  - name: "5.188.141.69-443"
+    type: vless
+    server: 5.188.141.69
+    port: 443
     uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
     network: tcp
     udp: true
@@ -2130,52 +2070,7 @@ proxies:
     servername: ads.x5.ru
     reality-opts:
       public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
-      short-id: 
-    client-fingerprint: chrome
-
-  - name: "79.137.175.56-8443"
-    type: vless
-    server: 79.137.175.56
-    port: 8443
-    uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
-      short-id: 8f222b3475800821
-    client-fingerprint: chrome
-
-  - name: "158.160.105.121-51102"
-    type: vless
-    server: 158.160.105.121
-    port: 51102
-    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
-      short-id: 8f222b3475800821
-    client-fingerprint: chrome
-
-  - name: "95.163.210.202-443"
-    type: vless
-    server: 95.163.210.202
-    port: 443
-    uuid: 94a03e9a-74d5-4036-95e9-563cc19355de
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: api-maps.yandex.ru
-    reality-opts:
-      public-key: 5bGFIWSo4vlrd9Tv1yFcpdpSjrjYYN20SOWHYfighHc
-      short-id: bbea2805
+      short-id: 6ba85179e30d4fc2
     client-fingerprint: chrome
 
   - name: "144.31.2.126-443"
@@ -2187,10 +2082,40 @@ proxies:
     udp: true
     tls: true
 
-  - name: "158.160.105.121-8443"
+  - name: "79.137.175.56-51102"
     type: vless
-    server: 158.160.105.121
+    server: 79.137.175.56
+    port: 51102
+    uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.ru
+    reality-opts:
+      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
+      short-id: 8f222b3475800821
+    client-fingerprint: chrome
+
+  - name: "176.123.164.110-8443"
+    type: vless
+    server: 176.123.164.110
     port: 8443
+    uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: rbc.ru
+    reality-opts:
+      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
+      short-id: 8f222b3475800821
+    client-fingerprint: chrome
+
+  - name: "158.160.221.132-51102"
+    type: vless
+    server: 158.160.221.132
+    port: 51102
     uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
     network: tcp
     udp: true
@@ -2217,49 +2142,10 @@ proxies:
       short-id: bbea2805
     client-fingerprint: chrome
 
-  - name: "79.137.175.56-443"
+  - name: "158.160.105.121-8443"
     type: vless
-    server: 79.137.175.56
-    port: 443
-    uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
-      short-id: 887c0d72e771a934
-    client-fingerprint: chrome
-
-  - name: "5.188.141.69-443"
-    type: vless
-    server: 5.188.141.69
-    port: 443
-    uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: ads.x5.ru
-    reality-opts:
-      public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
-      short-id: 6ba85179e30d4fc2
-    client-fingerprint: chrome
-
-  - name: "144.31.4.36-443"
-    type: vless
-    server: 144.31.4.36
-    port: 443
-    uuid: 94a03e9a-74d5-4036-95e9-563cc19355de
-    network: tcp
-    udp: true
-    tls: true
-
-  - name: "158.160.221.132-51102"
-    type: vless
-    server: 158.160.221.132
-    port: 51102
+    server: 158.160.105.121
+    port: 8443
     uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
     network: tcp
     udp: true
@@ -2270,6 +2156,45 @@ proxies:
       public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
       short-id: 8f222b3475800821
     client-fingerprint: chrome
+
+  - name: "5.188.140.18-1488"
+    type: vless
+    server: 5.188.140.18
+    port: 1488
+    uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: ads.x5.ru
+    reality-opts:
+      public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
+      short-id: 
+    client-fingerprint: chrome
+
+  - name: "95.163.210.202-443"
+    type: vless
+    server: 95.163.210.202
+    port: 443
+    uuid: 94a03e9a-74d5-4036-95e9-563cc19355de
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: api-maps.yandex.ru
+    reality-opts:
+      public-key: 5bGFIWSo4vlrd9Tv1yFcpdpSjrjYYN20SOWHYfighHc
+      short-id: bbea2805
+    client-fingerprint: chrome
+
+  - name: "144.31.4.36-443"
+    type: vless
+    server: 144.31.4.36
+    port: 443
+    uuid: 94a03e9a-74d5-4036-95e9-563cc19355de
+    network: tcp
+    udp: true
+    tls: true
 
   - name: "144.31.2.20-443"
     type: vless
@@ -2289,26 +2214,26 @@ proxies:
     udp: true
     tls: true
 
-  - name: "178.17.59.73-2053"
+  - name: "79.137.175.56-443"
     type: vless
-    server: 178.17.59.73
-    port: 2053
-    uuid: 07cd9dbe-21ac-4871-817d-c772687e4b7c
+    server: 79.137.175.56
+    port: 443
+    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: www.ibm.com
+    servername: m.vk.ru
     reality-opts:
-      public-key: WckOSneVajAzpH0sZSAFAWPnmwuuEXKZrTICNj5_hHU
-      short-id: 423bccc9c13fb509
+      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
+      short-id: 887c0d72e771a934
     client-fingerprint: chrome
 
   - name: "158.160.105.121-443"
     type: vless
     server: 158.160.105.121
     port: 443
-    uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
+    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
     network: tcp
     udp: true
     tls: true
@@ -2319,11 +2244,11 @@ proxies:
       short-id: 887c0d72e771a934
     client-fingerprint: chrome
 
-  - name: "79.137.175.56-51102"
+  - name: "79.137.175.56-8443"
     type: vless
     server: 79.137.175.56
-    port: 51102
-    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
+    port: 8443
+    uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
     network: tcp
     udp: true
     tls: true
@@ -2331,37 +2256,7 @@ proxies:
     servername: m.vk.ru
     reality-opts:
       public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
-      short-id: 1929ef620e9b34f5
-    client-fingerprint: chrome
-
-  - name: "144.31.3.35-443"
-    type: vless
-    server: 144.31.3.35
-    port: 443
-    uuid: ccedb1b1-35f3-46d1-a85a-c699eef5f3e1
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: poland.scroogethebest.com
-    reality-opts:
-      public-key: AYQOZFxjvHN-RIzKYEibwFiFsp03cdlWGdCmyFfuNVc
-      short-id: 4fa44664f6a566d3
-    client-fingerprint: chrome
-
-  - name: "176.123.164.110-8443"
-    type: vless
-    server: 176.123.164.110
-    port: 8443
-    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: rbc.ru
-    reality-opts:
-      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
-      short-id: 1929ef620e9b34f5
+      short-id: 8f222b3475800821
     client-fingerprint: chrome
 
   - name: "144.31.3.30-443"
@@ -2379,10 +2274,25 @@ proxies:
       short-id: 4fa44664f6a566d3
     client-fingerprint: chrome
 
-  - name: "158.160.221.132-8443"
+  - name: "144.31.3.35-443"
     type: vless
-    server: 158.160.221.132
-    port: 8443
+    server: 144.31.3.35
+    port: 443
+    uuid: ccedb1b1-35f3-46d1-a85a-c699eef5f3e1
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: poland.scroogethebest.com
+    reality-opts:
+      public-key: AYQOZFxjvHN-RIzKYEibwFiFsp03cdlWGdCmyFfuNVc
+      short-id: 4fa44664f6a566d3
+    client-fingerprint: chrome
+
+  - name: "158.160.105.121-51102"
+    type: vless
+    server: 158.160.105.121
+    port: 51102
     uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
     network: tcp
     udp: true
@@ -2398,7 +2308,7 @@ proxies:
     type: vless
     server: 158.160.221.132
     port: 443
-    uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
+    uuid: 46c9bd28-82ab-4a50-9e20-dbf6a1eb1e47
     network: tcp
     udp: true
     tls: true
@@ -2406,19 +2316,19 @@ proxies:
     servername: yandex.ru
     reality-opts:
       public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
-      short-id: 887c0d72e771a934
+      short-id: 1929ef620e9b34f5
     client-fingerprint: chrome
 
-  - name: "176.123.164.110-443"
+  - name: "158.160.221.132-8443"
     type: vless
-    server: 176.123.164.110
-    port: 443
-    uuid: 46c9bd28-82ab-4a50-9e20-dbf6a1eb1e47
+    server: 158.160.221.132
+    port: 8443
+    uuid: 225f5dd9-d885-49ad-8e7f-c0900bbc2230
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: rbc.ru
+    servername: yandex.ru
     reality-opts:
       public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
       short-id: 1929ef620e9b34f5
@@ -2454,6 +2364,15 @@ proxies:
       short-id: abde0809
     client-fingerprint: chrome
 
+  - name: "217.208.221.24-50"
+    type: vless
+    server: 217.208.221.24
+    port: 50
+    uuid: 75193bef-8d8f-e823-41e0-2dd083dc1399
+    network: tcp
+    udp: true
+    tls: true
+
   - name: "95.163.208.52-443"
     type: vless
     server: 95.163.208.52
@@ -2484,15 +2403,6 @@ proxies:
       short-id: 6b374e33af12fd1e
     client-fingerprint: chrome
 
-  - name: "45.67.215.233-443"
-    type: vless
-    server: 45.67.215.233
-    port: 443
-    uuid: 55b0463c-e27f-455b-a25a-70123297b9f4
-    network: tcp
-    udp: true
-    tls: true
-
   - name: "91.132.51.160-443"
     type: vless
     server: 91.132.51.160
@@ -2508,25 +2418,10 @@ proxies:
       short-id: e164b85aec8a7422
     client-fingerprint: chrome
 
-  - name: "84.252.136.245-443"
-    type: vless
-    server: 84.252.136.245
-    port: 443
-    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
-      short-id: e57932a42872a362
-    client-fingerprint: chrome
-
-  - name: "146.185.240.23-8443"
+  - name: "146.185.240.23-443"
     type: vless
     server: 146.185.240.23
-    port: 8443
+    port: 443
     uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
     network: tcp
     udp: true
@@ -2535,7 +2430,7 @@ proxies:
     servername: m.vk.ru
     reality-opts:
       public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
-      short-id: 205748bc0f24a747
+      short-id: e57932a42872a362
     client-fingerprint: chrome
 
   - name: "77.83.245.189-27414"
@@ -2553,16 +2448,31 @@ proxies:
       short-id: 1ba8b4cd54627171
     client-fingerprint: chrome
 
-  - name: "89.169.162.214-8443"
+  - name: "84.252.136.245-443"
     type: vless
-    server: 89.169.162.214
-    port: 8443
+    server: 84.252.136.245
+    port: 443
     uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
     servername: yandex.ru
+    reality-opts:
+      public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
+      short-id: e57932a42872a362
+    client-fingerprint: chrome
+
+  - name: "87.239.110.251-8443"
+    type: vless
+    server: 87.239.110.251
+    port: 8443
+    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: m.vk.ru
     reality-opts:
       public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
       short-id: c6ef72e4635d15a5
@@ -2583,34 +2493,19 @@ proxies:
       short-id: e57932a42872a362
     client-fingerprint: chrome
 
-  - name: "77.83.245.193-11777"
+  - name: "146.185.240.23-8443"
     type: vless
-    server: 77.83.245.193
-    port: 11777
-    uuid: 40a7f95c-f861-4f04-9a6e-55d624c7582c
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: Yx7qVnlZif4zOda3OjieAZm352SaGzy0bNT67xNKGxQ
-      short-id: a6f7168a7c3e2f77
-    client-fingerprint: chrome
-
-  - name: "84.252.136.245-8443"
-    type: vless
-    server: 84.252.136.245
+    server: 146.185.240.23
     port: 8443
     uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: yandex.ru
+    servername: m.vk.ru
     reality-opts:
       public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
-      short-id: c6ef72e4635d15a5
+      short-id: 205748bc0f24a747
     client-fingerprint: chrome
 
   - name: "79.137.175.59-8443"
@@ -2628,31 +2523,46 @@ proxies:
       short-id: 205748bc0f24a747
     client-fingerprint: chrome
 
-  - name: "146.185.240.23-443"
+  - name: "89.169.162.214-8443"
     type: vless
-    server: 146.185.240.23
-    port: 443
-    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
-      short-id: e57932a42872a362
-    client-fingerprint: chrome
-
-  - name: "87.239.110.251-8443"
-    type: vless
-    server: 87.239.110.251
+    server: 89.169.162.214
     port: 8443
     uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: m.vk.ru
+    servername: yandex.ru
+    reality-opts:
+      public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
+      short-id: 205748bc0f24a747
+    client-fingerprint: chrome
+
+  - name: "84.252.136.245-8443"
+    type: vless
+    server: 84.252.136.245
+    port: 8443
+    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
+      short-id: c6ef72e4635d15a5
+    client-fingerprint: chrome
+
+  - name: "89.169.162.214-443"
+    type: vless
+    server: 89.169.162.214
+    port: 443
+    uuid: 51278ccf-c9ad-438c-b9e7-12de5a9ac021
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
     reality-opts:
       public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
       short-id: 205748bc0f24a747
@@ -2668,21 +2578,6 @@ proxies:
     tls: true
     flow: xtls-rprx-vision
     servername: m.vk.ru
-    reality-opts:
-      public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
-      short-id: 205748bc0f24a747
-    client-fingerprint: chrome
-
-  - name: "89.169.162.214-443"
-    type: vless
-    server: 89.169.162.214
-    port: 443
-    uuid: 51278ccf-c9ad-438c-b9e7-12de5a9ac021
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
     reality-opts:
       public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
       short-id: 205748bc0f24a747
@@ -2742,27 +2637,9 @@ proxies:
     udp: true
     tls: true
 
-  - name: "45.82.251.115-8880"
+  - name: "74.119.192.243-2040"
     type: vless
-    server: 45.82.251.115
-    port: 8880
-    uuid: 8dc7722c-2767-4eea-a28b-2f8daacc07e3
-    network: tcp
-    udp: true
-    tls: true
-
-  - name: "43.173.125.15-44519"
-    type: vless
-    server: 43.173.125.15
-    port: 44519
-    uuid: 6b05ea27-051b-450b-965b-f6c5da11a1f0
-    network: tcp
-    udp: true
-    tls: true
-
-  - name: "144.31.104.1-2040"
-    type: vless
-    server: 144.31.104.1
+    server: 74.119.192.243
     port: 2040
     uuid: 14818654-7689-453a-9a1f-4c72f89782d5
     network: tcp
@@ -2790,34 +2667,43 @@ proxies:
       short-id: d4727968a1fae56f
     client-fingerprint: chrome
 
-  - name: "5.188.140.115-1488/"
+  - name: "195.123.211.205-2053"
     type: vless
-    server: 5.188.140.115
-    port: 1488/
-    uuid: 7bc30425-1c2f-4823-b629-90f599a4cbfe
+    server: 195.123.211.205
+    port: 2053
+    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
+    network: tcp
+    udp: true
+    tls: true
+
+  - name: "144.31.221.8-443/"
+    type: vless
+    server: 144.31.221.8
+    port: 443/
+    uuid: 4bc7d558-1943-44de-bd82-56920bc9383e
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: ads.x5.ru
+    servername: test.spectrum.vu
     reality-opts:
-      public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
-      short-id: 6ba85179e30d4fc2
+      public-key: EyzTSZxq5qlUT2xW0l7VP-DzIh2ucabMan9ekEv9Owo
+      short-id: 
     client-fingerprint: chrome
 
-  - name: "84.23.52.70-8443/"
+  - name: "178.154.253.80-443/"
     type: vless
-    server: 84.23.52.70
-    port: 8443/
+    server: 178.154.253.80
+    port: 443/
     uuid: 182a355e-8ffc-4735-84b6-afbd83c98ff2
     network: tcp
     udp: true
     tls: true
     flow: xtls-rprx-vision
-    servername: m.vk.ru
+    servername: yandex.ru
     reality-opts:
       public-key: 7zd9mJilgjOrg_ohtw23Vmio-pdnYqeP_r-kiWt87Cg
-      short-id: f4b4a6365558ea2e
+      short-id: 2715592069f36fe7
     client-fingerprint: chrome
 
   - name: "90.156.217.130-8443"
@@ -2835,6 +2721,36 @@ proxies:
       short-id: f32140952ba18e18
     client-fingerprint: chrome
 
+  - name: "130.193.59.133-443/"
+    type: vless
+    server: 130.193.59.133
+    port: 443/
+    uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+      short-id: 6419bed7fd0a2cff
+    client-fingerprint: chrome
+
+  - name: "130.193.59.133-8443/"
+    type: vless
+    server: 130.193.59.133
+    port: 8443/
+    uuid: 6408b7b0-2527-4d9f-b361-928222ec624f
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: yandex.ru
+    reality-opts:
+      public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
+      short-id: 6419bed7fd0a2cff
+    client-fingerprint: chrome
+
   - name: "130.193.59.133-51101/"
     type: vless
     server: 130.193.59.133
@@ -2848,66 +2764,6 @@ proxies:
     reality-opts:
       public-key: _CjW0Khlrr5z5oc9Oy6-w2ZEanz-zMBktVn5EOX9oTM
       short-id: f32140952ba18e18
-    client-fingerprint: chrome
-
-  - name: "95.174.93.49-443"
-    type: vless
-    server: 95.174.93.49
-    port: 443
-    uuid: 1b51d814-bfb2-4e12-a8f2-f01925c19500
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: funds.strelkavpn.ru
-    reality-opts:
-      public-key: CuX0P2TdD12NUFPEqm1jUkg0JyNOvLtkjsy7ZZzsyhQ
-      short-id: 41efd2fecb7cb3a5
-    client-fingerprint: chrome
-
-  - name: "158.160.105.121-51102/"
-    type: vless
-    server: 158.160.105.121
-    port: 51102/
-    uuid: 871fdc77-e6df-460d-ace3-b38ab82fb487
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: yandex.ru
-    reality-opts:
-      public-key: Qddpg8luihgzgx4g4uMJklXzlrMCd8L1igJSWrRUvSc
-      short-id: 887c0d72e771a934
-    client-fingerprint: chrome
-
-  - name: "79.137.175.44-8443/"
-    type: vless
-    server: 79.137.175.44
-    port: 8443/
-    uuid: d35900ef-0dbc-4e38-bab3-d6169b180c96
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 48fccabc158a4c22
-    client-fingerprint: chrome
-
-  - name: "87.239.106.153-443/"
-    type: vless
-    server: 87.239.106.153
-    port: 443/
-    uuid: d35900ef-0dbc-4e38-bab3-d6169b180c96
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: zr8_rtHm86s_G1gfRwNtunStGngYZSdYkA3PyBFXpDg
-      short-id: 48fccabc158a4c22
     client-fingerprint: chrome
 
   - name: "87.239.106.153-8443/"
@@ -2925,9 +2781,24 @@ proxies:
       short-id: 04bf0403f96e5b4b
     client-fingerprint: chrome
 
-  - name: "51.250.86.102-443/"
+  - name: "79.174.94.49-21314"
     type: vless
-    server: 51.250.86.102
+    server: 79.174.94.49
+    port: 21314
+    uuid: e4ffd1f2-6032-4f59-8b62-852312b592f5
+    network: tcp
+    udp: true
+    tls: true
+    flow: xtls-rprx-vision
+    servername: api-maps.yandex.ru
+    reality-opts:
+      public-key: VLTPbv0RFFV3b1SZsYV4NXDgNmhzx_mtyKCOy509hVQ
+      short-id: fe98f19f16f18265
+    client-fingerprint: chrome
+
+  - name: "51.250.0.147-443/"
+    type: vless
+    server: 51.250.0.147
     port: 443/
     uuid: 01896982-f9df-4bd5-8f32-914253db2e61
     network: tcp
@@ -2937,22 +2808,7 @@ proxies:
     servername: api-maps.yandex.ru
     reality-opts:
       public-key: FkmYFobwxLMLEktYXywmjthuEYCZggITsxwPNasTKUg
-      short-id: 4a3ad88ff867a295
-    client-fingerprint: chrome
-
-  - name: "79.137.175.59-443/"
-    type: vless
-    server: 79.137.175.59
-    port: 443/
-    uuid: b8b20850-fa09-4ac3-97fc-7d5be10e11ef
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: m.vk.ru
-    reality-opts:
-      public-key: zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04
-      short-id: e57932a42872a362
+      short-id: cd57a927f6b72d81
     client-fingerprint: chrome
 
   - name: "89.169.162.214-443/"
@@ -2985,497 +2841,436 @@ proxies:
       short-id: 205748bc0f24a747
     client-fingerprint: chrome
 
-  - name: "51.250.26.75-443"
-    type: vless
-    server: 51.250.26.75
-    port: 443
-    uuid: b8a44195-0860-4312-a0df-dae178585a48
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: eh.vk.com
-    reality-opts:
-      public-key: 7IOtSp0-n2_uNS5nMO9ywZbn2HibMRGy0KbLad3szXc
-      short-id: b8cf9578640a9edf
-    client-fingerprint: chrome
-
-  - name: "51.250.92.100-443"
-    type: vless
-    server: 51.250.92.100
-    port: 443
-    uuid: 30c04389-bbcb-431f-9d47-a8ad24406bd4
-    network: tcp
-    udp: true
-    tls: true
-    flow: xtls-rprx-vision
-    servername: ads.x5.ru
-    reality-opts:
-      public-key: OBR2JYROQB8odK5glVW_KLnsWl3UZ-voyGq_9ihQgTI
-      short-id: d49d578f280fd83a
-    client-fingerprint: chrome
-
-  - name: "195.123.211.205-2053"
-    type: vless
-    server: 195.123.211.205
-    port: 2053
-    uuid: 6202b230-417c-4d8e-b624-0f71afa9c75d
-    network: tcp
-    udp: true
-    tls: true
-
 proxy-groups:
   - name: Auto
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 300
     proxies:
+      - 51.250.26.75-443
       - 87.242.103.184-443
       - 185.130.115.55-443
-      - 109.120.190.78-443
-      - 95.163.211.13-443
       - 95.163.210.173-443
-      - 217.16.27.217-443
       - 109.120.191.46-443
+      - 109.120.190.78-443
+      - 217.16.27.217-443
+      - 95.163.211.13-443
       - 85.239.47.127-443
+      - 62.113.42.161-443
+      - 62.113.42.161-4443
       - 144.31.128.129-443
       - 45.15.170.237-80
       - 78.159.131.210-443
-      - 152.53.66.46-443
-      - 152.53.46.3-443
+      - 91.196.35.96-8080
+      - 152.53.46.200-443
       - 45.15.178.124-80
       - 77.111.101.80-443
-      - 172.64.155.209-2096
-      - 51.250.65.209-443
-      - 172.66.47.45-2096
+      - 172.66.44.211-2096
+      - 95.163.209.21-443
+      - 84.252.130.60-443
       - 146.185.208.206-443
       - 51.250.87.167-443
-      - 146.185.208.206-4443
-      - 51.250.86.102-443
-      - 95.163.209.21-443
-      - 82.22.174.150-50855
-      - 146.185.208.206-8443
-      - 84.252.130.60-443
-      - 51.250.0.147-443
-      - 38.244.215.124-443
-      - 95.163.182.178-443
-      - 51.250.83.255-443
       - 51.250.4.119-443
-      - 64.188.104.168-40721
-      - 144.31.221.8-443
-      - 109.120.177.193-443
-      - 104.17.25.173-443
-      - 84.201.20.217-443
-      - 178.17.50.66-8443
-      - 212.192.246.57-2087
+      - 146.185.208.206-8443
       - 104.17.147.22-2096
-      - 195.201.222.173-9090
-      - 162.159.36.20-2053
+      - 146.185.208.206-4443
+      - 95.163.182.178-443
+      - 95.163.213.86-443
+      - 51.250.0.147-443
+      - 144.31.221.8-443
+      - 172.66.47.45-2096
+      - 109.120.177.193-443
+      - 104.17.148.22-2096
+      - 104.17.25.173-443
+      - 51.250.83.255-443
+      - 212.192.246.57-2087
+      - 144.31.17.116-443
+      - 51.250.65.209-443
+      - 172.64.158.2-2096
+      - 172.64.155.209-2096
       - 172.64.155.209-443
       - 62.133.60.50-443
-      - 107.149.184.209-20501
-      - 45.145.41.35-443
-      - 95.163.213.86-443
       - 108.162.193.91-2096
-      - 172.64.35.45-2096
+      - 108.162.194.176-2096
+      - 45.145.41.35-443
+      - 84.201.20.217-443
+      - 108.162.195.45-2096
       - 162.159.38.99-2096
-      - 144.31.17.116-443
-      - 5.254.85.151-443
-      - 172.64.34.176-2096
+      - 5.254.85.152-443
       - 108.162.193.217-2096
-      - 217.154.194.55-443
+      - 82.22.174.150-50855
+      - 193.178.226.184-443
       - 185.254.98.164-443
-      - 104.21.227.134-2096
       - 45.130.125.160-2083
       - 104.21.224.5-2096
-      - 173.245.58.75-2096
-      - 108.162.194.176-2096
+      - 172.64.35.45-2096
       - 78.159.111.14-443
       - 104.18.185.26-2096
+      - 51.250.86.102-443
+      - 172.64.32.75-2096
       - 144.31.74.41-8443
-      - 89.106.89.112-2053
+      - 194.9.6.32-48484
+      - 144.31.25.130-4443
       - 5.188.140.115-1488
       - 5.188.141.138-443
-      - 109.120.191.92-1488
       - 5.188.140.55-443
+      - 109.120.191.92-1488
       - 144.31.178.196-443
-      - 79.137.175.44-8443
-      - 37.139.34.145-443
-      - 84.252.143.25-8443
-      - 158.160.223.36-8443
-      - 79.137.175.44-443
       - 87.239.106.153-8443
-      - 158.160.223.36-443
-      - 84.252.143.25-443
-      - 87.239.106.153-443
       - 37.139.34.145-8443
-      - 107.181.147.22-443
-      - 38.244.137.198-443
-      - 45.144.53.156-8104
-      - 92.63.224.18-443
-      - 144.31.90.6-8104
+      - 37.139.34.145-443
+      - 87.239.106.153-443
+      - 84.252.143.25-443
+      - 158.160.223.36-8443
+      - 84.252.143.25-8443
+      - 79.137.175.44-8443
+      - 79.137.175.44-443
+      - 158.160.223.36-443
+      - 45.15.127.107-443
+      - 45.144.53.77-8104
+      - 85.192.48.1-8104
       - 142.111.162.39-443
-      - 172.67.159.168-8443
+      - 104.21.9.88-8443
       - 64.188.125.104-443
       - 141.98.4.99-443
-      - 45.144.53.37-8104
       - 64.188.73.12-443
-      - 178.17.53.125-443
-      - 172.67.159.168-2083
-      - 45.144.53.77-8104
+      - 45.144.53.37-8104
+      - 104.21.9.88-2083
+      - 45.144.53.156-8104
       - 107.181.151.241-443
-      - 185.171.202.55-443
-      - 109.172.55.122-443
-      - 57.129.133.88-2345
-      - 54.38.214.29-2345
+      - 135.181.205.220-31421
+      - 185.171.202.58-443
+      - 77.221.152.183-443
+      - 84.54.48.238-443
       - 193.46.81.207-443
-      - 217.13.104.154-443
-      - 37.139.33.15-8443
+      - 54.38.214.29-2345
+      - 57.129.133.88-2345
       - 217.13.104.149-443
-      - 178.154.253.80-443
+      - 217.13.104.134-443
       - 217.13.104.148-443
-      - 178.154.253.80-8443
-      - 84.23.52.70-8443
-      - 37.139.33.15-443
-      - 89.169.128.105-443
-      - 84.23.52.70-443
-      - 212.111.84.82-8443
       - 89.169.128.105-8443
+      - 37.139.33.15-8443
+      - 84.23.52.70-8443
+      - 217.13.104.154-443
+      - 89.169.128.105-443
+      - 178.154.253.80-8443
+      - 37.139.33.15-443
+      - 178.154.253.80-443
       - 212.233.73.212-8443
+      - 84.23.52.70-443
       - 64.227.174.213-2053
       - 144.31.128.69-443
       - 144.31.128.67-443
       - 144.31.128.68-443
-      - 217.12.219.53-443
       - 37.139.33.57-443
-      - 217.12.219.51-443
-      - 37.139.33.57-8443
       - 37.139.33.57-51101
-      - 130.193.59.133-443
-      - 130.193.59.133-51101
+      - 217.12.219.53-443
       - 130.193.59.133-8443
       - 176.109.109.58-8443
+      - 176.109.109.58-51101
+      - 130.193.59.133-443
+      - 130.193.59.133-51101
+      - 37.139.33.57-8443
       - 109.61.109.135-443
-      - 188.253.17.85-443
       - 176.120.67.169-443
       - 45.145.163.115-39771
+      - 138.124.63.58-443
       - 90.156.255.198-51114
       - 188.253.17.225-443
-      - 144.31.100.120-443
-      - 185.121.232.251-8443
-      - 195.26.224.112-8443
-      - 87.239.252.186-443
+      - 188.253.17.85-443
       - 37.139.42.234-8443
+      - 144.31.100.120-443
       - 37.139.42.234-443
+      - 87.239.252.186-443
+      - 37.139.42.234-4443
       - 144.31.111.130-443
-      - 51.158.206.86-23576
       - 103.27.158.56-443
       - 31.43.179.4-443
+      - 89.110.119.44-443
       - 146.103.102.82-80
       - 104.20.1.252-2052
       - 104.20.1.252-80
       - 212.34.142.191-8443
       - 74.119.195.17-443
-      - 193.178.226.184-443
       - 51.158.206.97-23576
-      - 89.110.82.233-443
-      - 79.174.94.49-21314
       - 37.16.74.19-2053
-      - 85.17.145.169-443
       - 91.84.105.61-25998
-      - 104.18.38.47-2052
-      - 37.139.42.234-4443
+      - 162.159.36.5-2052
       - 37.218.247.35-8443
-      - 5.188.140.18-1488
-      - 79.137.175.56-8443
-      - 158.160.105.121-51102
-      - 95.163.210.202-443
-      - 144.31.2.126-443
-      - 158.160.105.121-8443
-      - 95.163.209.67-443
-      - 79.137.175.56-443
+      - 195.26.224.112-8443
+      - 194.164.32.99-2053
+      - 185.121.232.251-8443
+      - 5.35.36.50-443
       - 5.188.141.69-443
-      - 144.31.4.36-443
+      - 144.31.2.126-443
+      - 79.137.175.56-51102
+      - 176.123.164.110-8443
       - 158.160.221.132-51102
+      - 95.163.209.67-443
+      - 158.160.105.121-8443
+      - 5.188.140.18-1488
+      - 95.163.210.202-443
+      - 144.31.4.36-443
       - 144.31.2.20-443
       - 144.31.4.67-443
-      - 178.17.59.73-2053
+      - 79.137.175.56-443
       - 158.160.105.121-443
-      - 79.137.175.56-51102
-      - 144.31.3.35-443
-      - 176.123.164.110-8443
+      - 79.137.175.56-8443
       - 144.31.3.30-443
-      - 158.160.221.132-8443
+      - 144.31.3.35-443
+      - 158.160.105.121-51102
       - 158.160.221.132-443
-      - 176.123.164.110-443
+      - 158.160.221.132-8443
       - 95.163.208.135-443
       - 95.163.209.52-443
+      - 217.208.221.24-50
       - 95.163.208.52-443
       - 62.182.196.134-8443
-      - 45.67.215.233-443
       - 91.132.51.160-443
-      - 84.252.136.245-443
-      - 146.185.240.23-8443
-      - 77.83.245.189-27414
-      - 89.169.162.214-8443
-      - 79.137.175.59-443
-      - 77.83.245.193-11777
-      - 84.252.136.245-8443
-      - 79.137.175.59-8443
       - 146.185.240.23-443
+      - 77.83.245.189-27414
+      - 84.252.136.245-443
       - 87.239.110.251-8443
-      - 87.239.110.251-443
+      - 79.137.175.59-443
+      - 146.185.240.23-8443
+      - 79.137.175.59-8443
+      - 89.169.162.214-8443
+      - 84.252.136.245-8443
       - 89.169.162.214-443
+      - 87.239.110.251-443
       - 62.60.233.57-33895
       - 46.249.109.128-443
       - 38.180.138.72-443
       - 5.161.50.246-443
-      - 45.82.251.115-8880
-      - 43.173.125.15-44519
-      - 144.31.104.1-2040
+      - 74.119.192.243-2040
       - 45.134.218.222-443
-      - 5.188.140.115-1488/
-      - 84.23.52.70-8443/
+      - 195.123.211.205-2053
+      - 144.31.221.8-443/
+      - 178.154.253.80-443/
       - 90.156.217.130-8443
+      - 130.193.59.133-443/
+      - 130.193.59.133-8443/
       - 130.193.59.133-51101/
-      - 95.174.93.49-443
-      - 158.160.105.121-51102/
-      - 79.137.175.44-8443/
-      - 87.239.106.153-443/
       - 87.239.106.153-8443/
-      - 51.250.86.102-443/
-      - 79.137.175.59-443/
+      - 79.174.94.49-21314
+      - 51.250.0.147-443/
       - 89.169.162.214-443/
       - 89.169.162.214-8443/
-      - 51.250.26.75-443
-      - 51.250.92.100-443
-      - 195.123.211.205-2053
 
   - name: Proxy
     type: select
     proxies:
       - Auto
       - DIRECT
+      - 51.250.26.75-443
       - 87.242.103.184-443
       - 185.130.115.55-443
-      - 109.120.190.78-443
-      - 95.163.211.13-443
       - 95.163.210.173-443
-      - 217.16.27.217-443
       - 109.120.191.46-443
+      - 109.120.190.78-443
+      - 217.16.27.217-443
+      - 95.163.211.13-443
       - 85.239.47.127-443
+      - 62.113.42.161-443
+      - 62.113.42.161-4443
       - 144.31.128.129-443
       - 45.15.170.237-80
       - 78.159.131.210-443
-      - 152.53.66.46-443
-      - 152.53.46.3-443
+      - 91.196.35.96-8080
+      - 152.53.46.200-443
       - 45.15.178.124-80
       - 77.111.101.80-443
-      - 172.64.155.209-2096
-      - 51.250.65.209-443
-      - 172.66.47.45-2096
+      - 172.66.44.211-2096
+      - 95.163.209.21-443
+      - 84.252.130.60-443
       - 146.185.208.206-443
       - 51.250.87.167-443
-      - 146.185.208.206-4443
-      - 51.250.86.102-443
-      - 95.163.209.21-443
-      - 82.22.174.150-50855
-      - 146.185.208.206-8443
-      - 84.252.130.60-443
-      - 51.250.0.147-443
-      - 38.244.215.124-443
-      - 95.163.182.178-443
-      - 51.250.83.255-443
       - 51.250.4.119-443
-      - 64.188.104.168-40721
-      - 144.31.221.8-443
-      - 109.120.177.193-443
-      - 104.17.25.173-443
-      - 84.201.20.217-443
-      - 178.17.50.66-8443
-      - 212.192.246.57-2087
+      - 146.185.208.206-8443
       - 104.17.147.22-2096
-      - 195.201.222.173-9090
-      - 162.159.36.20-2053
+      - 146.185.208.206-4443
+      - 95.163.182.178-443
+      - 95.163.213.86-443
+      - 51.250.0.147-443
+      - 144.31.221.8-443
+      - 172.66.47.45-2096
+      - 109.120.177.193-443
+      - 104.17.148.22-2096
+      - 104.17.25.173-443
+      - 51.250.83.255-443
+      - 212.192.246.57-2087
+      - 144.31.17.116-443
+      - 51.250.65.209-443
+      - 172.64.158.2-2096
+      - 172.64.155.209-2096
       - 172.64.155.209-443
       - 62.133.60.50-443
-      - 107.149.184.209-20501
-      - 45.145.41.35-443
-      - 95.163.213.86-443
       - 108.162.193.91-2096
-      - 172.64.35.45-2096
+      - 108.162.194.176-2096
+      - 45.145.41.35-443
+      - 84.201.20.217-443
+      - 108.162.195.45-2096
       - 162.159.38.99-2096
-      - 144.31.17.116-443
-      - 5.254.85.151-443
-      - 172.64.34.176-2096
+      - 5.254.85.152-443
       - 108.162.193.217-2096
-      - 217.154.194.55-443
+      - 82.22.174.150-50855
+      - 193.178.226.184-443
       - 185.254.98.164-443
-      - 104.21.227.134-2096
       - 45.130.125.160-2083
       - 104.21.224.5-2096
-      - 173.245.58.75-2096
-      - 108.162.194.176-2096
+      - 172.64.35.45-2096
       - 78.159.111.14-443
       - 104.18.185.26-2096
+      - 51.250.86.102-443
+      - 172.64.32.75-2096
       - 144.31.74.41-8443
-      - 89.106.89.112-2053
+      - 194.9.6.32-48484
+      - 144.31.25.130-4443
       - 5.188.140.115-1488
       - 5.188.141.138-443
-      - 109.120.191.92-1488
       - 5.188.140.55-443
+      - 109.120.191.92-1488
       - 144.31.178.196-443
-      - 79.137.175.44-8443
-      - 37.139.34.145-443
-      - 84.252.143.25-8443
-      - 158.160.223.36-8443
-      - 79.137.175.44-443
       - 87.239.106.153-8443
-      - 158.160.223.36-443
-      - 84.252.143.25-443
-      - 87.239.106.153-443
       - 37.139.34.145-8443
-      - 107.181.147.22-443
-      - 38.244.137.198-443
-      - 45.144.53.156-8104
-      - 92.63.224.18-443
-      - 144.31.90.6-8104
+      - 37.139.34.145-443
+      - 87.239.106.153-443
+      - 84.252.143.25-443
+      - 158.160.223.36-8443
+      - 84.252.143.25-8443
+      - 79.137.175.44-8443
+      - 79.137.175.44-443
+      - 158.160.223.36-443
+      - 45.15.127.107-443
+      - 45.144.53.77-8104
+      - 85.192.48.1-8104
       - 142.111.162.39-443
-      - 172.67.159.168-8443
+      - 104.21.9.88-8443
       - 64.188.125.104-443
       - 141.98.4.99-443
-      - 45.144.53.37-8104
       - 64.188.73.12-443
-      - 178.17.53.125-443
-      - 172.67.159.168-2083
-      - 45.144.53.77-8104
+      - 45.144.53.37-8104
+      - 104.21.9.88-2083
+      - 45.144.53.156-8104
       - 107.181.151.241-443
-      - 185.171.202.55-443
-      - 109.172.55.122-443
-      - 57.129.133.88-2345
-      - 54.38.214.29-2345
+      - 135.181.205.220-31421
+      - 185.171.202.58-443
+      - 77.221.152.183-443
+      - 84.54.48.238-443
       - 193.46.81.207-443
-      - 217.13.104.154-443
-      - 37.139.33.15-8443
+      - 54.38.214.29-2345
+      - 57.129.133.88-2345
       - 217.13.104.149-443
-      - 178.154.253.80-443
+      - 217.13.104.134-443
       - 217.13.104.148-443
-      - 178.154.253.80-8443
-      - 84.23.52.70-8443
-      - 37.139.33.15-443
-      - 89.169.128.105-443
-      - 84.23.52.70-443
-      - 212.111.84.82-8443
       - 89.169.128.105-8443
+      - 37.139.33.15-8443
+      - 84.23.52.70-8443
+      - 217.13.104.154-443
+      - 89.169.128.105-443
+      - 178.154.253.80-8443
+      - 37.139.33.15-443
+      - 178.154.253.80-443
       - 212.233.73.212-8443
+      - 84.23.52.70-443
       - 64.227.174.213-2053
       - 144.31.128.69-443
       - 144.31.128.67-443
       - 144.31.128.68-443
-      - 217.12.219.53-443
       - 37.139.33.57-443
-      - 217.12.219.51-443
-      - 37.139.33.57-8443
       - 37.139.33.57-51101
-      - 130.193.59.133-443
-      - 130.193.59.133-51101
+      - 217.12.219.53-443
       - 130.193.59.133-8443
       - 176.109.109.58-8443
+      - 176.109.109.58-51101
+      - 130.193.59.133-443
+      - 130.193.59.133-51101
+      - 37.139.33.57-8443
       - 109.61.109.135-443
-      - 188.253.17.85-443
       - 176.120.67.169-443
       - 45.145.163.115-39771
+      - 138.124.63.58-443
       - 90.156.255.198-51114
       - 188.253.17.225-443
-      - 144.31.100.120-443
-      - 185.121.232.251-8443
-      - 195.26.224.112-8443
-      - 87.239.252.186-443
+      - 188.253.17.85-443
       - 37.139.42.234-8443
+      - 144.31.100.120-443
       - 37.139.42.234-443
+      - 87.239.252.186-443
+      - 37.139.42.234-4443
       - 144.31.111.130-443
-      - 51.158.206.86-23576
       - 103.27.158.56-443
       - 31.43.179.4-443
+      - 89.110.119.44-443
       - 146.103.102.82-80
       - 104.20.1.252-2052
       - 104.20.1.252-80
       - 212.34.142.191-8443
       - 74.119.195.17-443
-      - 193.178.226.184-443
       - 51.158.206.97-23576
-      - 89.110.82.233-443
-      - 79.174.94.49-21314
       - 37.16.74.19-2053
-      - 85.17.145.169-443
       - 91.84.105.61-25998
-      - 104.18.38.47-2052
-      - 37.139.42.234-4443
+      - 162.159.36.5-2052
       - 37.218.247.35-8443
-      - 5.188.140.18-1488
-      - 79.137.175.56-8443
-      - 158.160.105.121-51102
-      - 95.163.210.202-443
-      - 144.31.2.126-443
-      - 158.160.105.121-8443
-      - 95.163.209.67-443
-      - 79.137.175.56-443
+      - 195.26.224.112-8443
+      - 194.164.32.99-2053
+      - 185.121.232.251-8443
+      - 5.35.36.50-443
       - 5.188.141.69-443
-      - 144.31.4.36-443
+      - 144.31.2.126-443
+      - 79.137.175.56-51102
+      - 176.123.164.110-8443
       - 158.160.221.132-51102
+      - 95.163.209.67-443
+      - 158.160.105.121-8443
+      - 5.188.140.18-1488
+      - 95.163.210.202-443
+      - 144.31.4.36-443
       - 144.31.2.20-443
       - 144.31.4.67-443
-      - 178.17.59.73-2053
+      - 79.137.175.56-443
       - 158.160.105.121-443
-      - 79.137.175.56-51102
-      - 144.31.3.35-443
-      - 176.123.164.110-8443
+      - 79.137.175.56-8443
       - 144.31.3.30-443
-      - 158.160.221.132-8443
+      - 144.31.3.35-443
+      - 158.160.105.121-51102
       - 158.160.221.132-443
-      - 176.123.164.110-443
+      - 158.160.221.132-8443
       - 95.163.208.135-443
       - 95.163.209.52-443
+      - 217.208.221.24-50
       - 95.163.208.52-443
       - 62.182.196.134-8443
-      - 45.67.215.233-443
       - 91.132.51.160-443
-      - 84.252.136.245-443
-      - 146.185.240.23-8443
-      - 77.83.245.189-27414
-      - 89.169.162.214-8443
-      - 79.137.175.59-443
-      - 77.83.245.193-11777
-      - 84.252.136.245-8443
-      - 79.137.175.59-8443
       - 146.185.240.23-443
+      - 77.83.245.189-27414
+      - 84.252.136.245-443
       - 87.239.110.251-8443
-      - 87.239.110.251-443
+      - 79.137.175.59-443
+      - 146.185.240.23-8443
+      - 79.137.175.59-8443
+      - 89.169.162.214-8443
+      - 84.252.136.245-8443
       - 89.169.162.214-443
+      - 87.239.110.251-443
       - 62.60.233.57-33895
       - 46.249.109.128-443
       - 38.180.138.72-443
       - 5.161.50.246-443
-      - 45.82.251.115-8880
-      - 43.173.125.15-44519
-      - 144.31.104.1-2040
+      - 74.119.192.243-2040
       - 45.134.218.222-443
-      - 5.188.140.115-1488/
-      - 84.23.52.70-8443/
+      - 195.123.211.205-2053
+      - 144.31.221.8-443/
+      - 178.154.253.80-443/
       - 90.156.217.130-8443
+      - 130.193.59.133-443/
+      - 130.193.59.133-8443/
       - 130.193.59.133-51101/
-      - 95.174.93.49-443
-      - 158.160.105.121-51102/
-      - 79.137.175.44-8443/
-      - 87.239.106.153-443/
       - 87.239.106.153-8443/
-      - 51.250.86.102-443/
-      - 79.137.175.59-443/
+      - 79.174.94.49-21314
+      - 51.250.0.147-443/
       - 89.169.162.214-443/
       - 89.169.162.214-8443/
-      - 51.250.26.75-443
-      - 51.250.92.100-443
-      - 195.123.211.205-2053
 
 rules:
   - MATCH,Proxy
