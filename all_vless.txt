@@ -1,0 +1,31 @@
+$inputFile  = "all_vless.txt"
+$poolFile   = "ip_port_pool.txt"
+$out1       = "filtered_vless.txt"
+$out2       = "vless_list_new.txt"
+
+$allowed = Get-Content $poolFile | ForEach-Object {
+    ($_ -replace "\s","").Trim()
+}
+
+$result = @()
+
+Get-Content $inputFile | ForEach-Object {
+
+    if ($_ -match "@([^:]+):(\d+)") {
+
+        $ip   = $Matches[1]
+        $port = $Matches[2]
+        $pair = "$ip`:$port"
+
+        if ($allowed -contains $pair) {
+            $result += $_
+        }
+    }
+}
+
+$result = $result | Sort-Object -Unique
+
+$result | Set-Content $out1 -Encoding utf8NoBOM
+$result | Set-Content $out2 -Encoding utf8NoBOM
+
+Write-Host "Filtered:" $result.Count
