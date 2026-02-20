@@ -1,33 +1,42 @@
-name: Update VLESS whitelist
+name: Auto Update VLESS Whitelist
+
+permissions:
+  contents: write
 
 on:
-  workflow_dispatch:
   schedule:
     - cron: "*/30 * * * *"
+  workflow_dispatch:
 
 jobs:
-  update:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+    - name: Checkout Repo
+      uses: actions/checkout@v3
 
-      - name: Run download_sources.ps1
-        shell: pwsh
-        run: ./download_sources.ps1
+    - name: Install PowerShell
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y powershell
 
-      - name: Run filter.ps1
-        shell: pwsh
-        run: ./filter.ps1
+    - name: Run download_sources.ps1
+      shell: pwsh
+      run: ./download_sources.ps1
 
-      - name: Commit updated TXT
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
+    - name: Extract IP:PORT from all_vless.txt
+      shell: pwsh
+      run: ./extract_ip_port.ps1
 
-          git add filtered_vless.txt
-          git add vless_list_new.txt
+    - name: Filter VLESS by ip_port_pool.txt
+      shell: pwsh
+      run: ./filter.ps1
 
-          git commit -m "Auto update VLESS whitelist" || echo "No changes"
-          git push
+    - name: Commit updated TXT files
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "actions@github.com"
+        git add *.txt
+        git commit -m "auto update whitelist" || exit 0
+        git push
