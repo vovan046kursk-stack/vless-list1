@@ -23,7 +23,7 @@ Get-Content $sourceFile | Where-Object { $_ -match "^vless://" } | ForEach-Objec
 }
 
 $result = $result | Sort-Object -Unique
-$result | Out-File $outputFile -Encoding utf8
+$result | Set-Content $outputFile -Encoding utf8NoBOM
 
 Write-Host "Saved:" $result.Count
 
