@@ -22,16 +22,13 @@ jobs:
         sudo apt-get install -y powershell
 
     - name: Run download_sources.ps1
-      shell: pwsh
-      run: ./download_sources.ps1
+      run: pwsh -File download_sources.ps1
 
     - name: Extract IP:PORT from all_vless.txt
-      shell: pwsh
-      run: ./extract_ip_port.ps1
+      run: pwsh -File extract_ip_port.ps1
 
     - name: Filter VLESS by ip_port_pool.txt
-      shell: pwsh
-      run: ./filter.ps1
+      run: pwsh -File filter.ps1
 
     - name: Commit updated TXT files
       run: |
