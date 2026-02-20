@@ -13,14 +13,13 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup PowerShell
-        uses: actions/setup-powershell@v2
+      - name: Run download_sources.ps1
+        shell: pwsh
+        run: ./download_sources.ps1
 
-      - name: Download VLESS sources
-        run: pwsh ./download_sources.ps1
-
-      - name: Filter by whitelist IP:PORT
-        run: pwsh ./filter.ps1
+      - name: Run filter.ps1
+        shell: pwsh
+        run: ./filter.ps1
 
       - name: Commit updated TXT
         run: |
