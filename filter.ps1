@@ -1,77 +1,58 @@
-$inputFile  = "vless_list_new.txt"
-$poolFile   = "ip_port_pool.txt"
-$manualFile = "manual_ip_port.txt"
-$outputFile = "filtered_vless.txt"
+$inputFile  = "filtered_vless.txt"
+$outputFile = "vless_list_new.txt"
 
-if (!(Test-Path $inputFile)) {
-    Write-Host "vless_list_new.txt not found"
-    exit 1
-}
+$allowed = @(
+"37.139.33.52:443",
+"37.139.33.15:443",
+"109.120.188.140:443",
+"178.250.243.100:443",
+"178.250.243.220:443",
+"37.139.34.237:443",
+"89.208.228.250:8443",
+"178.250.243.208:443",
+"178.250.243.222:443",
+"178.250.243.221:443",
+"178.250.243.211:443",
+"178.250.243.99:443",
+"178.250.243.210:443",
+"51.250.73.139:8443",
+"5.188.143.8:443",
+"151.101.37.194:443",
+"84.23.52.70:8443",
+"5.188.143.8:8443",
+"81.200.151.139:443",
+"95.163.208.52:443",
+"46.243.235.109:443",
+"84.201.128.76:443",
+"151.236.114.162:6443",
+"188.253.17.225:443",
+"109.120.189.137:9443",
+"158.160.105.121:8443",
+"79.137.175.59:8443",
+"37.139.33.57:443",
+"5.188.140.18:1488",
+"109.120.191.92:1488",
+"151.236.114.233:6443"
+)
 
-$vlessList = Get-Content $inputFile
+$result = @()
 
-# ===============================
-# Загружаем авто IP
-# ===============================
-$ipPortList = @()
+Get-Content $inputFile | ForEach-Object {
 
-if (Test-Path $poolFile) {
-    $ipPortList += Get-Content $poolFile
-}
+    if ($_ -match '^vless://[^@]+@([^:]+):(\d+)') {
 
-# ===============================
-# Загружаем ручные IP (ВЕЧНЫЕ)
-# ===============================
-if (Test-Path $manualFile) {
-    $manualIPs = Get-Content $manualFile
-    $ipPortList += $manualIPs
-}
+        $ip   = $matches[1]
+        $port = $matches[2]
 
-# Убираем дубли
-$ipPortList = $ipPortList | Sort-Object -Unique
+        $combo = "$ip`:$port"
 
-if ($ipPortList.Count -eq 0) {
-    Write-Host "No IP list"
-    exit 1
-}
-
-$filtered = @()
-
-# ===============================
-# ФИЛЬТР VLESS ПО IP:PORT
-# ===============================
-foreach ($line in $vlessList) {
-
-    if ($line -notmatch "^vless://") { continue }
-
-    foreach ($ip in $ipPortList) {
-
-        $parts = $ip.Split(":")
-        if ($parts.Count -ne 2) { continue }
-
-        $server = $parts[0]
-        $port   = $parts[1]
-
-        if ($line -match "@$server`:$port") {
-            $filtered += $line
-            break
+        if ($allowed -contains $combo) {
+            $result += $_
         }
+
     }
+
 }
 
-# ===============================
-# Удаляем дубли
-# ===============================
-$filtered = $filtered | Sort-Object -Unique
-
-if ($filtered.Count -eq 0) {
-    Write-Host "No matching VLESS"
-    exit 1
-}
-
-# ===============================
-# Сохраняем
-# ===============================
-$filtered | Out-File $outputFile -Encoding utf8
-
-Write-Host "Filtered VLESS saved: $($filtered.Count)"
+$result | Set-Content $outputFile -Encoding utf8
+Write-Host "Filtered OK: $($result.Count) nodes saved"
