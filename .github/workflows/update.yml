@@ -1,4 +1,4 @@
-name: Auto update VLESS & Clash
+name: Update VLESS list
 
 on:
   schedule:
@@ -10,47 +10,28 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
+    - name: Checkout
       uses: actions/checkout@v4
 
-    # ===== ОБНОВЛЯЕМ FILTERED =====
     - name: Run filter
-      run: ./filter.ps1
       shell: pwsh
-
-    # ===== TXT ПОДПИСКА (HAPP НЕ ЛОМАЕМ) =====
-    - name: Update TXT subscription
       run: |
-        Copy-Item filtered_vless.txt vless_list_new.txt -Force
-      shell: pwsh
+        pwsh ./filter.ps1
 
-    # ===== ГЕНЕРАЦИЯ CLASH =====
-    - name: Generate Clash YAML
-      run: ./generate_clash.ps1
-      shell: pwsh
-
-    # ===== ПРОВЕРКА YAML =====
-    - name: Validate Clash YAML
+    - name: Check changes
       run: |
-        if (!(Test-Path clash_pool.yaml)) {
-          Write-Host "clash_pool.yaml not found"
-          exit 1
-        }
-        if (-not (Select-String -Path clash_pool.yaml -Pattern "proxies:")) {
-          Write-Host "Invalid YAML generated"
-          exit 1
-        }
-      shell: pwsh
+        git status
 
-    # ===== КОММИТ =====
     - name: Commit changes
       run: |
         git config --global user.name "github-actions"
-        git config --global user.email "actions@github.com"
-        git add .
-        git commit -m "Auto update subscription" || echo "No changes"
+        git config --global user.email "github-actions@github.com"
+
+        git add vless_list_new.txt
+
+        git commit -m "Auto update VLESS list" || echo "No changes"
+
         git push
-      shell: pwsh
