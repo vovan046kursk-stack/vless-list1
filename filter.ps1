@@ -1,29 +1,37 @@
-$sourceFile = "all_sources.txt"
-$poolFile   = "ip_port_pool.txt"
-$outputFile = "vless_list_new.txt"
-
-$allowed = Get-Content $poolFile | ForEach-Object {
-    ($_ -replace "\s","").Trim()
+# ====== CLEAN OLD FINAL ======
+if (Test-Path "vless_list_new.txt") {
+    Remove-Item "vless_list_new.txt"
 }
 
-$result = @()
+# ====== LOAD ALLOWED IP:PORT ======
+$allowed = Get-Content ip_port_pool.txt | ForEach-Object { $_.Trim() }
 
-Get-Content $sourceFile | Where-Object { $_ -match "^vless://" } | ForEach-Object {
+$good = @()
+$seen = @{}
 
-    if ($_ -match "@([^:]+):(\d+)") {
+# ====== FILTER VLESS ======
+Get-Content all_vless.txt | ForEach-Object {
 
-        $ip   = $Matches[1]
-        $port = $Matches[2]
-        $pair = "$ip`:$port"
+    $line = $_.Trim()
 
-        if ($allowed -contains $pair) {
-            $result += $_
+    if (!$line.StartsWith("vless://")) { return }
+
+    if ($line -match "TG:") { return }
+
+    if ($line -match '@([\d\.]+:\d+)') {
+
+        $ip = $matches[1]
+
+        if ($allowed -contains $ip) {
+
+            if (!$seen.ContainsKey($line)) {
+
+                $seen[$line] = $true
+                $good += $line
+            }
         }
     }
 }
 
-$result = $result | Sort-Object -Unique
-$result | Set-Content $outputFile -Encoding utf8NoBOM
-
-Write-Host "Saved:" $result.Count
-
+# ====== WRITE FINAL ======
+$good | Set-Content vless_list_new.txt -Encoding UTF8
