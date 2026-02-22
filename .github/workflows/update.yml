@@ -1,4 +1,4 @@
-name: Auto Update VLESS
+name: Auto Update VLESS (Whitelist + Ping + Failover)
 
 on:
   schedule:
@@ -10,10 +10,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download Sources
+      # ===== Скачиваем источники =====
+      - name: Download VLESS sources
         shell: pwsh
         run: |
           $urls = @(
@@ -26,17 +27,22 @@ jobs:
 
           foreach ($url in $urls) {
             try {
+              Write-Host "Downloading $url"
               Invoke-WebRequest $url -OutFile temp.txt
               Get-Content temp.txt | Add-Content all_sources.txt
-            } catch {}
+            } catch {
+              Write-Host "Failed: $url"
+            }
           }
 
-      - name: Run Filter
+      # ===== Запускаем фильтр =====
+      - name: Run filter (Whitelist + Ping)
         shell: pwsh
         run: |
           ./filter.ps1
 
-      - name: Commit changes
+      # ===== Коммитим изменения =====
+      - name: Commit updated files
         shell: pwsh
         run: |
           git config user.name "github-actions"
@@ -44,10 +50,11 @@ jobs:
 
           git add filtered_vless.txt
           git add vless_list_new.txt
+          git add server_state.json
 
           if (git diff --cached --quiet) {
-            echo "No changes"
+            Write-Host "No changes to commit"
           } else {
-            git commit -m "Auto update & dedupe"
+            git commit -m "Auto update: whitelist + ping + 2-fail removal"
             git push
           }
