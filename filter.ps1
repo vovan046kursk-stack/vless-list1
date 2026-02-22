@@ -3,34 +3,38 @@ $outputFiltered = "filtered_vless.txt"
 $outputFinal = "vless_list_new.txt"
 $stateFile = "server_state.json"
 
-# ===== whitelist =====
+# ===== ЖЁСТКИЙ WHITELIST =====
 $allowed = @(
 "146.185.240.23:443",
 "79.137.175.44:443",
 "87.239.110.251:443",
-"158.160.188.11:443",
+"84.201.129.41:8443",
+"158.160.197.213:443",
 "158.160.223.36:443",
 "95.163.211.158:8443",
 "51.250.26.102:443",
-"51.250.117.173:5443",
-"185.86.147.96:5443",
-"185.86.147.55:8443",
-"185.86.145.201:4443",
-"84.201.187.140:4443",
-"78.159.247.216:3443"
+"212.233.95.129:4443"
 )
 
-# ===== загрузка состояния =====
+# ===== Проверка входного файла =====
+if (!(Test-Path $inputFile)) {
+    Write-Host "all_sources.txt not found"
+    exit 1
+}
+
+# ===== Загрузка состояния =====
 if (Test-Path $stateFile) {
     $json = Get-Content $stateFile -Raw | ConvertFrom-Json
     $state = @{}
     foreach ($prop in $json.PSObject.Properties) {
         $state[$prop.Name] = $prop.Value
     }
-} else {
+}
+else {
     $state = @{}
 }
 
+# ===== Читаем VLESS =====
 $vlessLines = Get-Content $inputFile | Where-Object { $_ -match "^vless://" }
 
 $seen = @{}
@@ -44,53 +48,86 @@ foreach ($line in $vlessLines) {
         $port = $matches[2]
         $key = "$ip`:$port"
 
-        if (($allowed -contains $key) -and (-not $seen.ContainsKey($key))) {
+        # --- ЖЁСТКАЯ проверка whitelist ---
+        if (-not ($allowed -contains $key)) {
+            continue
+        }
 
-            $seen[$key] = $true
+        # --- Удаление дублей ---
+        if ($seen.ContainsKey($key)) {
+            continue
+        }
 
-            try {
-                $tcp = Test-NetConnection -ComputerName $ip -Port $port -InformationLevel Quiet -WarningAction SilentlyContinue
-            } catch { $tcp = $false }
+        $seen[$key] = $true
 
-            if ($tcp) {
+        # ===== TCP проверка =====
+        try {
+            $tcp = Test-NetConnection -ComputerName $ip -Port $port -InformationLevel Quiet -WarningAction SilentlyContinue
+        }
+        catch {
+            $tcp = $false
+        }
 
-                # сервер жив → сброс
-                $state[$key] = 0
+        # ===== Ping =====
+        try {
+            $pingResult = Test-Connection -ComputerName $ip -Count 1 -ErrorAction SilentlyContinue
+            $pingOk = $pingResult -ne $null
+            $latency = if ($pingOk) { $pingResult.ResponseTime } else { 9999 }
+        }
+        catch {
+            $pingOk = $false
+            $latency = 9999
+        }
 
-                $latency = (Test-Connection -ComputerName $ip -Count 1).ResponseTime
+        if ($tcp -and $pingOk) {
 
-                $alive += [PSCustomObject]@{
-                    Key = $key
-                    Line = $line
-                    Latency = $latency
-                }
+            # сервер жив → сброс счётчика
+            $state[$key] = 0
+
+            $alive += [PSCustomObject]@{
+                Key = $key
+                Line = $line
+                Latency = $latency
+            }
+
+            Write-Host "$key ALIVE ($latency ms)"
+        }
+        else {
+
+            # сервер мёртв → увеличиваем счётчик
+            if ($state.ContainsKey($key)) {
+                $state[$key] += 1
             }
             else {
-
-                if ($state.ContainsKey($key)) {
-                    $state[$key] += 1
-                } else {
-                    $state[$key] = 1
-                }
-
-                Write-Host "$key dead count: $($state[$key])"
+                $state[$key] = 1
             }
+
+            Write-Host "$key DEAD count: $($state[$key])"
         }
     }
 }
 
-# ===== удаляем тех, кто умер 2 раза =====
-$filtered = $alive | Where-Object {
-    $state[$_.Key] -lt 2
+# ===== Исключение после 2 падений =====
+$final = @()
+
+foreach ($item in $alive) {
+
+    $key = $item.Key
+
+    if ($state[$key] -lt 2) {
+        $final += $item
+    }
 }
 
-# сортировка
-$sorted = $filtered | Sort-Object Latency
+# ===== Сортировка по задержке =====
+$sorted = $final | Sort-Object Latency
 
+# ===== Запись файлов =====
 $sorted.Line | Set-Content $outputFiltered
 $sorted.Line | Set-Content $outputFinal
 
-# сохраняем состояние
+# ===== Сохранение состояния =====
 $state | ConvertTo-Json | Set-Content $stateFile
 
-Write-Host "Alive servers:" $sorted.Count
+Write-Host ""
+Write-Host "FINAL SERVERS:" $sorted.Count
