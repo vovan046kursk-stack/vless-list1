@@ -3,7 +3,7 @@ $outputFiltered = "filtered_vless.txt"
 $outputFinal = "vless_list_new.txt"
 $stateFile = "server_state.json"
 
-# ===== ТВОЙ whitelist =====
+# ===== whitelist =====
 $allowed = @(
 "146.185.240.23:443",
 "79.137.175.44:443",
@@ -16,7 +16,7 @@ $allowed = @(
 "212.233.95.129:4443"
 )
 
-# ===== Загружаем состояние =====
+# ===== загрузка состояния =====
 if (Test-Path $stateFile) {
     $state = Get-Content $stateFile | ConvertFrom-Json
 } else {
@@ -40,52 +40,48 @@ foreach ($line in $vlessLines) {
 
             $seen[$key] = $true
 
-            # TCP CHECK
             try {
                 $tcp = Test-NetConnection -ComputerName $ip -Port $port -InformationLevel Quiet -WarningAction SilentlyContinue
             } catch { $tcp = $false }
 
             if ($tcp) {
 
-                # сервер жив → сброс счетчика
-                $state.$key = 0
+                # жив → сброс
+                $state[$key] = 0
 
                 $latency = (Test-Connection -ComputerName $ip -Count 1).ResponseTime
 
                 $alive += [PSCustomObject]@{
+                    Key = $key
                     Line = $line
                     Latency = $latency
                 }
             }
             else {
 
-                # сервер мертв → увеличиваем счетчик
-                if ($state.$key) {
-                    $state.$key += 1
+                if ($state.ContainsKey($key)) {
+                    $state[$key] += 1
                 } else {
-                    $state.$key = 1
+                    $state[$key] = 1
                 }
 
-                Write-Host "$key dead count: $($state.$key)"
+                Write-Host "$key dead count: $($state[$key])"
             }
         }
     }
 }
 
-# ===== Удаляем тех, кто умер 2 раза =====
-$alive = $alive | Where-Object {
-    $k = ($_ .Line -match "@([^:]+):(\d+)"; "$($matches[1]):$($matches[2])")
-    $state.$k -lt 2
+# ===== удаляем кто умер 2 раза =====
+$filtered = $alive | Where-Object {
+    $state[$_.Key] -lt 2
 }
 
 # сортируем по ping
-$sorted = $alive | Sort-Object Latency
+$sorted = $filtered | Sort-Object Latency
 
 $sorted.Line | Set-Content $outputFiltered
 $sorted.Line | Set-Content $outputFinal
 
-# сохраняем состояние
 $state | ConvertTo-Json | Set-Content $stateFile
 
 Write-Host "Alive servers:" $sorted.Count
-
