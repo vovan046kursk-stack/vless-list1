@@ -11,6 +11,7 @@ $allowedPairs = @(
 "158.160.223.36:443",
 "95.163.211.158:8443",
 "51.250.26.102:443"
+"51.250.117.173:5443"
 )
 
 $allowedPairs | Set-Content ip_port_pool.txt -Encoding UTF8
