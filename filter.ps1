@@ -1,13 +1,9 @@
 $inputFile = "all_sources.txt"
 $outputFiltered = "filtered_vless.txt"
 $outputFinal = "vless_list_new.txt"
+$stateFile = "server_state.json"
 
-if (!(Test-Path $inputFile)) {
-    Write-Host "all_sources.txt not found"
-    exit 1
-}
-
-# ===== ТВОЙ БЕЛЫЙ СПИСОК =====
+# ===== ТВОЙ whitelist =====
 $allowed = @(
 "146.185.240.23:443",
 "79.137.175.44:443",
@@ -20,32 +16,76 @@ $allowed = @(
 "212.233.95.129:4443"
 )
 
-# Берем только vless строки
+# ===== Загружаем состояние =====
+if (Test-Path $stateFile) {
+    $state = Get-Content $stateFile | ConvertFrom-Json
+} else {
+    $state = @{}
+}
+
 $vlessLines = Get-Content $inputFile | Where-Object { $_ -match "^vless://" }
 
 $seen = @{}
-$result = @()
+$alive = @()
 
 foreach ($line in $vlessLines) {
 
     if ($line -match "vless://.*@([^:]+):(\d+)") {
 
-        $key = "$($matches[1]):$($matches[2])"
+        $ip = $matches[1]
+        $port = $matches[2]
+        $key = "$ip`:$port"
 
-        # проверяем есть ли в whitelist
-        if ($allowed -contains $key) {
+        if (($allowed -contains $key) -and (-not $seen.ContainsKey($key))) {
 
-            # убираем дубли
-            if (-not $seen.ContainsKey($key)) {
-                $seen[$key] = $true
-                $result += $line
+            $seen[$key] = $true
+
+            # TCP CHECK
+            try {
+                $tcp = Test-NetConnection -ComputerName $ip -Port $port -InformationLevel Quiet -WarningAction SilentlyContinue
+            } catch { $tcp = $false }
+
+            if ($tcp) {
+
+                # сервер жив → сброс счетчика
+                $state.$key = 0
+
+                $latency = (Test-Connection -ComputerName $ip -Count 1).ResponseTime
+
+                $alive += [PSCustomObject]@{
+                    Line = $line
+                    Latency = $latency
+                }
+            }
+            else {
+
+                # сервер мертв → увеличиваем счетчик
+                if ($state.$key) {
+                    $state.$key += 1
+                } else {
+                    $state.$key = 1
+                }
+
+                Write-Host "$key dead count: $($state.$key)"
             }
         }
     }
 }
 
-$result | Set-Content $outputFiltered
-$result | Set-Content $outputFinal
+# ===== Удаляем тех, кто умер 2 раза =====
+$alive = $alive | Where-Object {
+    $k = ($_ .Line -match "@([^:]+):(\d+)"; "$($matches[1]):$($matches[2])")
+    $state.$k -lt 2
+}
 
-Write-Host "Allowed unique servers:" $result.Count
+# сортируем по ping
+$sorted = $alive | Sort-Object Latency
+
+$sorted.Line | Set-Content $outputFiltered
+$sorted.Line | Set-Content $outputFinal
+
+# сохраняем состояние
+$state | ConvertTo-Json | Set-Content $stateFile
+
+Write-Host "Alive servers:" $sorted.Count
 
