@@ -1,5 +1,5 @@
 $urls = @(
-"https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt"
+"https://raw.githubusercontent.com/AvenCores/goida-vpn-configs/refs/heads/main/githubmirror/26.txt"
 )
 
 $out = "all_vless.txt"
