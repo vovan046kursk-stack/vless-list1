@@ -1,37 +1,51 @@
-# ====== CLEAN OLD FINAL ======
-if (Test-Path "vless_list_new.txt") {
-    Remove-Item "vless_list_new.txt"
+$inputFile = "all_sources.txt"
+$outputFiltered = "filtered_vless.txt"
+$outputFinal = "vless_list_new.txt"
+
+if (!(Test-Path $inputFile)) {
+    Write-Host "all_sources.txt not found"
+    exit 1
 }
 
-# ====== LOAD ALLOWED IP:PORT ======
-$allowed = Get-Content ip_port_pool.txt | ForEach-Object { $_.Trim() }
+# ===== ТВОЙ БЕЛЫЙ СПИСОК =====
+$allowed = @(
+"146.185.240.23:443",
+"79.137.175.44:443",
+"87.239.110.251:443",
+"84.201.129.41:8443",
+"158.160.197.213:443",
+"158.160.223.36:443",
+"95.163.211.158:8443",
+"51.250.26.102:443",
+"212.233.95.129:4443"
+)
 
-$good = @()
+# Берем только vless строки
+$vlessLines = Get-Content $inputFile | Where-Object { $_ -match "^vless://" }
+
 $seen = @{}
+$result = @()
 
-# ====== FILTER VLESS ======
-Get-Content all_vless.txt | ForEach-Object {
+foreach ($line in $vlessLines) {
 
-    $line = $_.Trim()
+    if ($line -match "vless://.*@([^:]+):(\d+)") {
 
-    if (!$line.StartsWith("vless://")) { return }
+        $key = "$($matches[1]):$($matches[2])"
 
-    if ($line -match "TG:") { return }
+        # проверяем есть ли в whitelist
+        if ($allowed -contains $key) {
 
-    if ($line -match '@([\d\.]+:\d+)') {
-
-        $ip = $matches[1]
-
-        if ($allowed -contains $ip) {
-
-            if (!$seen.ContainsKey($line)) {
-
-                $seen[$line] = $true
-                $good += $line
+            # убираем дубли
+            if (-not $seen.ContainsKey($key)) {
+                $seen[$key] = $true
+                $result += $line
             }
         }
     }
 }
 
-# ====== WRITE FINAL ======
-$good | Set-Content vless_list_new.txt -Encoding UTF8
+$result | Set-Content $outputFiltered
+$result | Set-Content $outputFinal
+
+Write-Host "Allowed unique servers:" $result.Count
+
