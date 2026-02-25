@@ -1,86 +1,75 @@
-# ==============================
-# SIMPLE NODE FILTER SYSTEM
-# ==============================
+# ==========================================
+# GITHUB CI VLESS FILTER (PREFIX + PORT)
+# Output: vless_list_new.txt
+# ==========================================
 
 $inputFile  = "all_sources.txt"
-$outputFile = "filtered_nodes.txt"
-$stateFile  = "state.json"
+$outputFile = "vless_list_new.txt"
 
-$deleteLimit = 5
-
-# ===== Prefix whitelist =====
+# ===== PREFIX + PORT WHITELIST =====
 $allowed = @{
     "79.137.175."  = @("443")
     "212.233.98."  = @("8443")
     "212.233.123." = @("8443")
     "89.208.222."  = @("8443")
-    "95.163.210." = @("443")
-    "95.163.211." = @("443")
-    "109.120."    = @("443")
-    "217.16."     = @("443")
-    "51.250."     = @("443")
-    "84.252."     = @("443")
+    "95.163.210."  = @("443")
+    "95.163.211."  = @("443")
+    "109.120."     = @("443")
+    "217.16."      = @("443")
+    "51.250."      = @("443")
+    "84.252."      = @("443")
 }
 
-# ===== Load state =====
-if (Test-Path $stateFile) {
-    $stateRaw = Get-Content $stateFile -Raw | ConvertFrom-Json
-    $state = @{} + $stateRaw
-}
-else {
-    $state = @{}
+if (!(Test-Path $inputFile)) {
+    Write-Host "Input file not found!"
+    exit 1
 }
 
-$filtered = @()
+$lines = Get-Content $inputFile
 
-# ===== Main loop =====
-Get-Content $inputFile | ForEach-Object {
+# ===== PARAM FILTER =====
+$filtered = $lines | Where-Object {
+    $_ -match "^vless://" -and
+    $_ -match "security=reality" -and
+    $_ -match "flow=xtls-rprx-vision" -and
+    $_ -match "type=tcp" -and
+    $_ -match "fp=chrome"
+}
 
-    if ($_ -match "@([0-9\.]+):(\d+)") {
+# ===== PREFIX + PORT FILTER =====
+$whitelisted = foreach ($line in $filtered) {
+
+    if ($line -match "@([^:]+):(\d+)") {
 
         $ip   = $matches[1]
         $port = $matches[2]
-        $ipPort = "${ip}:${port}"
-
-        $allowedMatch = $false
 
         foreach ($prefix in $allowed.Keys) {
             if ($ip.StartsWith($prefix) -and $allowed[$prefix] -contains $port) {
-                $allowedMatch = $true
+                $line
                 break
-            }
-        }
-
-        if (-not $allowedMatch) {
-            return
-        }
-
-        # Auto-add to state
-        if (-not $state.ContainsKey($ipPort)) {
-            $state[$ipPort] = 0
-        }
-
-        # Simulated health check (replace with real check if нужно)
-        $tcp = Test-NetConnection -ComputerName $ip -Port $port -WarningAction SilentlyContinue
-
-        if ($tcp.TcpTestSucceeded) {
-
-            $state[$ipPort] = 0
-            $filtered += $_
-        }
-        else {
-            $state[$ipPort]++
-
-            if ($state[$ipPort] -ge $deleteLimit) {
-                $state.Remove($ipPort)
             }
         }
     }
 }
 
-# ===== Save results =====
-$filtered | Set-Content $outputFile
+# ===== REMOVE DUPLICATE IP =====
+$unique = @{}
+$result = foreach ($line in $whitelisted) {
 
-$state | ConvertTo-Json -Depth 3 | Set-Content $stateFile
+    if ($line -match "@([^:]+):") {
+        $ip = $matches[1]
+
+        if (-not $unique.ContainsKey($ip)) {
+            $unique[$ip] = $true
+            $line
+        }
+    }
+}
+
+# ===== LIMIT =====
+$final = $result | Select-Object -First 50
+
+$final | Set-Content $outputFile
 
 Write-Host "Done. Saved to $outputFile"
