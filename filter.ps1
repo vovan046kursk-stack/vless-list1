@@ -24,7 +24,7 @@ $allowed = @{
 
 # ===== STATIC BLOCKED CIDR (ручной список) =====
 $blockedCIDR = @(
-    "95.163.210.0/24"
+    
 )
 
 # ===== AUTO CUT THRESHOLD =====
