@@ -1,5 +1,5 @@
 # ==========================================
-# FILTER1 - PREFIX + UNIVERSAL CIDR
+# FILTER1 - PREFIX + PARTIAL AUTO CIDR CUT
 # Output: vless_list_new.txt
 # ==========================================
 
@@ -17,15 +17,19 @@ $allowed = @{
     "109.120."     = @("443")
     "217.16."      = @("443")
     "51.250."      = @("443")
-    }
+    "84.252."      = @("443")
+}
 
-# ===== CIDR BLACKLIST =====
+# ===== STATIC BLOCKED CIDR (ручной список) =====
 $blockedCIDR = @(
-    "95.163.210.0/24",
-    "109.120.190.0/23"
+    "95.163.210.0/24"
 )
 
-# ===== UNIVERSAL CIDR FUNCTION =====
+# ===== AUTO CUT THRESHOLD =====
+# если в одной /24 больше 6 IP → считаем спам-пулом
+$autoCutThreshold = 6
+
+# ===== UNIVERSAL CIDR CHECK =====
 function Test-IPInCIDR {
     param(
         [string]$IP,
@@ -61,8 +65,6 @@ if (!(Test-Path $inputFile)) {
 
 $lines = Get-Content $inputFile
 
-Write-Host "Total lines:" $lines.Count
-
 # ===== PARAM FILTER =====
 $filtered = $lines | Where-Object {
     $_ -match "^vless://" -and
@@ -72,8 +74,39 @@ $filtered = $lines | Where-Object {
     $_ -match "fp=chrome"
 }
 
-Write-Host "After param filter:" $filtered.Count
+# ===== COLLECT IPs FOR AUTO ANALYSIS =====
+$ipList = @()
 
+foreach ($line in $filtered) {
+    if ($line -match "@([^:]+):(\d+)") {
+        $ip = $matches[1]
+        $ipList += $ip
+    }
+}
+
+# ===== GROUP BY /24 =====
+$groups = @{}
+
+foreach ($ip in $ipList) {
+    $parts = $ip.Split(".")
+    $prefix24 = "$($parts[0]).$($parts[1]).$($parts[2]).0/24"
+
+    if (-not $groups.ContainsKey($prefix24)) {
+        $groups[$prefix24] = 0
+    }
+
+    $groups[$prefix24]++
+}
+
+# ===== AUTO ADD HEAVY /24 TO BLACKLIST =====
+foreach ($net in $groups.Keys) {
+    if ($groups[$net] -gt $autoCutThreshold) {
+        $blockedCIDR += $net
+        Write-Host "Auto-blocked:" $net "Count:" $groups[$net]
+    }
+}
+
+# ===== MAIN FILTER =====
 $unique = @{}
 $result = @()
 
@@ -84,7 +117,7 @@ foreach ($line in $filtered) {
         $ip   = $matches[1]
         $port = $matches[2]
 
-        # ===== PREFIX + PORT CHECK =====
+        # PREFIX + PORT CHECK
         $allowedMatch = $false
 
         foreach ($prefix in $allowed.Keys) {
@@ -96,7 +129,7 @@ foreach ($line in $filtered) {
 
         if (-not $allowedMatch) { continue }
 
-        # ===== CIDR BLACKLIST CHECK =====
+        # CIDR BLACKLIST CHECK
         $blocked = $false
         foreach ($cidr in $blockedCIDR) {
             if (Test-IPInCIDR -IP $ip -CIDR $cidr) {
@@ -107,7 +140,7 @@ foreach ($line in $filtered) {
 
         if ($blocked) { continue }
 
-        # ===== REMOVE DUPLICATE IP =====
+        # REMOVE DUPLICATES
         if (-not $unique.ContainsKey($ip)) {
             $unique[$ip] = $true
             $result += $line
@@ -117,9 +150,8 @@ foreach ($line in $filtered) {
 
 Write-Host "Final count:" $result.Count
 
-# ===== LIMIT OUTPUT =====
+# LIMIT OUTPUT
 $final = $result | Select-Object -First 50
-
 $final | Set-Content $outputFile
 
 Write-Host "Done. Saved to $outputFile"
