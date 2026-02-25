@@ -35,7 +35,7 @@ Get-Content $inputFile | ForEach-Object {
 
         $ip   = $matches[1]
         $port = $matches[2]
-        $ipPort = "$ip:$port"
+        $ipPort = "${ip}:${port}"
 
         $allowedMatch = $false
 
