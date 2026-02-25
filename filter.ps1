@@ -1,70 +1,75 @@
-$inputFile = "all_sources.txt"
+# ==============================
+# ENTERPRISE VLESS FILTER
+# ==============================
+
+$inputFile      = "all_sources.txt"
 $outputFiltered = "filtered_vless.txt"
-$outputFinal = "vless_list_new.txt"
-$stateFile = "server_state.json"
+$outputFinal    = "vless_list_new.txt"
+$stateFile      = "state.json"
 
 # ===== ЖЁСТКИЙ WHITELIST =====
 $allowed = @(
 "79.137.175.44:443",
-"87.239.110.251:443",
 "95.163.211.158:8443",
-"51.250.26.102:443",
-"37.139.32.112:8443",
-"37.139.34.165:8443",
-"37.139.33.15:8443",
-"37.139.35.12:8443",
-"37.139.34.145:8443",
-"84.23.53.243:443",
-"178.250.243.188:3443",
-"151.236.114.162:6443",
-"212.233.123.107:8443"
+"158.160.188.11:443",
+"51.250.117.173:5443",
+"185.86.147.96:5443",
+"185.86.147.55:8443",
+"185.86.145.201:4443",
+"78.159.247.216:3443",
+"87.239.111.116:5443"
 )
 
-# ===== Проверка входного файла =====
+# ===== Настройки =====
+$quarantineLimit = 3
+$deleteLimit     = 5
+$topLimit        = 5
+
 if (!(Test-Path $inputFile)) {
-    Write-Host "all_sources.txt not found"
+    Write-Host "Input file not found"
     exit 1
 }
 
 # ===== Загрузка состояния =====
 if (Test-Path $stateFile) {
-    $json = Get-Content $stateFile -Raw | ConvertFrom-Json
+    $raw = Get-Content $stateFile -Raw | ConvertFrom-Json
     $state = @{}
-    foreach ($prop in $json.PSObject.Properties) {
-        $state[$prop.Name] = $prop.Value
+    foreach ($p in $raw.PSObject.Properties) {
+        $state[$p.Name] = $p.Value
     }
 }
 else {
     $state = @{}
 }
 
-# ===== Читаем VLESS =====
 $vlessLines = Get-Content $inputFile | Where-Object { $_ -match "^vless://" }
 
-$seen = @{}
 $alive = @()
+$seen  = @{}
 
 foreach ($line in $vlessLines) {
 
-    if ($line -match "vless://.*@([^:]+):(\d+)") {
+    if ($line -match "@([^:]+):(\d+)") {
 
-        $ip = $matches[1]
+        $ip   = $matches[1]
         $port = $matches[2]
-        $key = "$ip`:$port"
+        $key  = "$ip`:$port"
 
-        # --- ЖЁСТКАЯ проверка whitelist ---
-        if (-not ($allowed -contains $key)) {
-            continue
-        }
+        # whitelist
+        if (-not ($allowed -contains $key)) { continue }
 
-        # --- Удаление дублей ---
-        if ($seen.ContainsKey($key)) {
-            continue
-        }
-
+        # убрать дубли
+        if ($seen.ContainsKey($key)) { continue }
         $seen[$key] = $true
 
-        # ===== TCP проверка =====
+        if (-not $state.ContainsKey($key)) {
+            $state[$key] = @{
+                fail = 0
+                quarantine = $false
+            }
+        }
+
+        # ===== TCP CHECK =====
         try {
             $tcp = Test-NetConnection -ComputerName $ip -Port $port -InformationLevel Quiet -WarningAction SilentlyContinue
         }
@@ -72,66 +77,68 @@ foreach ($line in $vlessLines) {
             $tcp = $false
         }
 
-        # ===== Ping =====
-        try {
-            $pingResult = Test-Connection -ComputerName $ip -Count 1 -ErrorAction SilentlyContinue
-            $pingOk = $pingResult -ne $null
-            $latency = if ($pingOk) { $pingResult.ResponseTime } else { 9999 }
-        }
-        catch {
-            $pingOk = $false
-            $latency = 9999
-        }
+        if ($tcp) {
 
-        if ($tcp -and $pingOk) {
+            $state[$key].fail = 0
+            $state[$key].quarantine = $false
 
-            # сервер жив → сброс счётчика
-            $state[$key] = 0
+            # latency через TCP
+            try {
+                $ping = Test-Connection -ComputerName $ip -Count 1 -ErrorAction SilentlyContinue
+                $lat  = if ($ping) { $ping.ResponseTime } else { 9999 }
+            }
+            catch {
+                $lat = 9999
+            }
 
             $alive += [PSCustomObject]@{
                 Key = $key
                 Line = $line
-                Latency = $latency
+                Latency = $lat
             }
 
-            Write-Host "$key ALIVE ($latency ms)"
+            Write-Host "$key ALIVE ($lat ms)"
         }
         else {
 
-            # сервер мёртв → увеличиваем счётчик
-            if ($state.ContainsKey($key)) {
-                $state[$key] += 1
-            }
-            else {
-                $state[$key] = 1
+            $state[$key].fail++
+
+            if ($state[$key].fail -ge $deleteLimit) {
+                Write-Host "$key REMOVED after $deleteLimit fails"
+                continue
             }
 
-            Write-Host "$key DEAD count: $($state[$key])"
+            if ($state[$key].fail -ge $quarantineLimit) {
+                $state[$key].quarantine = $true
+                Write-Host "$key QUARANTINE ($($state[$key].fail))"
+            }
+            else {
+                Write-Host "$key FAIL ($($state[$key].fail))"
+            }
         }
     }
 }
 
-# ===== Исключение после 2 падений =====
-$final = @()
-
-foreach ($item in $alive) {
-
-    $key = $item.Key
-
-    if ($state[$key] -lt 2) {
-        $final += $item
-    }
+# ===== Убираем карантин =====
+$finalAlive = $alive | Where-Object {
+    -not $state[$_.Key].quarantine
 }
 
-# ===== Сортировка по задержке =====
-$sorted = $final | Sort-Object Latency
+# ===== Сортировка по latency =====
+$sorted = $finalAlive | Sort-Object Latency
 
-# ===== Запись файлов =====
-$sorted.Line | Set-Content $outputFiltered
-$sorted.Line | Set-Content $outputFinal
+# ===== TOP + RESERVE =====
+$top     = $sorted | Select-Object -First $topLimit
+$reserve = $sorted | Select-Object -Skip $topLimit
+
+$top.Line | Set-Content $outputFinal -Encoding utf8
+$sorted.Line | Set-Content $outputFiltered -Encoding utf8
 
 # ===== Сохранение состояния =====
-$state | ConvertTo-Json | Set-Content $stateFile
+$state | ConvertTo-Json -Depth 3 | Set-Content $stateFile
 
 Write-Host ""
-Write-Host "FINAL SERVERS:" $sorted.Count
+Write-Host "TOP SERVERS:" $top.Count
+Write-Host "RESERVE:" $reserve.Count
+
+
