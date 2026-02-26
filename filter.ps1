@@ -1,5 +1,5 @@
 # ==========================================
-# FILTER1 - PREFIX + PARTIAL AUTO CIDR CUT
+# FILTER1 - DEBUG VERSION (REALITY + VISION)
 # Output: vless_list_new.txt
 # ==========================================
 
@@ -15,55 +15,18 @@ $allowed = @{
     "87.239.108."  = @("8443")
     "89.208.222."  = @("8443")
     "84.201.128."  = @("443")
-    "37.139.33."  = @("443")
-    "5.188.141."  = @("443")
-    "185.254.98."    = @("443")
-    "185.241.193."    = @("8443")
-    "109.120.188."    = @("443")
-    "109.120.189."    = @("443")
-    "51.250.20."    = @("8443")
+    "37.139.33."   = @("443")
+    "5.188.141."   = @("443")
+    "185.254.98."  = @("443")
+    "185.241.193." = @("8443")
+    "109.120.188." = @("443")
+    "109.120.189." = @("443")
+    "51.250.20."   = @("8443")
     "51.250.4."    = @("443")
     "95.163.183."  = @("443")
     "95.163.208."  = @("443")
-    "95.163.210."  = @("80")
-    "79.137.175."  = @("8443","51102")
-    }
-
-# ===== STATIC BLOCKED CIDR (ручной список) =====
-$blockedCIDR = @(
-    
-)
-
-# ===== AUTO CUT THRESHOLD =====
-# если в одной /24 больше 6 IP → считаем спам-пулом
-$autoCutThreshold = 6
-
-# ===== UNIVERSAL CIDR CHECK =====
-function Test-IPInCIDR {
-    param(
-        [string]$IP,
-        [string]$CIDR
-    )
-
-    $parts = $CIDR.Split('/')
-    $network = [System.Net.IPAddress]::Parse($parts[0])
-    $prefixLength = [int]$parts[1]
-
-    $ipBytes = [System.Net.IPAddress]::Parse($IP).GetAddressBytes()
-    $networkBytes = $network.GetAddressBytes()
-
-    [Array]::Reverse($ipBytes)
-    [Array]::Reverse($networkBytes)
-
-    $ipInt = [BitConverter]::ToUInt32($ipBytes, 0)
-    $networkInt = [BitConverter]::ToUInt32($networkBytes, 0)
-
-    $mask = [uint32]0
-    if ($prefixLength -ne 0) {
-        $mask = [uint32]::MaxValue -shl (32 - $prefixLength)
-    }
-
-    return (($ipInt -band $mask) -eq ($networkInt -band $mask))
+    "95.163.210."  = @("443","8443")
+    "79.137.175."  = @("8443","51102","443")
 }
 
 # ===== START =====
@@ -73,47 +36,16 @@ if (!(Test-Path $inputFile)) {
 }
 
 $lines = Get-Content $inputFile
+Write-Host "Total lines:" $lines.Count
 
 # ===== PARAM FILTER =====
 $filtered = $lines | Where-Object {
     $_ -match "^vless://" -and
     $_ -match "security=reality" -and
-    $_ -match "flow=xtls-rprx-vision" -and
-    $_ -match "type=tcp" -and
-    $_ -match "fp=chrome"
+    $_ -match "flow=xtls-rprx-vision"
 }
 
-# ===== COLLECT IPs FOR AUTO ANALYSIS =====
-$ipList = @()
-
-foreach ($line in $filtered) {
-    if ($line -match "@([^:]+):(\d+)") {
-        $ip = $matches[1]
-        $ipList += $ip
-    }
-}
-
-# ===== GROUP BY /24 =====
-$groups = @{}
-
-foreach ($ip in $ipList) {
-    $parts = $ip.Split(".")
-    $prefix24 = "$($parts[0]).$($parts[1]).$($parts[2]).0/24"
-
-    if (-not $groups.ContainsKey($prefix24)) {
-        $groups[$prefix24] = 0
-    }
-
-    $groups[$prefix24]++
-}
-
-# ===== AUTO ADD HEAVY /24 TO BLACKLIST =====
-foreach ($net in $groups.Keys) {
-    if ($groups[$net] -gt $autoCutThreshold) {
-        $blockedCIDR += $net
-        Write-Host "Auto-blocked:" $net "Count:" $groups[$net]
-    }
-}
+Write-Host "After param filter:" $filtered.Count
 
 # ===== MAIN FILTER =====
 $unique = @{}
@@ -126,7 +58,6 @@ foreach ($line in $filtered) {
         $ip   = $matches[1]
         $port = $matches[2]
 
-        # PREFIX + PORT CHECK
         $allowedMatch = $false
 
         foreach ($prefix in $allowed.Keys) {
@@ -138,18 +69,7 @@ foreach ($line in $filtered) {
 
         if (-not $allowedMatch) { continue }
 
-        # CIDR BLACKLIST CHECK
-        $blocked = $false
-        foreach ($cidr in $blockedCIDR) {
-            if (Test-IPInCIDR -IP $ip -CIDR $cidr) {
-                $blocked = $true
-                break
-            }
-        }
-
-        if ($blocked) { continue }
-
-        # REMOVE DUPLICATES
+        # Remove duplicates by IP
         if (-not $unique.ContainsKey($ip)) {
             $unique[$ip] = $true
             $result += $line
@@ -157,10 +77,11 @@ foreach ($line in $filtered) {
     }
 }
 
-Write-Host "Final count:" $result.Count
+Write-Host "After whitelist:" $result.Count
 
-# LIMIT OUTPUT
+# ===== LIMIT OUTPUT =====
 $final = $result | Select-Object -First 50
 $final | Set-Content $outputFile
 
+Write-Host "Final count saved:" $final.Count
 Write-Host "Done. Saved to $outputFile"
