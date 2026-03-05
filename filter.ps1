@@ -38,9 +38,21 @@ if (Test-Path $historyFile) {
     $history = @{}
 }
 
-if (!(Test-Path $inputFile)) {
-    Write-Host "No sources"
-    exit
+if (Test-Path $historyFile) {
+
+    $json = Get-Content $historyFile -Raw | ConvertFrom-Json
+
+    $history = @{}
+
+    foreach ($p in $json.PSObject.Properties) {
+        $history[$p.Name] = $p.Value
+    }
+
+}
+else {
+
+    $history = @{}
+
 }
 
 $lines = Get-Content $inputFile
