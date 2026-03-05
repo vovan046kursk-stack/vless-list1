@@ -1,10 +1,12 @@
 # ==========================================
-# VLESS REALITY FILTER (FULL OPTIMIZED)
+# VLESS REALITY FILTER (FINAL OPTIMIZED)
 # ==========================================
 
 $inputFile  = "all_sources.txt"
 $outputFile = "vless_list_new.txt"
+
 $historyFile = "subnet_history.json"
+$latencyFile = "latency_cache.json"
 
 # ===== STATIC WHITELIST =====
 
@@ -32,28 +34,37 @@ $allowed = @{
 
 # ===== LOAD HISTORY =====
 
+$history = @{}
+
 if (Test-Path $historyFile) {
 
-    $json = Get-Content $historyFile -Raw | ConvertFrom-Json
-    $history = @{}
+$json = Get-Content $historyFile -Raw | ConvertFrom-Json
 
-    foreach ($p in $json.PSObject.Properties) {
-        $history[$p.Name] = $p.Value
-    }
+foreach ($p in $json.PSObject.Properties) {
+
+$history[$p.Name] = $p.Value
 
 }
-else {
 
-    $history = @{}
+}
+
+# ===== LOAD RTT CACHE =====
+
+$latencyCache = @{}
+
+if (Test-Path $latencyFile) {
+
+$json = Get-Content $latencyFile -Raw | ConvertFrom-Json
+
+foreach ($p in $json.PSObject.Properties) {
+
+$latencyCache[$p.Name] = $p.Value
+
+}
 
 }
 
 # ===== LOAD SOURCES =====
-
-if (!(Test-Path $inputFile)) {
-    Write-Host "No sources"
-    exit
-}
 
 $lines = Get-Content $inputFile
 
@@ -63,9 +74,9 @@ Write-Host "Total lines:" $lines.Count
 
 $filtered = $lines | Where-Object {
 
-    $_ -match "^vless://" -and
-    $_ -match "security=reality" -and
-    $_ -match "flow=xtls-rprx-vision"
+$_ -match "^vless://" -and
+$_ -match "security=reality" -and
+$_ -match "flow=xtls-rprx-vision"
 
 }
 
@@ -75,36 +86,39 @@ $targets = @()
 
 foreach ($line in $filtered) {
 
-    if ($line -match "@([^:]+):(\d+)") {
+if ($line -match "@([^:]+):(\d+)") {
 
-        $ip   = $matches[1]
-        $port = $matches[2]
+$ip   = $matches[1]
+$port = $matches[2]
 
-        $prefix = ($ip.Split(".")[0..1] -join ".") + "."
+$prefix = ($ip.Split(".")[0..1] -join ".") + "."
 
-        if ($allowed.ContainsKey($prefix) -and $allowed[$prefix] -contains $port) {
+if ($allowed.ContainsKey($prefix) -and $allowed[$prefix] -contains $port) {
 
-            $targets += [PSCustomObject]@{
-                ip=$ip
-                port=$port
-                line=$line
-            }
+$targets += [PSCustomObject]@{
 
-        }
+ip=$ip
+port=$port
+line=$line
 
-        # ===== SUBNET HISTORY =====
+}
 
-        $parts = $ip.Split(".")
-        $subnet = "$($parts[0]).$($parts[1]).$($parts[2])."
+}
 
-        if ($history.ContainsKey($subnet)) {
-            $history[$subnet] += 1
-        }
-        else {
-            $history[$subnet] = 1
-        }
+$parts = $ip.Split(".")
+$subnet = "$($parts[0]).$($parts[1]).$($parts[2])."
 
-    }
+if ($history.ContainsKey($subnet)) {
+
+$history[$subnet] += 1
+
+} else {
+
+$history[$subnet] = 1
+
+}
+
+}
 
 }
 
@@ -119,16 +133,16 @@ Write-Host "Targets after dedup:" $targets.Count
 # ===== SMART SUBNET FILTER =====
 
 $bestSubnets = $history.GetEnumerator() |
-    Sort-Object Value -Descending |
-    Select-Object -First 20 |
-    ForEach-Object { $_.Key }
+Sort-Object Value -Descending |
+Select-Object -First 20 |
+ForEach-Object { $_.Key }
 
 $targets = $targets | Where-Object {
 
-    $parts = $_.ip.Split(".")
-    $subnet = "$($parts[0]).$($parts[1]).$($parts[2])."
+$parts = $_.ip.Split(".")
+$subnet = "$($parts[0]).$($parts[1]).$($parts[2])."
 
-    $bestSubnets -contains $subnet
+$bestSubnets -contains $subnet
 
 }
 
@@ -140,56 +154,102 @@ $targets = $targets | Select-Object -First 80
 
 Write-Host "Targets for RTT test:" $targets.Count
 
-# ===== PARALLEL TCP LATENCY TEST =====
+# ===== CHECK RTT CACHE =====
 
-$results = [System.Collections.Concurrent.ConcurrentBag[object]]::new()
+$testTargets = @()
 
-$targets | ForEach-Object -Parallel {
+foreach ($t in $targets) {
 
-    try {
+$key = "$($t.ip):$($t.port)"
 
-        $sw = [System.Diagnostics.Stopwatch]::StartNew()
+if ($latencyCache.ContainsKey($key)) {
 
-        $tcp = New-Object System.Net.Sockets.TcpClient
-        $task = $tcp.ConnectAsync($_.ip,$_.port)
+$t | Add-Member -Name rtt -Value $latencyCache[$key] -MemberType NoteProperty
 
-        if ($task.Wait(800)) {
+} else {
 
-            $sw.Stop()
-            $latency = $sw.ElapsedMilliseconds
+$testTargets += $t
 
-        }
-        else {
+}
 
-            $latency = 999
+}
 
-        }
+Write-Host "Need TCP test:" $testTargets.Count
 
-        $tcp.Close()
+# ===== TCP TEST =====
 
-    }
-    catch {
+$tested = $testTargets | ForEach-Object -Parallel {
 
-        $latency = 999
+try {
 
-    }
+$sw = [System.Diagnostics.Stopwatch]::StartNew()
 
-    $results.Add([PSCustomObject]@{
-        ip=$_.ip
-        port=$_.port
-        line=$_.line
-        rtt=$latency
-    })
+$tcp = New-Object System.Net.Sockets.TcpClient
+$task = $tcp.ConnectAsync($_.ip,$_.port)
+
+if ($task.Wait(800)) {
+
+$sw.Stop()
+$latency = $sw.ElapsedMilliseconds
+
+} else {
+
+$latency = 999
+
+}
+
+$tcp.Close()
+
+} catch {
+
+$latency = 999
+
+}
+
+[PSCustomObject]@{
+
+ip=$_.ip
+port=$_.port
+line=$_.line
+rtt=$latency
+
+}
 
 } -ThrottleLimit 10
 
-Write-Host "TCP latency test done"
+# ===== UPDATE CACHE =====
+
+foreach ($t in $tested) {
+
+$key = "$($t.ip):$($t.port)"
+$latencyCache[$key] = $t.rtt
+
+}
+
+# ===== MERGE RESULTS =====
+
+$results = @()
+
+foreach ($t in $targets) {
+
+$key = "$($t.ip):$($t.port)"
+
+$rtt = $latencyCache[$key]
+
+$results += [PSCustomObject]@{
+
+ip=$t.ip
+port=$t.port
+line=$t.line
+rtt=$rtt
+
+}
+
+}
 
 # ===== SORT BY LATENCY =====
 
 $sorted = $results | Sort-Object rtt
-
-# ===== FINAL SERVERS =====
 
 $final = $sorted | Select-Object -First 40
 
@@ -197,18 +257,24 @@ $final | ForEach-Object { $_.line } | Set-Content $outputFile
 
 Write-Host "Saved servers:" $final.Count
 
-# ===== LIMIT SUBNET HISTORY =====
+# ===== SAVE CACHE =====
+
+$latencyCache | ConvertTo-Json | Set-Content $latencyFile
+
+# ===== LIMIT HISTORY =====
 
 $maxSubnets = 40
 
 $sortedHistory = $history.GetEnumerator() |
-    Sort-Object Value -Descending |
-    Select-Object -First $maxSubnets
+Sort-Object Value -Descending |
+Select-Object -First $maxSubnets
 
 $newHistory = @{}
 
 foreach ($s in $sortedHistory) {
-    $newHistory[$s.Key] = $s.Value
+
+$newHistory[$s.Key] = $s.Value
+
 }
 
 $newHistory | ConvertTo-Json | Set-Content $historyFile
