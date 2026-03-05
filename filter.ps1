@@ -1,6 +1,5 @@
 # ==========================================
-# VLESS SCANNER 4.0
-# Multi-thread TCP + Floating Score
+# VLESS SCANNER 4.1 (GitHub optimized)
 # ==========================================
 
 $inputFile  = "all_sources.txt"
@@ -10,8 +9,7 @@ $scoreFile = "ip_scores.txt"
 $cooldownFile = "cooldown_ips.txt"
 
 $cooldownTime = 3600
-$threads = 50
-$tcpTimeout = 1500
+$tcpTimeout = 700
 
 # ===== PREFIX WHITELIST =====
 
@@ -35,30 +33,28 @@ $allowed = @{
 "79.137.175."   = @("443","8443","51102")
 }
 
-# ===== LOAD SCORES =====
+# ===== LOAD SCORE =====
 
 $scores = @{}
-
 if (Test-Path $scoreFile) {
-Get-Content $scoreFile | ForEach-Object {
-
-$p = $_ -split ","
-$scores[$p[0]] = [int]$p[1]
-
-}
+    Get-Content $scoreFile | ForEach-Object {
+        $p = $_ -split ","
+        if ($p.Count -eq 2) {
+            $scores[$p[0]] = [int]$p[1]
+        }
+    }
 }
 
 # ===== LOAD COOLDOWN =====
 
 $cooldown = @{}
-
 if (Test-Path $cooldownFile) {
-Get-Content $cooldownFile | ForEach-Object {
-
-$p = $_ -split ","
-$cooldown[$p[0]] = [int]$p[1]
-
-}
+    Get-Content $cooldownFile | ForEach-Object {
+        $p = $_ -split ","
+        if ($p.Count -eq 2) {
+            $cooldown[$p[0]] = [int]$p[1]
+        }
+    }
 }
 
 $now = [int][double]::Parse((Get-Date -UFormat %s))
@@ -71,9 +67,9 @@ $lines = Get-Content $inputFile
 
 $filtered = $lines | Where-Object {
 
-$_ -match "^vless://" -and
-$_ -match "security=reality" -and
-$_ -match "flow=xtls-rprx-vision"
+    $_ -match "^vless://" -and
+    $_ -match "security=reality" -and
+    $_ -match "flow=xtls-rprx-vision"
 
 }
 
@@ -85,54 +81,122 @@ $targets = @()
 
 foreach ($line in $filtered) {
 
-if ($line -match "@([^:]+):(\d+)") {
+    if ($line -match "@([^:]+):(\d+)") {
 
-$ip = $matches[1]
-$port = $matches[2]
+        $ip = $matches[1]
+        $port = $matches[2]
 
-if ($cooldown.ContainsKey($ip)) {
+        if ($cooldown.ContainsKey($ip)) {
 
-if (($now - $cooldown[$ip]) -lt $cooldownTime) {
-continue
+            if (($now - $cooldown[$ip]) -lt $cooldownTime) {
+                continue
+            }
+
+        }
+
+        foreach ($prefix in $allowed.Keys) {
+
+            if ($ip.StartsWith($prefix) -and $allowed[$prefix] -contains $port) {
+
+                $targets += [PSCustomObject]@{
+                    ip=$ip
+                    port=$port
+                    line=$line
+                }
+
+                break
+            }
+
+        }
+
+    }
+
 }
 
+Write-Host "Targets before dedup:" $targets.Count
+
+# ===== REMOVE DUPLICATES =====
+
+$targets = $targets | Sort-Object ip,port -Unique
+
+Write-Host "Targets after dedup:" $targets.Count
+
+# ===== TCP CHECK =====
+
+$alive = @()
+
+foreach ($t in $targets) {
+
+    $ip = $t.ip
+    $port = $t.port
+    $line = $t.line
+
+    try {
+
+        $tcp = New-Object System.Net.Sockets.TcpClient
+        $task = $tcp.ConnectAsync($ip,$port)
+
+        if ($task.Wait($tcpTimeout) -and $tcp.Connected) {
+
+            $alive += $line
+
+            if ($scores.ContainsKey($ip)) {
+                $scores[$ip] += 3
+            } else {
+                $scores[$ip] = 3
+            }
+
+        }
+        else {
+
+            $cooldown[$ip] = $now
+
+        }
+
+        $tcp.Close()
+
+    }
+    catch {}
+
 }
 
-foreach ($prefix in $allowed.Keys) {
+Write-Host "TCP alive:" $alive.Count
 
-if ($ip.StartsWith($prefix) -and $allowed[$prefix] -contains $port) {
+# ===== RANKING =====
 
-$targets += [PSCustomObject]@{
-ip=$ip
-port=$port
-line=$line
-}
+$ranked = $alive | Sort-Object {
 
-break
+    if ($_ -match "@([^:]+):") {
 
-}
+        $ip = $matches[1]
 
-}
+        if ($scores.ContainsKey($ip)) {
+            $scores[$ip]
+        } else {0}
 
-}
+    }
 
-}
+} -Descending
 
-Write-Host "Targets:" $targets.Count
+# ===== OUTPUT =====
 
-# ===== TCP MULTI THREAD SCAN =====
+$final = $ranked | Select-Object -First 40
 
-$alive = [System.Collections.Concurrent.ConcurrentBag[object]]::new()
+$final | Set-Content $outputFile
 
-$targets | ForEach-Object -Parallel {
+# ===== SAVE SCORE =====
 
-$ip = $_.ip
-$port = $_.port
-$line = $_.line
+$scores.GetEnumerator() | ForEach-Object {
+    "$($_.Key),$($_.Value)"
+} | Set-Content $scoreFile
 
-try {
+# ===== SAVE COOLDOWN =====
 
-$tcp = New-Object System.Net.Sockets.TcpClient
+$cooldown.GetEnumerator() | ForEach-Object {
+    "$($_.Key),$($_.Value)"
+} | Set-Content $cooldownFile
+
+Write-Host "Final servers:" $final.Count
 $task = $tcp.ConnectAsync($ip,$port)
 
 if ($task.Wait(1500)) {
