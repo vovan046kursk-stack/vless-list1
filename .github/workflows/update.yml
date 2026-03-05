@@ -1,4 +1,4 @@
-name: Auto Update VLESS (Whitelist + Filter)
+name: Auto Update VLESS
 
 on:
   schedule:
@@ -15,10 +15,9 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Download VLESS sources
+      - name: Download sources
         shell: pwsh
         run: |
           $urls = @(
@@ -46,13 +45,14 @@ jobs:
         run: |
           ./filter.ps1
 
-      - name: Commit updated files
+      - name: Commit results
         shell: pwsh
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
           git add vless_list_new.txt
+          git add subnet_history.json
 
           if (git diff --cached --quiet) {
             Write-Host "No changes"
