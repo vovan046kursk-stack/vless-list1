@@ -33,15 +33,8 @@ $allowed = @{
 # ===== LOAD HISTORY =====
 
 if (Test-Path $historyFile) {
-    $history = Get-Content $historyFile | ConvertFrom-Json
-} else {
-    $history = @{}
-}
-
-if (Test-Path $historyFile) {
 
     $json = Get-Content $historyFile -Raw | ConvertFrom-Json
-
     $history = @{}
 
     foreach ($p in $json.PSObject.Properties) {
@@ -53,6 +46,13 @@ else {
 
     $history = @{}
 
+}
+
+# ===== LOAD SOURCES =====
+
+if (!(Test-Path $inputFile)) {
+    Write-Host "No sources"
+    exit
 }
 
 $lines = Get-Content $inputFile
@@ -99,7 +99,8 @@ foreach ($line in $filtered) {
 
         if ($history.ContainsKey($subnet)) {
             $history[$subnet] += 1
-        } else {
+        }
+        else {
             $history[$subnet] = 1
         }
 
@@ -196,7 +197,7 @@ $final | ForEach-Object { $_.line } | Set-Content $outputFile
 
 Write-Host "Saved servers:" $final.Count
 
-# ===== LIMIT HISTORY =====
+# ===== LIMIT SUBNET HISTORY =====
 
 $maxSubnets = 40
 
