@@ -5,14 +5,14 @@ on:
     - cron: "*/30 * * * *"
   workflow_dispatch:
 
-# предотвращает параллельные запуски
+# Предотвращаем параллельные запуски
 concurrency:
   group: vless-update
   cancel-in-progress: true
 
 jobs:
   update:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -34,6 +34,7 @@ jobs:
           foreach ($url in $urls) {
             try {
               Write-Host "Downloading $url"
+              # ограничиваем время ожидания каждого запроса
               Invoke-WebRequest $url -OutFile temp.txt -TimeoutSec 15
               Get-Content temp.txt | Add-Content all_sources.txt
             } catch {
