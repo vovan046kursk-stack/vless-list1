@@ -1,282 +1,85 @@
 # ==========================================
-# VLESS REALITY FILTER (FINAL OPTIMIZED)
+# FILTER1 - DEBUG VERSION (REALITY + VISION)
+# Output: vless_list_new.txt
 # ==========================================
 
 $inputFile  = "all_sources.txt"
 $outputFile = "vless_list_new.txt"
 
-$historyFile = "subnet_history.json"
-$latencyFile = "latency_cache.json"
-
-# ===== STATIC WHITELIST =====
-
+# ===== PREFIX + PORT WHITELIST =====
 $allowed = @{
-
-"212.233." = @("8443")
-"87.239." = @("443","8443")
-"89.208.222." = @("8443")
-"84.201." = @("443")
-"84.23." = @("443")
-"37.139.33." = @("443")
-"5.188.140." = @("443")
-"185.254.98." = @("443")
-"185.241.193." = @("8443")
-"185.40.152." = @("443")
-"109.120." = @("443")
-"51.250." = @("443","8443")
-"91.219.227." = @("9443")
-"95.163." = @("443","8443")
-"146.185.240." = @("443")
-"78.41.109." = @("443")
-"79.137.175." = @("443","8443","51102")
-
+"212.233."      = @("8443")
+"87.239."       = @("443","8443")
+"89.208.222."   = @("8443")
+"84.201."       = @("443")
+"84.23."        = @("443")
+"37.139.33."    = @("443")
+"5.188.140."    = @("443")
+"185.254.98."   = @("443")
+"185.241.193."  = @("8443")
+"185.40.152."   = @("443")
+"109.120."      = @("443")
+"51.250."       = @("443","8443")
+"91.219.227."   = @("9443")
+"95.163."       = @("443","8443")
+"146.185.240."  = @("443")
+"78.41.109."    = @("443")
+"79.137.175."   = @("443","8443","51102")
 }
 
-# ===== LOAD HISTORY =====
-
-$history = @{}
-
-if (Test-Path $historyFile) {
-
-$json = Get-Content $historyFile -Raw | ConvertFrom-Json
-
-foreach ($p in $json.PSObject.Properties) {
-
-$history[$p.Name] = $p.Value
-
+# ===== START =====
+if (!(Test-Path $inputFile)) {
+    Write-Host "Input file not found!"
+    exit 1
 }
-
-}
-
-# ===== LOAD RTT CACHE =====
-
-$latencyCache = @{}
-
-if (Test-Path $latencyFile) {
-
-$json = Get-Content $latencyFile -Raw | ConvertFrom-Json
-
-foreach ($p in $json.PSObject.Properties) {
-
-$latencyCache[$p.Name] = $p.Value
-
-}
-
-}
-
-# ===== LOAD SOURCES =====
 
 $lines = Get-Content $inputFile
-
 Write-Host "Total lines:" $lines.Count
 
-# ===== REALITY FILTER =====
-
+# ===== PARAM FILTER =====
 $filtered = $lines | Where-Object {
-
-$_ -match "^vless://" -and
-$_ -match "security=reality" -and
-$_ -match "flow=xtls-rprx-vision"
-
+    $_ -match "^vless://" -and
+    $_ -match "security=reality" -and
+    $_ -match "flow=xtls-rprx-vision"
 }
 
 Write-Host "After param filter:" $filtered.Count
 
-$targets = @()
+# ===== MAIN FILTER =====
+$unique = @{}
+$result = @()
 
 foreach ($line in $filtered) {
 
-if ($line -match "@([^:]+):(\d+)") {
+    if ($line -match "@([^:]+):(\d+)") {
 
-$ip   = $matches[1]
-$port = $matches[2]
+        $ip   = $matches[1]
+        $port = $matches[2]
 
-$prefix = ($ip.Split(".")[0..1] -join ".") + "."
+        $allowedMatch = $false
 
-if ($allowed.ContainsKey($prefix) -and $allowed[$prefix] -contains $port) {
+        foreach ($prefix in $allowed.Keys) {
+            if ($ip.StartsWith($prefix) -and $allowed[$prefix] -contains $port) {
+                $allowedMatch = $true
+                break
+            }
+        }
 
-$targets += [PSCustomObject]@{
+        if (-not $allowedMatch) { continue }
 
-ip=$ip
-port=$port
-line=$line
-
+        # Remove duplicates by IP
+        if (-not $unique.ContainsKey($ip)) {
+            $unique[$ip] = $true
+            $result += $line
+        }
+    }
 }
 
-}
+Write-Host "After whitelist:" $result.Count
 
-$parts = $ip.Split(".")
-$subnet = "$($parts[0]).$($parts[1]).$($parts[2])."
+# ===== LIMIT OUTPUT =====
+$final = $result | Select-Object -First 40
+$final | Set-Content $outputFile
 
-if ($history.ContainsKey($subnet)) {
-
-$history[$subnet] += 1
-
-} else {
-
-$history[$subnet] = 1
-
-}
-
-}
-
-}
-
-Write-Host "Targets before dedup:" $targets.Count
-
-# ===== REMOVE DUPLICATES =====
-
-$targets = $targets | Sort-Object ip,port -Unique
-
-Write-Host "Targets after dedup:" $targets.Count
-
-# ===== SMART SUBNET FILTER =====
-
-$bestSubnets = $history.GetEnumerator() |
-Sort-Object Value -Descending |
-Select-Object -First 20 |
-ForEach-Object { $_.Key }
-
-$targets = $targets | Where-Object {
-
-$parts = $_.ip.Split(".")
-$subnet = "$($parts[0]).$($parts[1]).$($parts[2])."
-
-$bestSubnets -contains $subnet
-
-}
-
-Write-Host "After subnet optimization:" $targets.Count
-
-# ===== LIMIT BEFORE RTT =====
-
-$targets = $targets | Select-Object -First 80
-
-Write-Host "Targets for RTT test:" $targets.Count
-
-# ===== CHECK RTT CACHE =====
-
-$testTargets = @()
-
-foreach ($t in $targets) {
-
-$key = "$($t.ip):$($t.port)"
-
-if ($latencyCache.ContainsKey($key)) {
-
-$t | Add-Member -Name rtt -Value $latencyCache[$key] -MemberType NoteProperty
-
-} else {
-
-$testTargets += $t
-
-}
-
-}
-
-Write-Host "Need TCP test:" $testTargets.Count
-
-# ===== TCP TEST =====
-
-$tested = $testTargets | ForEach-Object -Parallel {
-
-try {
-
-$sw = [System.Diagnostics.Stopwatch]::StartNew()
-
-$tcp = New-Object System.Net.Sockets.TcpClient
-$task = $tcp.ConnectAsync($_.ip,$_.port)
-
-if ($task.Wait(800)) {
-
-$sw.Stop()
-$latency = $sw.ElapsedMilliseconds
-
-} else {
-
-$latency = 999
-
-}
-
-$tcp.Close()
-
-} catch {
-
-$latency = 999
-
-}
-
-[PSCustomObject]@{
-
-ip=$_.ip
-port=$_.port
-line=$_.line
-rtt=$latency
-
-}
-
-} -ThrottleLimit 10
-
-# ===== UPDATE CACHE =====
-
-foreach ($t in $tested) {
-
-$key = "$($t.ip):$($t.port)"
-$latencyCache[$key] = $t.rtt
-
-}
-
-# ===== MERGE RESULTS =====
-
-$results = @()
-
-foreach ($t in $targets) {
-
-$key = "$($t.ip):$($t.port)"
-
-$rtt = $latencyCache[$key]
-
-$results += [PSCustomObject]@{
-
-ip=$t.ip
-port=$t.port
-line=$t.line
-rtt=$rtt
-
-}
-
-}
-
-# ===== SORT BY LATENCY =====
-
-$sorted = $results | Sort-Object rtt
-
-$final = $sorted | Select-Object -First 40
-
-$final | ForEach-Object { $_.line } | Set-Content $outputFile
-
-Write-Host "Saved servers:" $final.Count
-
-# ===== SAVE CACHE =====
-
-$latencyCache | ConvertTo-Json | Set-Content $latencyFile
-
-# ===== LIMIT HISTORY =====
-
-$maxSubnets = 40
-
-$sortedHistory = $history.GetEnumerator() |
-Sort-Object Value -Descending |
-Select-Object -First $maxSubnets
-
-$newHistory = @{}
-
-foreach ($s in $sortedHistory) {
-
-$newHistory[$s.Key] = $s.Value
-
-}
-
-$newHistory | ConvertTo-Json | Set-Content $historyFile
-
-Write-Host "Subnet history updated"
+Write-Host "Final count saved:" $final.Count
+Write-Host "Done. Saved to $outputFile"
