@@ -5,7 +5,7 @@ on:
     - cron: "*/30 * * * *"
   workflow_dispatch:
 
-# Предотвращаем параллельные запуски
+# Предотвращаем параллельные запуски и отменяем текущий, если новый старт
 concurrency:
   group: vless-update
   cancel-in-progress: true
