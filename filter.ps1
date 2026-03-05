@@ -1,6 +1,5 @@
 # ==========================================
-# VLESS REALITY FILTER
-# Dynamic subnet + RTT sorting
+# VLESS REALITY FILTER (FULL OPTIMIZED)
 # ==========================================
 
 $inputFile  = "all_sources.txt"
@@ -81,7 +80,7 @@ foreach ($line in $filtered) {
 
         }
 
-        # subnet history
+        # ===== SUBNET HISTORY =====
 
         $parts = $ip.Split(".")
         $subnet = "$($parts[0]).$($parts[1]).$($parts[2])."
@@ -104,46 +103,80 @@ $targets = $targets | Sort-Object ip,port -Unique
 
 Write-Host "Targets after dedup:" $targets.Count
 
-# ===== RTT TEST =====
+# ===== SMART SUBNET FILTER =====
 
-$results = @()
+$bestSubnets = $history.GetEnumerator() |
+    Sort-Object Value -Descending |
+    Select-Object -First 20 |
+    ForEach-Object { $_.Key }
 
-foreach ($t in $targets) {
+$targets = $targets | Where-Object {
+
+    $parts = $_.ip.Split(".")
+    $subnet = "$($parts[0]).$($parts[1]).$($parts[2])."
+
+    $bestSubnets -contains $subnet
+
+}
+
+Write-Host "After subnet optimization:" $targets.Count
+
+# ===== LIMIT BEFORE RTT =====
+
+$targets = $targets | Select-Object -First 80
+
+Write-Host "Targets for RTT test:" $targets.Count
+
+# ===== PARALLEL TCP LATENCY TEST =====
+
+$results = [System.Collections.Concurrent.ConcurrentBag[object]]::new()
+
+$targets | ForEach-Object -Parallel {
 
     try {
 
-        $ping = Test-Connection -ComputerName $t.ip -Count 1 -TimeoutSeconds 1 -ErrorAction Stop
+        $sw = [System.Diagnostics.Stopwatch]::StartNew()
 
-        $rtt = $ping.ResponseTime
+        $tcp = New-Object System.Net.Sockets.TcpClient
+        $task = $tcp.ConnectAsync($_.ip,$_.port)
 
-        $results += [PSCustomObject]@{
-            ip=$t.ip
-            port=$t.port
-            line=$t.line
-            rtt=$rtt
+        if ($task.Wait(800)) {
+
+            $sw.Stop()
+            $latency = $sw.ElapsedMilliseconds
+
         }
+        else {
+
+            $latency = 999
+
+        }
+
+        $tcp.Close()
 
     }
     catch {
 
-        $results += [PSCustomObject]@{
-            ip=$t.ip
-            port=$t.port
-            line=$t.line
-            rtt=999
-        }
+        $latency = 999
 
     }
 
-}
+    $results.Add([PSCustomObject]@{
+        ip=$_.ip
+        port=$_.port
+        line=$_.line
+        rtt=$latency
+    })
 
-Write-Host "RTT test done"
+} -ThrottleLimit 10
+
+Write-Host "TCP latency test done"
 
 # ===== SORT BY LATENCY =====
 
 $sorted = $results | Sort-Object rtt
 
-# ===== TOP SERVERS =====
+# ===== FINAL SERVERS =====
 
 $final = $sorted | Select-Object -First 40
 
@@ -151,23 +184,20 @@ $final | ForEach-Object { $_.line } | Set-Content $outputFile
 
 Write-Host "Saved servers:" $final.Count
 
-# ===== LIMIT SUBNET HISTORY =====
+# ===== LIMIT HISTORY =====
 
 $maxSubnets = 40
 
-$sortedHistory = $history.GetEnumerator() | Sort-Object Value -Descending
+$sortedHistory = $history.GetEnumerator() |
+    Sort-Object Value -Descending |
+    Select-Object -First $maxSubnets
 
 $newHistory = @{}
 
-$sortedHistory | Select-Object -First $maxSubnets | ForEach-Object {
-
-    $newHistory[$_.Key] = $_.Value
-
+foreach ($s in $sortedHistory) {
+    $newHistory[$s.Key] = $s.Value
 }
 
 $newHistory | ConvertTo-Json | Set-Content $historyFile
 
-Write-Host "Subnet history saved"
-
-Write-Host "Final servers:" $final.Count
-Write-Host "Saved to $outputFile"
+Write-Host "Subnet history updated"
