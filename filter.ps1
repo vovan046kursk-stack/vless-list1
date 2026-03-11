@@ -78,7 +78,7 @@ foreach ($line in $filtered) {
 Write-Host "After whitelist:" $result.Count
 
 # ===== LIMIT OUTPUT =====
-$final = $result | Select-Object -First 30
+$final = $result | Select-Object -First 45
 $final | Set-Content $outputFile
 
 Write-Host "Final count saved:" $final.Count
