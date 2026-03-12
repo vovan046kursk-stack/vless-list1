@@ -2,7 +2,7 @@ name: Auto Update VLESS
 
 on:
   schedule:
-    - cron: "*/90 * * * *"
+    - cron: "*/60 * * * *"
   workflow_dispatch:
 
 concurrency:
