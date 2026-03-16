@@ -10,14 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download file from GitHub RAW
+      - name: Download file
         run: |
-          curl -L "https://raw.githubusercontent.com/vovan046kursk-stack/vless-list1/refs/heads/main/vless_list_new.txt" -o file.txt
+          curl -L "https://raw.githubusercontent.com/vovan046kursk-stack/vless-list1/refs/heads/main/vless_list_new.txt" -o new_file
 
-      - name: Upload to GitVerse
+      - name: Push to GitVerse
         run: |
-          curl -X PUT \
-          -H "Authorization: token ${{ secrets.GITVERSE_TOKEN }}" \
-          -H "Content-Type: text/plain" \
-          --data-binary "@file.txt" \
-          "https://gitverse.ru/api/repos/Benss/Vless/raw/branch/master/new_file"
+          git clone https://oauth2:${{ secrets.GITVERSE_TOKEN }}@gitverse.ru/Benss/Vless.git repo
+          cd repo
+          mv ../new_file new_file
+          git config user.name "sync-bot"
+          git config user.email "bot@sync.com"
+          git add new_file
+          git commit -m "update subscription"
+          git push
