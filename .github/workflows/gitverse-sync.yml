@@ -2,7 +2,7 @@ name: Sync to GitVerse
 
 on:
   schedule:
-    - cron: "*/40 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
       - name: Upload to GitVerse
         run: |
           curl -X PUT \
-          -H "Authorization: Bearer ${{ secrets.GITVERSE_TOKEN }}" \
+          -H "Authorization: token ${{ secrets.GITVERSE_TOKEN }}" \
           -H "Content-Type: text/plain" \
           --data-binary "@file.txt" \
           "https://gitverse.ru/api/repos/Benss/Vless/raw/branch/master/new_file"
