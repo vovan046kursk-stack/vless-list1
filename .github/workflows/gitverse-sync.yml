@@ -20,4 +20,4 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GITVERSE_TOKEN }}" \
           -H "Content-Type: text/plain" \
           --data-binary "@file.txt" \
-          "https://gitverse.ru/api/repos/Benss/Vless/raw/branch/master/new%20file"
+          "https://gitverse.ru/api/repos/Benss/Vless/raw/branch/master/new_file"
