@@ -1,0 +1,23 @@
+name: Sync to GitVerse
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download file from GitHub RAW
+        run: |
+          curl -L "https://raw.githubusercontent.com/vovan046kursk-stack/vless-list1/refs/heads/main/vless_list_new.txt" -o file.txt
+
+      - name: Upload to GitVerse
+        run: |
+          curl -X PUT \
+          -H "Authorization: Bearer ${{ secrets.GITVERSE_TOKEN }}" \
+          -H "Content-Type: text/plain" \
+          --data-binary "@file.txt" \
+          "https://gitverse.ru/api/repos/Benss/Vless/raw/branch/master/new%20file"
