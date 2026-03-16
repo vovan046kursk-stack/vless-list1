@@ -22,5 +22,5 @@ jobs:
           git config user.name "sync-bot"
           git config user.email "bot@sync.com"
           git add new_file
-          git commit -m "update subscription"
+          git commit -m "update subscription" || true
           git push
