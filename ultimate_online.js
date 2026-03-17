@@ -1,9 +1,11 @@
 (function () {
     'use strict';
 
-    function start() {
+    function startPlugin() {
 
-        console.log('ULTIMATE START OK');
+        console.log('ULTIMATE FULL FIX');
+
+        if (!window.Lampa || !Lampa.Component) return;
 
         Lampa.Component.add('ultimate_online', {
 
@@ -22,14 +24,12 @@
                     '</div>'
                 );
 
-                setTimeout(function () {
-                    var btn = document.getElementById('btn');
-                    if (btn) {
-                        btn.onclick = function () {
-                            alert('ВСЁ РАБОТАЕТ 💀');
-                        };
-                    }
-                }, 500);
+                var btn = document.getElementById('btn');
+                if (btn) {
+                    btn.onclick = function () {
+                        alert('ВСЁ РАБОТАЕТ 💀');
+                    };
+                }
             }
         });
 
@@ -40,8 +40,15 @@
         });
     }
 
-    // 💣 ВАЖНО: двойной запуск
-    if (window.appready) start();
-    window.addEventListener('appready', start);
+    // 💣 ГАРАНТИРОВАННЫЙ ХУК
+    if (window.Lampa && Lampa.Listener) {
+        Lampa.Listener.follow('app', function (e) {
+            if (e.type === 'ready') {
+                startPlugin();
+            }
+        });
+    } else {
+        setTimeout(startPlugin, 2000);
+    }
 
 })();
