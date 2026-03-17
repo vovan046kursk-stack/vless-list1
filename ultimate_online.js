@@ -3,16 +3,24 @@
 
     function startPlugin() {
 
-        console.log('PLUGIN STARTED');
+        console.log('ULTIMATE PLUGIN LOADED');
 
-        Lampa.Component.add('test_online', {
-            template: '<div></div>',
+        Lampa.Component.add('ultimate_online', {
+            name: 'Ultimate',
 
             init: function () {
-                this.render(`
+                this.render();
+            },
+
+            render: function () {
+                this.activity.loader(false);
+
+                this.empty();
+
+                this.append(`
                     <div style="padding:20px">
-                        <h1>🔥 Плагин работает</h1>
-                        <button id="btn">Нажми меня</button>
+                        <h1>🔥 Ultimate работает</h1>
+                        <button id="btn">Проверка</button>
                     </div>
                 `);
 
@@ -20,24 +28,25 @@
                     let btn = document.getElementById('btn');
                     if (btn) {
                         btn.onclick = () => {
-                            alert('ВСЁ РАБОТАЕТ 💀');
+                            alert('ПЛАГИН ЖИВОЙ 💀');
                         };
                     }
-                }, 500);
+                }, 300);
+            },
+
+            destroy: function () {
+                console.log('destroy');
             }
         });
 
         Lampa.Menu.add({
-            title: '🔥 TEST',
-            component: 'test_online',
+            title: '🔥 Ultimate',
+            component: 'ultimate_online',
             icon: 'movie'
         });
     }
 
-    if (window.Lampa) {
-        startPlugin();
-    } else {
-        window.addEventListener('lampa:ready', startPlugin);
-    }
+    if (window.Lampa) startPlugin();
+    else window.addEventListener('lampa:ready', startPlugin);
 
 })();
