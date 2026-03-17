@@ -19,6 +19,7 @@ $allowed = @{
 "185.254."      = @("443")
 "185.241."      = @("8443")
 "185.40."        = @("443")
+"146.185."     = @("443","3443")
 "109.120."      = @("443")
 "51.250."       = @("443","7445","8443")
 "91.219."       = @("9443")
@@ -78,7 +79,7 @@ foreach ($line in $filtered) {
 Write-Host "After whitelist:" $result.Count
 
 # ===== LIMIT OUTPUT =====
-$final = $result | Select-Object -First 50
+$final = $result | Select-Object -First 80
 $final | Set-Content $outputFile
 
 Write-Host "Final count saved:" $final.Count
