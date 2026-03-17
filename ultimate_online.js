@@ -1,13 +1,17 @@
 (function () {
     'use strict';
 
-    function initPlugin() {
+    if (!window.Lampa) {
+        window.addEventListener('lampa:ready', init);
+    } else {
+        init();
+    }
 
-        console.log('ULTIMATE INIT');
-
-        if (!window.Lampa) return;
+    function init() {
+        console.log('ULTIMATE LOADED');
 
         Lampa.Component.add('ultimate_online', {
+            name: 'Ultimate',
 
             init: function () {
                 this.render();
@@ -31,7 +35,7 @@
                             alert('ПЛАГИН ЖИВОЙ');
                         };
                     }
-                }, 300);
+                }, 500);
             }
         });
 
@@ -41,19 +45,5 @@
             icon: 'movie'
         });
     }
-
-    function start() {
-        try {
-            initPlugin();
-        } catch (e) {
-            console.log('PLUGIN ERROR', e);
-        }
-    }
-
-    if (window.Lampa) {
-        start();
-    }
-
-    window.addEventListener('lampa:ready', start);
 
 })();
