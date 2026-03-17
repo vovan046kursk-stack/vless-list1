@@ -2,32 +2,34 @@
     'use strict';
 
     function start() {
-        console.log('ULTIMATE START');
+
+        console.log('ULTIMATE START OK');
 
         Lampa.Component.add('ultimate_online', {
-            name: 'Ultimate',
 
             init: function () {
+                this.activity.loader(false);
                 this.render();
             },
 
             render: function () {
-                this.activity.loader(false);
                 this.empty();
 
                 this.append(
                     '<div style="padding:20px">' +
                     '<h1>Ultimate работает</h1>' +
-                    '<button id="btn">OK</button>' +
+                    '<button id="btn">Проверка</button>' +
                     '</div>'
                 );
 
-                var btn = document.getElementById('btn');
-                if (btn) {
-                    btn.onclick = function () {
-                        alert('РАБОТАЕТ 💀');
-                    };
-                }
+                setTimeout(function () {
+                    var btn = document.getElementById('btn');
+                    if (btn) {
+                        btn.onclick = function () {
+                            alert('ВСЁ РАБОТАЕТ 💀');
+                        };
+                    }
+                }, 500);
             }
         });
 
@@ -38,10 +40,8 @@
         });
     }
 
-    if (window.appready) {
-        start();
-    } else {
-        window.addEventListener('appready', start);
-    }
+    // 💣 ВАЖНО: двойной запуск
+    if (window.appready) start();
+    window.addEventListener('appready', start);
 
 })();
