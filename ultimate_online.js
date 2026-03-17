@@ -1,7 +1,9 @@
-(function () {
-    'use strict';
+Lampa.Plugin.create({
+    name: 'Ultimate',
 
-    function startPlugin() {
+    init: function () {
+
+        console.log('PLUGIN INIT');
 
         Lampa.Component.add('ultimate_online', {
 
@@ -37,8 +39,4 @@
             icon: 'movie'
         });
     }
-
-    if (window.Lampa) startPlugin();
-    else window.addEventListener('lampa:ready', startPlugin);
-
-})();
+});
