@@ -1,14 +1,8 @@
 (function () {
     'use strict';
 
-    if (!window.Lampa) {
-        window.addEventListener('lampa:ready', init);
-    } else {
-        init();
-    }
-
-    function init() {
-        console.log('ULTIMATE LOADED');
+    function start() {
+        console.log('ULTIMATE START');
 
         Lampa.Component.add('ultimate_online', {
             name: 'Ultimate',
@@ -24,18 +18,16 @@
                 this.append(
                     '<div style="padding:20px">' +
                     '<h1>Ultimate работает</h1>' +
-                    '<button id="btn">Проверка</button>' +
+                    '<button id="btn">OK</button>' +
                     '</div>'
                 );
 
-                setTimeout(function () {
-                    var btn = document.getElementById('btn');
-                    if (btn) {
-                        btn.onclick = function () {
-                            alert('ПЛАГИН ЖИВОЙ');
-                        };
-                    }
-                }, 500);
+                var btn = document.getElementById('btn');
+                if (btn) {
+                    btn.onclick = function () {
+                        alert('РАБОТАЕТ 💀');
+                    };
+                }
             }
         });
 
@@ -44,6 +36,12 @@
             component: 'ultimate_online',
             icon: 'movie'
         });
+    }
+
+    if (window.appready) {
+        start();
+    } else {
+        window.addEventListener('appready', start);
     }
 
 })();
