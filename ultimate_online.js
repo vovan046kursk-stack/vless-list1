@@ -1,54 +1,47 @@
 (function () {
     'use strict';
 
-    function startPlugin() {
+    if (!window.Lampa) return;
 
-        console.log('ULTIMATE FULL FIX');
+    Lampa.Plugin.add({
+        name: 'ultimate_online',
 
-        if (!window.Lampa || !Lampa.Component) return;
+        init: function () {
 
-        Lampa.Component.add('ultimate_online', {
+            console.log('PLUGIN INIT OK');
 
-            init: function () {
-                this.activity.loader(false);
-                this.render();
-            },
+            Lampa.Component.add('ultimate_online_component', {
 
-            render: function () {
-                this.empty();
+                init: function () {
+                    this.activity.loader(false);
+                    this.render();
+                },
 
-                this.append(
-                    '<div style="padding:20px">' +
-                    '<h1>Ultimate работает</h1>' +
-                    '<button id="btn">Проверка</button>' +
-                    '</div>'
-                );
+                render: function () {
+                    this.empty();
 
-                var btn = document.getElementById('btn');
-                if (btn) {
-                    btn.onclick = function () {
-                        alert('ВСЁ РАБОТАЕТ 💀');
-                    };
+                    this.append(
+                        '<div style="padding:20px">' +
+                        '<h1>Ultimate работает</h1>' +
+                        '<button id="btn">OK</button>' +
+                        '</div>'
+                    );
+
+                    var btn = document.getElementById('btn');
+                    if (btn) {
+                        btn.onclick = function () {
+                            alert('ВСЁ РАБОТАЕТ 💀');
+                        };
+                    }
                 }
-            }
-        });
+            });
 
-        Lampa.Menu.add({
-            title: 'Ultimate',
-            component: 'ultimate_online',
-            icon: 'movie'
-        });
-    }
-
-    // 💣 ГАРАНТИРОВАННЫЙ ХУК
-    if (window.Lampa && Lampa.Listener) {
-        Lampa.Listener.follow('app', function (e) {
-            if (e.type === 'ready') {
-                startPlugin();
-            }
-        });
-    } else {
-        setTimeout(startPlugin, 2000);
-    }
+            Lampa.Menu.add({
+                title: 'Ultimate',
+                component: 'ultimate_online_component',
+                icon: 'movie'
+            });
+        }
+    });
 
 })();
