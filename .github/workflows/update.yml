@@ -21,8 +21,7 @@ jobs:
         shell: pwsh
         run: |
           $urls = @(
-           "https://raw.githubusercontent.com/EtoNeYaProject/etoneyaproject.github.io/refs/heads/main/1",
-            "https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt"
+          "https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt"
           )
           
           Remove-Item all_sources.txt -ErrorAction Ignore
