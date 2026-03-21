@@ -1,87 +1,37 @@
-# ==========================================
-# FILTER1 - DEBUG VERSION (REALITY + VISION)
-# Output: vless_list_new.txt
-# ==========================================
-
-$inputFile  = "all_sources.txt"
 $outputFile = "vless_list_new.txt"
+$inputFile = "all_sources.txt"
 
-# ===== PREFIX + PORT WHITELIST =====
-$allowed = @{
-"87.239."       = @("443","8443")
-"89.208."       = @("443","8443")
-"90.156."       = @("52006")
-"84.23."        = @("443")
-"37.139."       = @("443","8443")
-"5.188."        = @("443")
-"185.254."      = @("443")
-"185.241."      = @("8443")
-"185.40."        = @("443")
-"185.86."        = @("443")
-"109.120."      = @("443","40443")
-"51.250."       = @("443","7445","563","8443")
-"91.219."       = @("9443")
-"95.163."       = @("443","8443")
-"78.41."       = @("443")
-"146.185."     = @("443","3443")
-"79.137."   = @("443","8443","51102")
-"217.16."       = @("443")
-"212.233."      = @("443","8443")
-}
+Write-Host "Читаю $inputFile ..."
 
-# ===== START =====
 if (!(Test-Path $inputFile)) {
-    Write-Host "Input file not found!"
+    Write-Host "Файл не найден!"
     exit 1
 }
 
 $lines = Get-Content $inputFile
-Write-Host "Total lines:" $lines.Count
 
-# ===== PARAM FILTER =====
-$filtered = $lines | Where-Object {
-    $_ -match "^vless://" -and
-    $_ -match "security=reality" -and
-    $_ -match "flow=xtls-rprx-vision"
-}
-
-Write-Host "After param filter:" $filtered.Count
-
-# ===== MAIN FILTER =====
-$unique = @{}
 $result = @()
 
-foreach ($line in $filtered) {
+foreach ($line in $lines) {
 
-    if ($line -match "@([^:]+):(\d+)") {
+    if ($line -notmatch "^vless://") { continue }
 
-        $ip   = $matches[1]
-        $port = $matches[2]
+    # IP фильтр
+    if ($line -notmatch "@5\.188\." -and $line -notmatch "@109\.120\.") { continue }
 
-        $allowedMatch = $false
+    # порт 443
+    if ($line -notmatch ":443") { continue }
 
-        foreach ($prefix in $allowed.Keys) {
-            if ($ip.StartsWith($prefix) -and $allowed[$prefix] -contains $port) {
-                $allowedMatch = $true
-                break
-            }
-        }
+    # x5.ru
+    if ($line -notmatch "x5\.ru") { continue }
 
-        if (-not $allowedMatch) { continue }
-
-        # Remove duplicates by IP
-        if (-not $unique.ContainsKey($ip)) {
-            $unique[$ip] = $true
-            $result += $line
-        }
-    }
+    # 👇 дубликаты сохраняем
+    $result += $line.Trim()
 }
 
-Write-Host "After whitelist:" $result.Count
+Write-Host "Найдено:" $result.Count
 
-# ===== LIMIT OUTPUT =====
-$final = $result | Select-Object -First 50
-$final | Set-Content $outputFile
+# сохраняем
+$result | Out-File -Encoding utf8 $outputFile
 
-Write-Host "Final count saved:" $final.Count
-Write-Host "Done. Saved to $outputFile"
+Write-Host "Готово → $outputFile"
