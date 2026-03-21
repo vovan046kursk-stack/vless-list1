@@ -21,7 +21,7 @@ jobs:
         shell: pwsh
         run: |
           $urls = @(
-          "https://white-lists.vercel.app/api/filter?code=ALL&type=white&min=true"
+          "https://raw.githubusercontent.com/EtoNeYaProject/etoneyaproject.github.io/refs/heads/main/1"
           )
           
           Remove-Item all_sources.txt -ErrorAction Ignore
