@@ -18,10 +18,11 @@ foreach ($line in $lines) {
     if ($line -notmatch "^vless://") { continue }
 
     # 🔥 только нужные IP
-    if (
-        $line -notmatch "@5\.188\." -and
-        $line -notmatch "@109\.120\."
-    ) { continue }
+   if (
+    $line -notmatch "ads\.x5\.ru" -and
+    $line -notmatch "5post-gate\.x5\.ru" -and
+    $line -notmatch "x5\.ru"
+) { continue }
 
     # 🔥 только порт 443
     if ($line -notmatch ":443") { continue }
