@@ -20,10 +20,14 @@ jobs:
       # 🔥 установка sing-box
       - name: Install sing-box
         run: |
-          wget https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-amd64.tar.gz
-          tar -xzf sing-box-linux-amd64.tar.gz
-          mv sing-box-*/sing-box ./sing-box
-          chmod +x sing-box
+    VERSION=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4)
+    echo "Latest version: $VERSION"
+
+    wget https://github.com/SagerNet/sing-box/releases/download/$VERSION/sing-box-$VERSION-linux-amd64.tar.gz
+
+    tar -xzf sing-box-$VERSION-linux-amd64.tar.gz
+    mv sing-box-$VERSION-linux-amd64/sing-box ./sing-box
+    chmod +x sing-box
 
       - name: Download sources
         shell: pwsh
