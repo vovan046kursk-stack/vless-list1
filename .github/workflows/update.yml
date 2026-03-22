@@ -17,6 +17,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 🔥 установка sing-box
+      - name: Install sing-box
+        run: |
+          wget https://github.com/SagerNet/sing-box/releases/latest/download/sing-box-linux-amd64.tar.gz
+          tar -xzf sing-box-linux-amd64.tar.gz
+          mv sing-box-*/sing-box ./sing-box
+          chmod +x sing-box
+
       - name: Download sources
         shell: pwsh
         run: |
@@ -38,6 +46,7 @@ jobs:
             }
           }
 
+      # 🔥 запуск фильтра (с sing-box внутри)
       - name: Run filter
         shell: pwsh
         run: |
