@@ -67,9 +67,7 @@ foreach ($line in $lines) {
     # фильтр IP
     if (
         $line -notmatch "@5\.188\." -and
-        $line -notmatch "@109\.120\." -and
-        $line -notmatch "@37\.139\." -and
-        $line -notmatch "@95\.163\."
+        $line -notmatch "@109\.120\." 
     ) { continue }
 
     # порт
