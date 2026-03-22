@@ -1,12 +1,11 @@
 $outputFile = "vless_list_new.txt"
 $inputFile = "all_sources.txt"
-$maxResults = 50  # Максимальное количество живых адресов
+$maxResults = 50
 
 Write-Host "Читаю $inputFile ..."
 
-# Проверка, что файл существует
 if (!(Test-Path $inputFile)) {
-    Write-Host "Файл $inputFile не найден!"
+    Write-Host "Файл не найден!"
     exit 1
 }
 
@@ -14,55 +13,55 @@ $lines = Get-Content $inputFile
 
 $result = @()
 
-# 🔥 Функция проверки TCP
-function Test-Port {
-    param($ip, $port)
+# 🔥 проверка через HTTPS (YouTube)
+function Test-YouTube {
+    param($ip)
 
     try {
-        $client = New-Object System.Net.Sockets.TcpClient
-        $iar = $client.BeginConnect($ip, $port, $null, $null)
-        $success = $iar.AsyncWaitHandle.WaitOne(1500, $false)
+        $request = [System.Net.HttpWebRequest]::Create("https://youtube.com")
+        $request.Timeout = 3000
+        $request.Host = "youtube.com"
 
-        if ($success -and $client.Connected) {
-            $client.EndConnect($iar)
-            $client.Close()
-            return $true
+        # подключаемся к IP
+        $request.ServicePoint.BindIPEndPointDelegate = {
+            param($servicePoint, $remoteEndPoint, $retryCount)
+            return New-Object System.Net.IPEndPoint ([System.Net.IPAddress]::Parse($ip), 0)
         }
 
-        $client.Close()
-        return $false
+        $response = $request.GetResponse()
+        $response.Close()
+        return $true
     }
     catch {
         return $false
     }
 }
 
-# Процесс фильтрации
 foreach ($line in $lines) {
 
     if ($line -notmatch "^vless://") { continue }
 
-    # Фильтруем по IP (5.188.*, 109.120.*, 37.139.*, 95.163.*)
+    # IP фильтр
     if (
         $line -notmatch "@5\.188\." -and
-        $line -notmatch "@109\.120\."
-       
+        $line -notmatch "@109\.120\." -and
+        $line -notmatch "@37\.139\." -and
+        $line -notmatch "@95\.163\."
     ) { continue }
 
-    # Порт 443
+    # порт 443
     if ($line -notmatch ":443") { continue }
 
     # x5.ru
     if ($line -notmatch "x5\.ru") { continue }
 
-    # Извлекаем IP
+    # достаём IP
     if ($line -match "@([^:]+):443") {
         $ip = $matches[1]
 
-        Write-Host "Проверка $ip..."
+        Write-Host "Проверка YouTube $ip..."
 
-        # Проверка TCP (порт 443)
-        if (Test-Port $ip 443) {
+        if (Test-YouTube $ip) {
             Write-Host "OK $ip"
             $result += $line.Trim()
         }
@@ -70,9 +69,8 @@ foreach ($line in $lines) {
             Write-Host "DEAD $ip"
         }
 
-        # Если найдено 50 живых адресов, останавливаем процесс
         if ($result.Count -ge $maxResults) {
-            Write-Host "Достигнуто максимальное количество живых адресов: $maxResults"
+            Write-Host "Достигнуто 50 адресов"
             break
         }
     }
@@ -80,7 +78,6 @@ foreach ($line in $lines) {
 
 Write-Host "`nЖивых:" $result.Count
 
-# Сохраняем результат в файл
 $result | Out-File -Encoding utf8 $outputFile
 
 Write-Host "Готово → $outputFile"
