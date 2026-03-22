@@ -17,17 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 🔥 установка sing-box
+      # 🔥 установка sing-box (исправлено)
       - name: Install sing-box
         run: |
-    VERSION=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4)
-    echo "Latest version: $VERSION"
+          VERSION=$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep tag_name | cut -d '"' -f 4)
+          echo "Latest version: $VERSION"
 
-    wget https://github.com/SagerNet/sing-box/releases/download/$VERSION/sing-box-$VERSION-linux-amd64.tar.gz
+          wget https://github.com/SagerNet/sing-box/releases/download/$VERSION/sing-box-$VERSION-linux-amd64.tar.gz
 
-    tar -xzf sing-box-$VERSION-linux-amd64.tar.gz
-    mv sing-box-$VERSION-linux-amd64/sing-box ./sing-box
-    chmod +x sing-box
+          tar -xzf sing-box-$VERSION-linux-amd64.tar.gz
+          mv sing-box-$VERSION-linux-amd64/sing-box ./sing-box
+          chmod +x sing-box
 
       - name: Download sources
         shell: pwsh
@@ -50,7 +50,6 @@ jobs:
             }
           }
 
-      # 🔥 запуск фильтра (с sing-box внутри)
       - name: Run filter
         shell: pwsh
         run: |
