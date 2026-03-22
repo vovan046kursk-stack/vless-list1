@@ -26,8 +26,11 @@ foreach ($line in $lines) {
     # 🔥 только порт 443
     if ($line -notmatch ":443") { continue }
 
-    # 🔥 только ads.x5.ru
-    if ($line -notmatch "ads\.x5\.ru") { continue }
+    # 🔥 SNI (ads.x5.ru ИЛИ любой x5.ru)
+    if (
+        $line -notmatch "ads\.x5\.ru" -and
+        $line -notmatch "x5\.ru"
+    ) { continue }
 
     # 🔥 достаём IP
     if ($line -match "@([^:]+):443") {
@@ -36,8 +39,15 @@ foreach ($line in $lines) {
         continue
     }
 
-    # 🔥 ключ (только IP, т.к. SNI одинаковый)
-    $key = "$ip"
+    # 🔥 достаём SNI
+    if ($line -match "sni=([^&]+)") {
+        $sni = $matches[1]
+    } else {
+        $sni = "none"
+    }
+
+    # 🔥 ключ (IP + SNI)
+    $key = "$ip|$sni"
 
     if ($seen.ContainsKey($key)) {
         continue
