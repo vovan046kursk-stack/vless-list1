@@ -21,7 +21,6 @@ foreach ($line in $lines) {
     if (
         $line -notmatch "@5\.188\." -and
         $line -notmatch "@109\.120\." -and
-        $line -notmatch "@95\.163\." -and
         $line -notmatch "@37\.139\."
     ) { continue }
 
