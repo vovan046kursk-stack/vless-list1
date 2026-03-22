@@ -13,24 +13,47 @@ $lines = Get-Content $inputFile
 
 $result = @()
 
-# 🔥 проверка через HTTPS (YouTube)
-function Test-YouTube {
-    param($ip)
+function Test-SingBox {
+    param($line)
 
     try {
-        $request = [System.Net.HttpWebRequest]::Create("https://youtube.com")
-        $request.Timeout = 3000
-        $request.Host = "youtube.com"
-
-        # подключаемся к IP
-        $request.ServicePoint.BindIPEndPointDelegate = {
-            param($servicePoint, $remoteEndPoint, $retryCount)
-            return New-Object System.Net.IPEndPoint ([System.Net.IPAddress]::Parse($ip), 0)
+        # временный конфиг
+        $config = @{
+            "log" = @{ "disabled" = $true }
+            "outbounds" = @(
+                @{
+                    "type" = "vless"
+                    "tag" = "test"
+                    "server" = ($line -replace '.*@([^:]+):.*','$1')
+                    "server_port" = 443
+                    "uuid" = ($line -replace 'vless://([^@]+)@.*','$1')
+                    "flow" = "xtls-rprx-vision"
+                    "tls" = @{
+                        "enabled" = $true
+                        "server_name" = "ads.x5.ru"
+                        "insecure" = $true
+                    }
+                }
+            )
         }
 
-        $response = $request.GetResponse()
-        $response.Close()
-        return $true
+        $config | ConvertTo-Json -Depth 10 | Out-File test.json
+
+        $proc = Start-Process "./sing-box" -ArgumentList "run -c test.json" -PassThru
+
+        Start-Sleep -Seconds 3
+
+        try {
+            Invoke-WebRequest "https://1.1.1.1" -TimeoutSec 5 | Out-Null
+            $ok = $true
+        }
+        catch {
+            $ok = $false
+        }
+
+        Stop-Process $proc -ErrorAction Ignore
+
+        return $ok
     }
     catch {
         return $false
@@ -41,7 +64,7 @@ foreach ($line in $lines) {
 
     if ($line -notmatch "^vless://") { continue }
 
-    # IP фильтр
+    # фильтр IP
     if (
         $line -notmatch "@5\.188\." -and
         $line -notmatch "@109\.120\." -and
@@ -49,34 +72,27 @@ foreach ($line in $lines) {
         $line -notmatch "@95\.163\."
     ) { continue }
 
-    # порт 443
+    # порт
     if ($line -notmatch ":443") { continue }
 
-    # x5.ru
+    # домен
     if ($line -notmatch "x5\.ru") { continue }
 
-    # достаём IP
-    if ($line -match "@([^:]+):443") {
-        $ip = $matches[1]
+    Write-Host "Проверка через sing-box..."
 
-        Write-Host "Проверка YouTube $ip..."
+    if (Test-SingBox $line) {
+        Write-Host "OK"
+        $result += $line.Trim()
+    }
+    else {
+        Write-Host "DEAD"
+    }
 
-        if (Test-YouTube $ip) {
-            Write-Host "OK $ip"
-            $result += $line.Trim()
-        }
-        else {
-            Write-Host "DEAD $ip"
-        }
-
-        if ($result.Count -ge $maxResults) {
-            Write-Host "Достигнуто 50 адресов"
-            break
-        }
+    if ($result.Count -ge $maxResults) {
+        Write-Host "Достигнуто 50"
+        break
     }
 }
-
-Write-Host "`nЖивых:" $result.Count
 
 $result | Out-File -Encoding utf8 $outputFile
 
