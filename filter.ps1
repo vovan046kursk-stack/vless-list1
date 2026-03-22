@@ -22,7 +22,7 @@ foreach ($line in $lines) {
         $line -notmatch "@5\.188\." -and
         $line -notmatch "@109\.120\." -and
         $line -notmatch "@95\.163\." -and
-        $line -notmatch "@37\.139\."
+        $line -notmatch "@89\.208\."
     ) { continue }
 
     # порт 443
