@@ -21,23 +21,28 @@ foreach ($line in $lines) {
     if (
         $line -notmatch "@5\.188\." -and
         $line -notmatch "@109\.120\." -and
-        $line -notmatch "@95\.163\." -and
+        $line -notmatch "@51\.250\." -and
         $line -notmatch "@89\.208\."
     ) { continue }
 
-    # порт 443
-    if ($line -notmatch ":443") { continue }
+    # 🔥 порты (443 / 8443 / 6443)
+    if (
+        $line -notmatch ":443" -and
+        $line -notmatch ":8443" -and
+        $line -notmatch ":6443"
+    ) { continue }
 
-    # SNI фильтр
+    # 🔥 SNI фильтр
     if (
         $line -notmatch "ads\.x5\.ru" -and
         $line -notmatch "5post-gate\.x5\.ru" -and
         $line -notmatch "x5\.ru"
     ) { continue }
 
-    # 🔥 достаём IP
-    if ($line -match "@([^:]+):443") {
+    # 🔥 достаём IP и порт
+    if ($line -match "@([^:]+):(\d+)") {
         $ip = $matches[1]
+        $port = $matches[2]
     } else {
         continue
     }
@@ -49,10 +54,9 @@ foreach ($line in $lines) {
         $sni = "none"
     }
 
-    # 🔥 ключ (IP + SNI)
-    $key = "$ip|$sni"
+    # 🔥 ключ (IP + PORT + SNI)
+    $key = "$ip|$port|$sni"
 
-    # если уже есть — пропускаем
     if ($seen.ContainsKey($key)) {
         continue
     }
@@ -63,7 +67,6 @@ foreach ($line in $lines) {
 
 Write-Host "После удаления дублей:" $result.Count
 
-# сохраняем
 $result | Out-File -Encoding utf8 $outputFile
 
 Write-Host "Готово → $outputFile"
