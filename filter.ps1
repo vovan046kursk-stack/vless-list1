@@ -13,11 +13,27 @@ $lines = Get-Content $inputFile
 
 $result = @()
 
+# 🔥 функция оценки
+function Get-Score($line) {
+    $score = 0
+
+    if ($line -match "ads\.x5\.ru") { $score += 5 }
+    elseif ($line -match "5post-gate\.x5\.ru") { $score += 4 }
+    elseif ($line -match "x5\.ru") { $score += 2 }
+
+    if ($line -match "@5\.188\.") { $score += 3 }
+    elseif ($line -match "@95\.163\.") { $score += 3 }
+    elseif ($line -match "@109\.120\.") { $score += 2 }
+    elseif ($line -match "@37\.139\.") { $score += 2 }
+
+    return $score
+}
+
+# 🔥 проверка через sing-box (упрощённая)
 function Test-SingBox {
     param($line)
 
     try {
-        # временный конфиг
         $config = @{
             "log" = @{ "disabled" = $true }
             "outbounds" = @(
@@ -41,10 +57,10 @@ function Test-SingBox {
 
         $proc = Start-Process "./sing-box" -ArgumentList "run -c test.json" -PassThru
 
-        Start-Sleep -Seconds 3
+        Start-Sleep -Seconds 2
 
         try {
-            Invoke-WebRequest "https://1.1.1.1" -TimeoutSec 5 | Out-Null
+            Invoke-WebRequest "https://1.1.1.1" -TimeoutSec 3 | Out-Null
             $ok = $true
         }
         catch {
@@ -52,7 +68,6 @@ function Test-SingBox {
         }
 
         Stop-Process $proc -ErrorAction Ignore
-
         return $ok
     }
     catch {
@@ -60,37 +75,57 @@ function Test-SingBox {
     }
 }
 
+Write-Host "Фильтрация..."
+
+$filtered = @()
+
 foreach ($line in $lines) {
 
     if ($line -notmatch "^vless://") { continue }
 
-    # фильтр IP
     if (
         $line -notmatch "@5\.188\." -and
-        $line -notmatch "@109\.120\." 
+        $line -notmatch "@109\.120\." -and
+        $line -notmatch "@37\.139\." -and
+        $line -notmatch "@95\.163\."
     ) { continue }
 
-    # порт
     if ($line -notmatch ":443") { continue }
 
-    # домен
     if ($line -notmatch "x5\.ru") { continue }
 
-    Write-Host "Проверка через sing-box..."
+    $score = Get-Score $line
 
-    if (Test-SingBox $line) {
-        Write-Host "OK"
-        $result += $line.Trim()
+    $filtered += [PSCustomObject]@{
+        line = $line.Trim()
+        score = $score
     }
-    else {
+}
+
+Write-Host "После фильтра:" $filtered.Count
+
+# 🔥 сортировка по качеству
+$filtered = $filtered | Sort-Object score -Descending
+
+Write-Host "Проверка через sing-box..."
+
+foreach ($item in $filtered) {
+
+    Write-Host "Score $($item.score)"
+
+    if (Test-SingBox $item.line) {
+        Write-Host "OK"
+        $result += $item.line
+    } else {
         Write-Host "DEAD"
     }
 
     if ($result.Count -ge $maxResults) {
-        Write-Host "Достигнуто 50"
         break
     }
 }
+
+Write-Host "Итог:" $result.Count
 
 $result | Out-File -Encoding utf8 $outputFile
 
