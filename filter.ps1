@@ -11,34 +11,57 @@ if (!(Test-Path $inputFile)) {
 $lines = Get-Content $inputFile
 
 $result = @()
+$seen = @{}
 
 foreach ($line in $lines) {
 
-    # только VLESS
     if ($line -notmatch "^vless://") { continue }
 
-    # 🔥 IP фильтр (топ под РФ)
+    # 🔥 IP фильтр
     if (
         $line -notmatch "@5\.188\." -and
         $line -notmatch "@109\.120\." -and
+        $line -notmatch "@95\.163\." -and
         $line -notmatch "@37\.139\."
     ) { continue }
 
-    # 🔥 только порт 443
+    # порт 443
     if ($line -notmatch ":443") { continue }
 
-    # 🔥 нормальные домены (без мусора)
+    # SNI фильтр
     if (
         $line -notmatch "ads\.x5\.ru" -and
         $line -notmatch "5post-gate\.x5\.ru" -and
         $line -notmatch "x5\.ru"
     ) { continue }
 
-    # 👇 дубликаты оставляем как есть
+    # 🔥 достаём IP
+    if ($line -match "@([^:]+):443") {
+        $ip = $matches[1]
+    } else {
+        continue
+    }
+
+    # 🔥 достаём SNI
+    if ($line -match "sni=([^&]+)") {
+        $sni = $matches[1]
+    } else {
+        $sni = "none"
+    }
+
+    # 🔥 ключ (IP + SNI)
+    $key = "$ip|$sni"
+
+    # если уже есть — пропускаем
+    if ($seen.ContainsKey($key)) {
+        continue
+    }
+
+    $seen[$key] = $true
     $result += $line.Trim()
 }
 
-Write-Host "Найдено:" $result.Count
+Write-Host "После удаления дублей:" $result.Count
 
 # сохраняем
 $result | Out-File -Encoding utf8 $outputFile
