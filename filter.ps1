@@ -22,11 +22,13 @@ foreach ($line in $lines) {
 
     # 🔥 SNI фильтр (добавили anti-vpn.ru)
     if (
-        $line -notmatch "ads\.x5\.ru" -and
-        $line -notmatch "5post-gate\.x5\.ru" -and
-        $line -notmatch "x5\.ru" -and
-        $line -notmatch "anti-vpn\.ru"
-    ) { continue }
+    $line -notmatch "ads\.x5\.ru" -and
+    $line -notmatch "5post-gate\.x5\.ru" -and
+    $line -notmatch "anti-vpn\.ru" -and
+    $line -notmatch "x5\.ru" -and
+    $line -notmatch "vkclip\.enotfast\.com" -and
+    $line -notmatch "wl-3\.legendary-vpn\.com"
+) { continue }
 
     # 🔥 достаём IP
     if ($line -match "@([^:]+):443") {
