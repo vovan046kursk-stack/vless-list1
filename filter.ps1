@@ -17,20 +17,15 @@ foreach ($line in $lines) {
 
     if ($line -notmatch "^vless://") { continue }
 
-    # 🔥 только нужные IP
-   if (
-    $line -notmatch "ads\.x5\.ru" -and
-    $line -notmatch "5post-gate\.x5\.ru" -and
-    $line -notmatch "x5\.ru"
-) { continue }
-
     # 🔥 только порт 443
     if ($line -notmatch ":443") { continue }
 
-    # 🔥 SNI (ads.x5.ru ИЛИ любой x5.ru)
+    # 🔥 SNI фильтр (добавили anti-vpn.ru)
     if (
         $line -notmatch "ads\.x5\.ru" -and
-        $line -notmatch "x5\.ru"
+        $line -notmatch "5post-gate\.x5\.ru" -and
+        $line -notmatch "x5\.ru" -and
+        $line -notmatch "anti-vpn\.ru"
     ) { continue }
 
     # 🔥 достаём IP
