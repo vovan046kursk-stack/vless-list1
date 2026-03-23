@@ -17,7 +17,13 @@ foreach ($line in $lines) {
 
     if ($line -notmatch "^vless://") { continue }
 
-    # 🔥 порты (добавили 8447)
+    # 🔥 блокируем плохие IP
+    if (
+        $line -match "@51\.250\." -or
+        $line -match "@84\.201\."
+    ) { continue }
+
+    # 🔥 порты
     if (
         $line -notmatch ":443" -and
         $line -notmatch ":8443" -and
@@ -25,7 +31,7 @@ foreach ($line in $lines) {
         $line -notmatch ":8447"
     ) { continue }
 
-    # 🔥 SNI фильтр (добавили botapi.max.ru)
+    # 🔥 SNI фильтр
     if (
         $line -notmatch "ads\.x5\.ru" -and
         $line -notmatch "5post-gate\.x5\.ru" -and
