@@ -17,22 +17,29 @@ foreach ($line in $lines) {
 
     if ($line -notmatch "^vless://") { continue }
 
-    # 🔥 только порт 443
-    if ($line -notmatch ":443") { continue }
-
-    # 🔥 SNI фильтр (добавили anti-vpn.ru)
+    # 🔥 порты (добавили 8447)
     if (
-    $line -notmatch "ads\.x5\.ru" -and
-    $line -notmatch "5post-gate\.x5\.ru" -and
-    $line -notmatch "anti-vpn\.ru" -and
-    $line -notmatch "x5\.ru" -and
-    $line -notmatch "vkclip\.enotfast\.com" -and
-    $line -notmatch "wl-3\.legendary-vpn\.com"
-) { continue }
+        $line -notmatch ":443" -and
+        $line -notmatch ":8443" -and
+        $line -notmatch ":6443" -and
+        $line -notmatch ":8447"
+    ) { continue }
 
-    # 🔥 достаём IP
-    if ($line -match "@([^:]+):443") {
+    # 🔥 SNI фильтр (добавили botapi.max.ru)
+    if (
+        $line -notmatch "ads\.x5\.ru" -and
+        $line -notmatch "5post-gate\.x5\.ru" -and
+        $line -notmatch "anti-vpn\.ru" -and
+        $line -notmatch "x5\.ru" -and
+        $line -notmatch "vkclip\.enotfast\.com" -and
+        $line -notmatch "wl-3\.legendary-vpn\.com" -and
+        $line -notmatch "botapi\.max\.ru"
+    ) { continue }
+
+    # 🔥 достаём IP и порт
+    if ($line -match "@([^:]+):(\d+)") {
         $ip = $matches[1]
+        $port = $matches[2]
     } else {
         continue
     }
@@ -44,8 +51,8 @@ foreach ($line in $lines) {
         $sni = "none"
     }
 
-    # 🔥 ключ (IP + SNI)
-    $key = "$ip|$sni"
+    # 🔥 ключ (IP + PORT + SNI)
+    $key = "$ip|$port|$sni"
 
     if ($seen.ContainsKey($key)) {
         continue
