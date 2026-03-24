@@ -37,6 +37,7 @@ foreach ($line in $lines) {
         $line -notmatch "anti-vpn\.ru" -and
         $line -notmatch "x5\.ru" -and
         $line -notmatch "max\.ru" -and
+        $line -notmatch "eh.vk\.com" -and
         $line -notmatch "vkclip\.enotfast\.com" -and
         $line -notmatch "wl-3\.legendary-vpn\.com" -and
         $line -notmatch "botapi\.max\.ru"
