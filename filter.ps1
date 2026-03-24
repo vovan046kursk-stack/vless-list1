@@ -19,7 +19,6 @@ foreach ($line in $lines) {
 
     # 🔥 блокируем плохие IP
     if (
-        $line -match "@51\.250\." -or
         $line -match "@37\.139\." -or
         $line -match "@84\.201\."
     ) { continue }
@@ -37,6 +36,7 @@ foreach ($line in $lines) {
         $line -notmatch "5post-gate\.x5\.ru" -and
         $line -notmatch "anti-vpn\.ru" -and
         $line -notmatch "x5\.ru" -and
+        $line -notmatch "max\.ru" -and
         $line -notmatch "vkclip\.enotfast\.com" -and
         $line -notmatch "wl-3\.legendary-vpn\.com" -and
         $line -notmatch "botapi\.max\.ru"
