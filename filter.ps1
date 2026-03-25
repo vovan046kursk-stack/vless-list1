@@ -40,7 +40,6 @@ foreach ($line in $lines) {
         $line -notmatch "event.yandex\.ru" -and
         $line -notmatch "5post-gate-test\.ru" -and
         $line -notmatch "max\.ru" -and
-        $line -notmatch "eh.vk\.com" -and
         $line -notmatch "vkclip\.enotfast\.com" -and
         $line -notmatch "wl-3\.legendary-vpn\.com" -and
         $line -notmatch "botapi\.max\.ru"
