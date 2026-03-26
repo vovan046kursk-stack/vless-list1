@@ -19,6 +19,7 @@ foreach ($line in $lines) {
 
     # 🔥 блокируем плохие IP
     if (
+        $line -match "@62\.152\." -or
         $line -match "@158\.160\." -or
         $line -match "@51\.250\." -or
         $line -match "@84\.201\."
