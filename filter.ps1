@@ -34,17 +34,20 @@ foreach ($line in $lines) {
 
     # 🔥 SNI фильтр
     if (
-        $line -notmatch "ads\.x5\.ru" -and
-        $line -notmatch "5post-gate\.x5\.ru" -and
-        $line -notmatch "anti-vpn\.ru" -and
-        $line -notmatch "x5\.ru" -and
-        $line -notmatch "event.yandex\.ru" -and
-        $line -notmatch "5post-gate-test\.ru" -and
-        $line -notmatch "max\.ru" -and
-        $line -notmatch "vkclip\.enotfast\.com" -and
-        $line -notmatch "wl-3\.legendary-vpn\.com" -and
-        $line -notmatch "botapi\.max\.ru"
-    ) { continue }
+    $line -notmatch "ads\.x5\.ru" -and
+    $line -notmatch "5post-gate\.x5\.ru" -and
+    $line -notmatch "anti-vpn\.ru" -and
+    $line -notmatch "x5\.ru" -and
+    $line -notmatch "event.yandex\.ru" -and
+    $line -notmatch "5post-gate-test\.ru" -and
+    $line -notmatch "max\.ru" -and
+    $line -notmatch "vkclip\.enotfast\.com" -and
+    $line -notmatch "wl-3\.legendary-vpn\.com" -and
+    $line -notmatch "botapi\.max\.ru" -and
+    $line -notmatch "vkvideo\.ru" -and
+    $line -notmatch "smartcaptcha\.yandexcloud\.net" -and
+    $line -notmatch "www\.vk\.com"
+) { continue }
 
     # 🔥 достаём IP и порт
     if ($line -match "@([^:]+):(\d+)") {
