@@ -30,13 +30,16 @@ foreach ($line in $lines) {
     if (
         $line -notmatch ":40001" -and
         $line -notmatch ":443" -and
+        $line -notmatch ":7443" -and
         $line -notmatch ":6443" -and
         $line -notmatch ":8447"
     ) { continue }
 
     # 🔥 SNI фильтр
     if (
+    $line -notmatch "api-maps\.yandex\.ru" -and
     $line -notmatch "ads\.x5\.ru" -and
+    $line -notmatch "rutube\.ru" -and
     $line -notmatch "5post-gate\.x5\.ru" -and
     $line -notmatch "anti-vpn\.ru" -and
     $line -notmatch "x5\.ru" -and
