@@ -19,7 +19,6 @@ foreach ($line in $lines) {
 
     # 🔥 блокируем плохие IP
     if (
-        $line -match "@37\.139\." -or
         $line -match "@158\.160\." -or
         $line -match "@51\.250\." -or
         $line -match "@84\.201\."
@@ -27,6 +26,7 @@ foreach ($line in $lines) {
 
     # 🔥 порты
     if (
+        $line -notmatch ":40001" -and
         $line -notmatch ":443" -and
         $line -notmatch ":6443" -and
         $line -notmatch ":8447"
