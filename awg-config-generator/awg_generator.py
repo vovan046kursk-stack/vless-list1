@@ -114,6 +114,23 @@ def main():
 
         print(f"✔ {json_name}")
 
+    # 🔥 создаём подписку
+sub_file = os.path.join(BASE_DIR, "wg.txt")
+
+with open(sub_file, "w", encoding="utf-8") as f:
+    for i in range(1, len(best_configs) + 1):
+        conf_path = os.path.join(BASE_DIR, f"vpn{i}.conf")
+
+        if not os.path.exists(conf_path):
+            continue
+
+        with open(conf_path, "r", encoding="utf-8") as cf:
+            content = cf.read()
+
+        f.write(f"# vpn{i}\n")
+        f.write(content + "\n\n")
+
+print(f"✔ подписка создана: {sub_file}")
     print("💀 Готово")
 
 
