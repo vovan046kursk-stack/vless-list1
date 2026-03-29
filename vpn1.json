@@ -1,24 +1,30 @@
 {
+  "version": 1,
   "containers": [
     {
       "type": "awg",
       "name": "awg-auto",
-      "config": {
-        "private_key": "uAbxnL3IHddTyArBYCpW71NFwse8XhCbHVstfZffk0o=",
-        "address": "10.8.38.150/32",
+      "awg": {
+        "privateKey": "oO8nRnq8lo4ndSDUsZF5KocQ1jGShSup+chjW0/+OWE=",
+        "address": "10.8.38.152/32",
         "dns": [
           "176.99.11.77",
           "80.78.247.254",
           "2a00:f940:2:4:2::5d1b",
           "2a00:f940:2:4:2::21ed"
         ],
-        "peer": {
-          "public_key": "R/TI2Xm21f8NzO+2ag6PiMTTdpBmDBx5QxQtGQgYghU=",
-          "preshared_key": "vTotpGCnP7DpWHsat5OvaUnUqIgUeI3YjSrOdlNJy0I=",
-          "endpoint": "46.243.235.199:51820",
-          "allowed_ips": "0.0.0.0/0, ::/0",
-          "persistent_keepalive": 25
-        }
+        "peers": [
+          {
+            "publicKey": "R/TI2Xm21f8NzO+2ag6PiMTTdpBmDBx5QxQtGQgYghU=",
+            "presharedKey": "DNjPFUP4vuAa/JeVCRBCpnz4MoGagPqLvtS4D4cJIBI=",
+            "endpoint": "46.243.235.199:51820",
+            "allowedIPs": [
+              "0.0.0.0/0",
+              "::/0"
+            ],
+            "persistentKeepalive": 25
+          }
+        ]
       }
     }
   ]
