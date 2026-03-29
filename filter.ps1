@@ -21,6 +21,7 @@ foreach ($line in $lines) {
     if (
         $line -match "@84\.23\." -or
         $line -match "@62\.152\." -or
+        $line -match "@147\.45\." -or
         $line -match "@158\.160\." -or
         $line -match "@51\.250\." -or
         $line -match "@84\.201\."
