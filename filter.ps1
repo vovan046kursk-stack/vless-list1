@@ -28,12 +28,11 @@ foreach ($line in $lines) {
 
     # 🔥 порты
     if (
-        $line -notmatch ":40001" -and
         $line -notmatch ":9443" -and
         $line -notmatch ":443" -and
         $line -notmatch ":7443" -and
         $line -notmatch ":6443" -and
-        $line -notmatch ":8447"
+        $line -notmatch ":8443"
     ) { continue }
 
     # 🔥 SNI фильтр
@@ -42,8 +41,6 @@ foreach ($line in $lines) {
     $line -notmatch "ads\.x5media\.ru" -and
     $line -notmatch "5post-gate\.x5\.ru" -and
     $line -notmatch "x5\.ru" -and
-    $line -notmatch "anti-vpn\.ru" -and
-    $line -notmatch "event.yandex\.ru" -and
     $line -notmatch "5post-gate-test\.ru" -and
     $line -notmatch "max\.ru" -and
     $line -notmatch "vkclip\.enotfast\.com" -and
