@@ -1,0 +1,26 @@
+{
+  "containers": [
+    {
+      "type": "wireguard",
+      "name": "awg-auto",
+      "config": {
+        "private_key": "0Hla7Z3L6PGc+Uss31L0xxf+uW+oXPpfqzER0nKW9kw=",
+        "address": "10.8.38.146/32",
+        "dns": [
+          "176.99.11.77",
+          "80.78.247.254",
+          "2a00:f940:2:4:2::5d1b",
+          "2a00:f940:2:4:2::21ed"
+        ],
+        "peer": {
+          "public_key": "R/TI2Xm21f8NzO+2ag6PiMTTdpBmDBx5QxQtGQgYghU=",
+          "preshared_key": "cUy2JPe6S6R/2xsapwA7it7Frx6APr53gomOf2JGAxM=",
+          "endpoint": "46.243.235.199",
+          "port": 51820,
+          "allowed_ips": "0.0.0.0/0, ::/0",
+          "persistent_keepalive": 25
+        }
+      }
+    }
+  ]
+}
