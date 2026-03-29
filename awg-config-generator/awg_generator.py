@@ -49,7 +49,6 @@ def main():
 
     subnets = defaultdict(list)
 
-    # сбор конфигов
     for _ in range(COUNT):
         cfg = fetch()
         if not cfg:
@@ -61,7 +60,6 @@ def main():
         if subnet is not None:
             subnets[subnet].append(cfg)
 
-    # сортировка
     sorted_subnets = sorted(
         subnets.items(),
         key=lambda x: len(x[1]),
@@ -73,7 +71,6 @@ def main():
     for _, cfgs in sorted_subnets:
         best_configs.extend(cfgs)
 
-    # добивка если мало
     if len(best_configs) < OUTPUT_COUNT:
         for _, cfgs in sorted_subnets:
             for cfg in cfgs:
@@ -101,13 +98,12 @@ def main():
     for i, cfg in enumerate(best_configs, start=1):
         filename = os.path.join(BASE_DIR, f"vpn{i}.conf")
 
-        # сохраняем .conf
         with open(filename, "w", encoding="utf-8") as f:
             f.write(cfg)
 
         print(f"✔ {filename}")
 
-        # 🔥 делаем JSON для Amnezia
+        # 🔥 создаём JSON для Amnezia
         wg = parse_wg_config(cfg)
         amnezia = build_amnezia_json(wg)
 
