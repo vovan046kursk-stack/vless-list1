@@ -1,5 +1,6 @@
 import re
 
+
 def parse_wg_config(cfg):
     def get(key):
         match = re.search(rf"{key}\s*=\s*(.+)", cfg)
@@ -18,12 +19,10 @@ def parse_wg_config(cfg):
 
 
 def build_amnezia_json(wg):
-    host, port = wg["endpoint"].split(":")
-
     return {
         "containers": [
             {
-                "type": "wireguard",
+                "type": "awg",
                 "name": "awg-auto",
                 "config": {
                     "private_key": wg["private_key"],
@@ -32,8 +31,7 @@ def build_amnezia_json(wg):
                     "peer": {
                         "public_key": wg["public_key"],
                         "preshared_key": wg["preshared_key"],
-                        "endpoint": host,
-                        "port": int(port),
+                        "endpoint": wg["endpoint"],  # IP:PORT
                         "allowed_ips": wg["allowed_ips"],
                         "persistent_keepalive": int(wg["keepalive"]) if wg["keepalive"] else 25
                     }
