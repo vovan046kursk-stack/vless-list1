@@ -20,21 +20,24 @@ def parse_wg_config(cfg):
 
 def build_amnezia_json(wg):
     return {
+        "version": 1,
         "containers": [
             {
                 "type": "awg",
                 "name": "awg-auto",
-                "config": {
-                    "private_key": wg["private_key"],
+                "awg": {
+                    "privateKey": wg["private_key"],
                     "address": wg["address"],
                     "dns": [x.strip() for x in wg["dns"].split(",") if x.strip()],
-                    "peer": {
-                        "public_key": wg["public_key"],
-                        "preshared_key": wg["preshared_key"],
-                        "endpoint": wg["endpoint"],  # IP:PORT
-                        "allowed_ips": wg["allowed_ips"],
-                        "persistent_keepalive": int(wg["keepalive"]) if wg["keepalive"] else 25
-                    }
+                    "peers": [
+                        {
+                            "publicKey": wg["public_key"],
+                            "presharedKey": wg["preshared_key"],
+                            "endpoint": wg["endpoint"],
+                            "allowedIPs": ["0.0.0.0/0", "::/0"],
+                            "persistentKeepalive": int(wg["keepalive"]) if wg["keepalive"] else 25
+                        }
+                    ]
                 }
             }
         ]
