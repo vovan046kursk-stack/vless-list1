@@ -1,3 +1,5 @@
+import json
+from awg_to_amnezia import parse_wg_config, build_amnezia_json
 import requests
 import re
 import os
@@ -30,7 +32,6 @@ def fetch():
 
 
 def fix(cfg):
-    # фикс endpoint
     return re.sub(
         r'Endpoint\s*=\s*.*:51820',
         f'Endpoint = {ENDPOINT_IP}:51820',
@@ -91,24 +92,34 @@ def main():
 
     print(f"🔥 выбрано {len(best_configs)} конфигов")
 
-    # очистка старых файлов (ВАЖНО для GitHub)
+    # очистка старых файлов
     for file in os.listdir(BASE_DIR):
-        if file.endswith(".conf"):
+        if file.endswith(".conf") or file.endswith(".json"):
             os.remove(os.path.join(BASE_DIR, file))
 
     # сохранение
     for i, cfg in enumerate(best_configs, start=1):
         filename = os.path.join(BASE_DIR, f"vpn{i}.conf")
 
+        # сохраняем .conf
         with open(filename, "w", encoding="utf-8") as f:
             f.write(cfg)
 
         print(f"✔ {filename}")
+
+        # 🔥 делаем JSON для Amnezia
+        wg = parse_wg_config(cfg)
+        amnezia = build_amnezia_json(wg)
+
+        json_name = filename.replace(".conf", ".json")
+
+        with open(json_name, "w", encoding="utf-8") as f:
+            json.dump(amnezia, f, indent=2)
+
+        print(f"✔ {json_name}")
 
     print("💀 Готово")
 
 
 if __name__ == "__main__":
     main()
-    import json
-from awg_to_amnezia import parse_wg_config, build_amnezia_json
