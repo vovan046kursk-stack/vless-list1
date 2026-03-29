@@ -30,7 +30,6 @@ foreach ($line in $lines) {
     # 🔥 порты
     if (
         $line -notmatch ":9443" -and
-        $line -notmatch ":3443" -and
         $line -notmatch ":443" -and
         $line -notmatch ":7443" -and
         $line -notmatch ":6443" -and
