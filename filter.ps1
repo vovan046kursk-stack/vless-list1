@@ -39,6 +39,7 @@ foreach ($line in $lines) {
     # 🔥 SNI фильтр
     if (
     $line -notmatch "ads\.x5\.ru" -and
+    $line -notmatch "ads\.x5media\.ru" -and
     $line -notmatch "5post-gate\.x5\.ru" -and
     $line -notmatch "x5\.ru" -and
     $line -notmatch "anti-vpn\.ru" -and
