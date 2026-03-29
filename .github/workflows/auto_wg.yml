@@ -19,10 +19,10 @@ jobs:
           python-version: '3.11'
 
       - name: 📦 Install deps
-        run: pip install -r requirements.txt
+        run: pip install -r awg-config-generator/requirements.txt
 
       - name: 🚀 Run generator
-        run: python awg_generator.py
+        run: python awg-config-generator/awg_generator.py
 
       - name: 💾 Commit & push
         run: |
