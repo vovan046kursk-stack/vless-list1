@@ -1,3 +1,4 @@
+# vpn1
 [Interface]
 PrivateKey = ACYKTUUb0qKPDVqFcjx5c4YQTYpGuZPnw9t2rfaR2F4=
 Address = 10.8.38.172/32
@@ -19,3 +20,4 @@ PresharedKey = C6x6ELjhUGBnThAGZWDMfIuxH7n1hGzci6KRDOSzguY=
 Endpoint = 46.243.235.199:51820
 AllowedIPs = 0.0.0.0/0, ::/0
 PersistentKeepalive = 25
+
