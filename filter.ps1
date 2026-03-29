@@ -38,12 +38,10 @@ foreach ($line in $lines) {
 
     # 🔥 SNI фильтр
     if (
-    $line -notmatch "api-maps\.yandex\.ru" -and
     $line -notmatch "ads\.x5\.ru" -and
-    $line -notmatch "rutube\.ru" -and
     $line -notmatch "5post-gate\.x5\.ru" -and
-    $line -notmatch "anti-vpn\.ru" -and
     $line -notmatch "x5\.ru" -and
+    $line -notmatch "anti-vpn\.ru" -and
     $line -notmatch "event.yandex\.ru" -and
     $line -notmatch "5post-gate-test\.ru" -and
     $line -notmatch "max\.ru" -and
