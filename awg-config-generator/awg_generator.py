@@ -110,3 +110,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    import json
+from awg_to_amnezia import parse_wg_config, build_amnezia_json
