@@ -1,21 +1,25 @@
-def build_amnezia_json(wg):
-    return {
-        "containers": [
-            {
-                "type": "awg",
-                "name": "awg-auto",
-                "config": {
-                    "private_key": wg["private_key"],
-                    "address": wg["address"],
-                    "dns": [x.strip() for x in wg["dns"].split(",") if x.strip()],
-                    "peer": {
-                        "public_key": wg["public_key"],
-                        "preshared_key": wg["preshared_key"],
-                        "endpoint": wg["endpoint"],  # вместе с портом!
-                        "allowed_ips": wg["allowed_ips"],
-                        "persistent_keepalive": int(wg["keepalive"]) if wg["keepalive"] else 25
-                    }
-                }
-            }
-        ]
+{
+  "containers": [
+    {
+      "type": "awg",
+      "name": "awg-auto",
+      "config": {
+        "private_key": "uAbxnL3IHddTyArBYCpW71NFwse8XhCbHVstfZffk0o=",
+        "address": "10.8.38.150/32",
+        "dns": [
+          "176.99.11.77",
+          "80.78.247.254",
+          "2a00:f940:2:4:2::5d1b",
+          "2a00:f940:2:4:2::21ed"
+        ],
+        "peer": {
+          "public_key": "R/TI2Xm21f8NzO+2ag6PiMTTdpBmDBx5QxQtGQgYghU=",
+          "preshared_key": "vTotpGCnP7DpWHsat5OvaUnUqIgUeI3YjSrOdlNJy0I=",
+          "endpoint": "46.243.235.199:51820",
+          "allowed_ips": "0.0.0.0/0, ::/0",
+          "persistent_keepalive": 25
+        }
+      }
     }
+  ]
+}
