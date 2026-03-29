@@ -43,11 +43,9 @@ foreach ($line in $lines) {
     $line -notmatch "x5\.ru" -and
     $line -notmatch "5post-gate-test\.ru" -and
     $line -notmatch "max\.ru" -and
-    $line -notmatch "vkclip\.enotfast\.com" -and
     $line -notmatch "wl-3\.legendary-vpn\.com" -and
-    $line -notmatch "botapi\.max\.ru" -and
+    $line -notmatch "web\.max\.ru" -and
     $line -notmatch "vkvideo\.ru" -and
-    $line -notmatch "smartcaptcha\.yandexcloud\.net" -and
     $line -notmatch "www\.vk\.com"
 ) { continue }
 
