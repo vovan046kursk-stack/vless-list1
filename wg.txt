@@ -1,7 +1,7 @@
 # vpn1
 [Interface]
-PrivateKey = ACYKTUUb0qKPDVqFcjx5c4YQTYpGuZPnw9t2rfaR2F4=
-Address = 10.8.38.172/32
+PrivateKey = iA9ivhAo7jut5ZxwTxOfoDoHF76zbfWc/6vwNQR9zlE=
+Address = 10.8.40.78/32
 DNS = 176.99.11.77, 80.78.247.254, 2a00:f940:2:4:2::5d1b, 2a00:f940:2:4:2::21ed
 MTU = 1280
 Jc = 4
@@ -16,7 +16,7 @@ H4 = 394857261
 
 [Peer]
 PublicKey = R/TI2Xm21f8NzO+2ag6PiMTTdpBmDBx5QxQtGQgYghU=
-PresharedKey = C6x6ELjhUGBnThAGZWDMfIuxH7n1hGzci6KRDOSzguY=
+PresharedKey = ekuQd8Ir6AcEiM7DksPH7ab8KfPN+yRK8vffwr9eHlk=
 Endpoint = 46.243.235.199:51820
 AllowedIPs = 0.0.0.0/0, ::/0
 PersistentKeepalive = 25
