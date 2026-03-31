@@ -23,12 +23,12 @@ foreach ($line in $lines) {
         $line -match "@62\.152\." -or
         $line -match "@147\.45\." -or
         $line -match "@158\.160\." -or
-        $line -match "@51\.250\." -or
         $line -match "@84\.201\."
     ) { continue }
 
     # 🔥 порты
     if (
+        $line -notmatch ":9999" -and
         $line -notmatch ":5444" -and
         $line -notmatch ":8080" -and
         $line -notmatch ":2053" -and
