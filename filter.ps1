@@ -35,8 +35,8 @@ foreach ($line in $lines) {
         $line -notmatch ":9443" -and
         $line -notmatch ":443" -and
         $line -notmatch ":7443" -and
-        $line -notmatch ":6443" -and
-        $line -notmatch ":8443"
+        $line -notmatch ":6443"
+        
     ) { continue }
 
     # 🔥 SNI фильтр
