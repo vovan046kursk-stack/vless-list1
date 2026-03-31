@@ -63,8 +63,8 @@ jobs:
         shell: pwsh
         run: |
           $urls = @(
-          "https://accargame.cfd/sub/tg7dzYH8Kxu-3BmE",
-          "https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt"
+          "https://accargame.cfd/sub/tg7dzYH8Kxu-3BmE"
+          
           
           )
           
