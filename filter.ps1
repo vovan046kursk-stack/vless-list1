@@ -29,6 +29,7 @@ foreach ($line in $lines) {
 
     # 🔥 порты
     if (
+        $line -notmatch ":8080" -and
         $line -notmatch ":9443" -and
         $line -notmatch ":443" -and
         $line -notmatch ":7443" -and
@@ -38,6 +39,7 @@ foreach ($line in $lines) {
 
     # 🔥 SNI фильтр
     if (
+    $line -notmatch "5ka-cdn\.x5static\.net" -and
     $line -notmatch "ads\.x5\.ru" -and
     $line -notmatch "ads\.x5media\.ru" -and
     $line -notmatch "5post-gate\.x5\.ru" -and
