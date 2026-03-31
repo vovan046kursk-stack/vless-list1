@@ -2,7 +2,7 @@
 # НАСТРОЙКИ
 # =========================
 
-$sourceUrl = ""https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt"
+$sourceUrl = "https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt"
 
 $outputFile = "vless_list_new.txt"
 $inputFile  = "all_sources.txt"
