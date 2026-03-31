@@ -2,7 +2,7 @@
 # НАСТРОЙКИ
 # =========================
 
-$sourceUrl = "https://accargame.cfd/sub/tg7dzYH8Kxu-3BmE"
+$sourceUrl = ""https://raw.githubusercontent.com/zieng2/wl/main/vless_universal.txt"
 
 $outputFile = "vless_list_new.txt"
 $inputFile  = "all_sources.txt"
