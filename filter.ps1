@@ -66,7 +66,7 @@ foreach ($line in $lines) {
     # ✅ ПОРТЫ (быстрее regex)
     # =========================
 
-    if ($line -notmatch ":(9999|5444|8080|2053|9443|443|7443|6443)") {
+    if ($line -notmatch ":(9999|8443|5444|8080|2053|9443|443|7443|6443)") {
         continue
     }
 
@@ -74,7 +74,7 @@ foreach ($line in $lines) {
     # ✅ SNI ФИЛЬТР
     # =========================
 
-    if ($line -notmatch "(5ka-cdn\.x5static\.net|ads\.x5\.ru|www\.philips\.com|ads\.x5media\.ru|5post-gate\.x5\.ru|x5\.ru|5post-gate-test\.ru|max\.ru|ru-portal\.meetvideo\.ru|web\.max\.ru|www\.vk\.com)") {
+    if ($line -notmatch "(5ka-cdn\.x5static\.net|ads\.x5\.ru|www\.philips\.com|ads\.x5media\.ru|5post-gate\.x5\.ru|x5\.ru|5post-gate-test\.ru|max\.ru|ru-portal\.meetvideo\.ru|web\.max\.ru|www\.vk\.com|yandex\.ru|api-maps\.yandex\.ru|mc\.yandex\.ru)") {
         continue
     }
 
