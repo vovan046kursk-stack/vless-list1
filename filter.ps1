@@ -58,9 +58,7 @@ foreach ($line in $lines) {
     # =========================
 
     if (
-        $line -match "@62\.152\." -or
-        $line -match "@103\.88\." -or
-        $line -match "@194\.87\." -or
+        
         $line -match "@5\.42\."
     ) { continue }
 
