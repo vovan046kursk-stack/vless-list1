@@ -74,7 +74,7 @@ foreach ($line in $lines) {
     # ✅ SNI ФИЛЬТР
     # =========================
 
-    if ($line -notmatch "(5ka-cdn\.x5static\.net|ads\.x5\.ru|www\.philips\.com|ads\.x5media\.ru|5post-gate\.x5\.ru|x5\.ru|5post-gate-test\.ru|max\.ru|ru-portal\.meetvideo\.ru|web\.max\.ru|www\.vk\.com|yandex\.ru|api-maps\.yandex\.ru|mc\.yandex\.ru)") {
+    if ($line -notmatch "(5ka-cdn\.x5static\.net|ads\.x5\.ru|www\.philips\.com|ads\.x5media\.ru|5post-gate\.x5\.ru|x5\.ru|5post-gate-test\.ru|max\.ru|ru-portal\.meetvideo\.ru|web\.max\.ru|www\.vk\.com|yandex\.ru|api-maps\.yandex\.ru|mc\.yandex\.ru|sun6-\d+\.userapi\.com)") {
         continue
     }
 
