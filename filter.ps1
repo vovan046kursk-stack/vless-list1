@@ -1,3 +1,4 @@
+```powershell
 # =========================
 # НАСТРОЙКИ
 # =========================
@@ -57,13 +58,10 @@ foreach ($line in $lines) {
     # ❌ ПЛОХИЕ IP
     # =========================
 
-    if (
-        
-        $line -match "@5\.42\."
-    ) { continue }
+    if ($line -match "@5\.42\.") { continue }
 
     # =========================
-    # ✅ ПОРТЫ (быстрее regex)
+    # ✅ ПОРТЫ
     # =========================
 
     if ($line -notmatch ":(9999|6445|666|8443|5444|8080|2053|9443|443|7443|6443)") {
@@ -74,7 +72,7 @@ foreach ($line in $lines) {
     # ✅ SNI ФИЛЬТР
     # =========================
 
-    if ($line -notmatch "(5ka-cdn\.x5static\.net|ads\.x5\.ru|ads\.x5media\.ru|5post-gate\.x5\.ru|5post-gate-test\.ru|x5\.ru|max\.ru|web\.max\.ru|ru-portal\.meetvideo\.ru|www\.vk\.com|sun6-\d+\.userapi\.com|yandex\.ru|api-maps\.yandex\.ru|mc\.yandex\.ru|www\.philips\.com|wl-\d+-\d+\.legendary-vpn\.com|tunnel\.vk-apps\.com)")
+    if ($line -notmatch '(5ka-cdn\.x5static\.net|ads\.x5\.ru|ads\.x5media\.ru|5post-gate\.x5\.ru|5post-gate-test\.ru|x5\.ru|max\.ru|web\.max\.ru|ru-portal\.meetvideo\.ru|www\.vk\.com|sun6-\d+\.userapi\.com|yandex\.ru|api-maps\.yandex\.ru|mc\.yandex\.ru|www\.philips\.com|wl-\d+-\d+\.legendary-vpn\.com|tunnel\.vk-apps\.com)') {
         continue
     }
 
@@ -94,7 +92,7 @@ foreach ($line in $lines) {
     }
 
     # =========================
-    # ❌ ДУБЛИ (умнее)
+    # ❌ ДУБЛИ
     # =========================
 
     $key = "$ip|$port|$sni"
@@ -114,3 +112,4 @@ Write-Host "🔥 После фильтра:" $result.Count
 $result | Out-File -Encoding utf8 $outputFile
 
 Write-Host "✅ Готово → $outputFile"
+```
