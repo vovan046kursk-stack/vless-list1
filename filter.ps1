@@ -1,4 +1,3 @@
-```powershell
 # =========================
 # НАСТРОЙКИ
 # =========================
@@ -112,4 +111,4 @@ Write-Host "🔥 После фильтра:" $result.Count
 $result | Out-File -Encoding utf8 $outputFile
 
 Write-Host "✅ Готово → $outputFile"
-```
+
