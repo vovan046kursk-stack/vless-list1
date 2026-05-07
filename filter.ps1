@@ -106,6 +106,8 @@ foreach ($line in $lines) {
 # СОХРАНЕНИЕ
 # =========================
 
+$result = $result | Select-Object -First 50
+
 Write-Host "🔥 После фильтра:" $result.Count
 
 $result | Out-File -Encoding utf8 $outputFile
