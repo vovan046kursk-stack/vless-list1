@@ -63,7 +63,7 @@ foreach ($line in $lines) {
     # ✅ ПОРТЫ
     # =========================
 
-    if ($line -notmatch ":(|9999|9090|2448|6445|8454|8443|5444|8080|2053|9443|443|7443|6443)") {
+    if ($line -notmatch ":(|9999|5446|2448|6445|8454|8443|5444|8080|2053|9443|443|7443|6443)") {
         continue
     }
 
@@ -71,7 +71,7 @@ foreach ($line in $lines) {
     # ✅ SNI ФИЛЬТР
     # =========================
 
-   if ($line -notmatch '(5ka-cdn\.x5static\.net|ads\.x5\.ru|ads\.x5media\.ru|5post-gate\.x5\.ru|5post-gate-test\.ru|x5\.ru|max\.ru|web\.max\.ru|ru-portal\.meetvideo\.ru|www\.vk\.com|sun6-\d+\.userapi\.com|yandex\.ru|api-maps\.yandex\.ru|mc\.yandex\.ru|www\.philips\.com|wl-\d+-\d+\.legendary-vpn\.com|tunnel\.vk-apps\.com|megafon\.ru|vkvideo\.ru|sweden\.nosok-top\.com|ger\.nosok-top\.com|m\.ok\.ru|jobinvest\.ru)') {
+  if ($line -notmatch '(5ka-cdn\.x5static\.net|ads\.x5\.ru|ads\.x5media\.ru|5post-gate\.x5\.ru|5post-gate-test\.ru|x5\.ru|max\.ru|web\.max\.ru|ru-portal\.meetvideo\.ru|www\.vk\.com|sun6-\d+\.userapi\.com|yandex\.ru|api-maps\.yandex\.ru|mc\.yandex\.ru|www\.philips\.com|wl-\d+-\d+\.legendary-vpn\.com|tunnel\.vk-apps\.com|megafon\.ru|vkvideo\.ru|sweden\.nosok-top\.com|ger\.nosok-top\.com|m\.ok\.ru|jobinvest\.ru|quiz\.kinopoisk\.ru)') {
     }
 
     # =========================
